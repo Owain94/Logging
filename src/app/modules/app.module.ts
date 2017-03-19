@@ -31,7 +31,8 @@ import { HomeViewComponent } from '../components/home/home.component';
       }
     ], {
       useHash: false,
-      preloadingStrategy: PreloadAllModules
+      preloadingStrategy: PreloadAllModules,
+      initialNavigation: 'enabled'
     })
   ],
   providers: [
