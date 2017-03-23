@@ -3,6 +3,9 @@ import { Request, Response, Send } from 'express';
 import { Provider, NgModuleFactory, NgModuleRef, PlatformRef, ApplicationRef, Type } from '@angular/core';
 import { platformServer, platformDynamicServer, PlatformState, INITIAL_CONFIG } from '@angular/platform-server';
 
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/first';
+
 /**
  * These are the allowed options for the engine
  */
