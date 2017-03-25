@@ -19,7 +19,6 @@ const app = express();
 const api = new App();
 
 app.engine('html', ngExpressEngine({
-  aot: false,
   bootstrap: AppServerModule
 }));
 

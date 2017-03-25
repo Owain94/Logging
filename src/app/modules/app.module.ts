@@ -1,4 +1,4 @@
-import { CommonModule, APP_BASE_HREF } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -31,11 +31,9 @@ import { HomeViewComponent } from '../components/home/home.component';
       }
     ], {
       useHash: false,
-      preloadingStrategy: PreloadAllModules
+      preloadingStrategy: PreloadAllModules,
+      initialNavigation: 'enabled'
     })
-  ],
-  providers: [
-    { provide: APP_BASE_HREF, useValue: '/'}
   ],
   exports: [
     MainComponent
