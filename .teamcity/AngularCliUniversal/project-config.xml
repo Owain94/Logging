@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="e3227d41-5bdd-47e0-96a2-3497f4b8967c" xsi:noNamespaceSchemaLocation="http://www.jetbrains.com/teamcity/schemas/10.0/project-config.xsd">
+  <name>Angular Cli Universal</name>
+  <parameters />
+  <project-extensions>
+    <extension id="PROJECT_EXT_5" type="versionedSettings">
+      <parameters>
+        <param name="buildSettings" value="ALWAYS_USE_CURRENT" />
+        <param name="enabled" value="true" />
+        <param name="rootId" value="AngularCliUniversal_HttpsGithubComOwain94angularCliUniversalRefsHeadsMaster" />
+        <param name="showChanges" value="false" />
+      </parameters>
+    </extension>
+    <extension id="PROJECT_EXT_6" type="IssueTracker">
+      <parameters>
+        <param name="host" value="http://136.144.141.239:8081" />
+        <param name="idPrefix" value="angular_cli_universal" />
+        <param name="name" value="YouTrack" />
+        <param name="secure:password" value="zxx42b3b7e522fe2a5f598606134e9ed1e69226423a85137700" />
+        <param name="type" value="youtrack" />
+        <param name="username" value="Owain94" />
+      </parameters>
+    </extension>
+  </project-extensions>
+  <cleanup />
+</project>
+

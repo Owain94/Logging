@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vcs-root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="a080d798-b554-4033-a4b0-4dd9a935c4f3" type="jetbrains.git" xsi:noNamespaceSchemaLocation="http://www.jetbrains.com/teamcity/schemas/10.0/project-config.xsd">
+  <name>https://github.com/Owain94/angular-cli-universal#refs/heads/master</name>
+  <param name="agentCleanFilesPolicy" value="ALL_UNTRACKED" />
+  <param name="agentCleanPolicy" value="ON_BRANCH_CHANGE" />
+  <param name="authMethod" value="PASSWORD" />
+  <param name="branch" value="refs/heads/master" />
+  <param name="ignoreKnownHosts" value="true" />
+  <param name="push_url" value="https://github.com/Owain94/angular-cli-universal" />
+  <param name="secure:password" value="zxxdd780c66b9af60f03ea50b6c69e2f732b585c5a66744b101c30e3f054a0b42098d0cf9a1ddbec272775d03cbe80d301b" />
+  <param name="submoduleCheckout" value="CHECKOUT" />
+  <param name="teamcity:branchSpec" value="+:refs/pull/(*/merge)" />
+  <param name="url" value="https://github.com/Owain94/angular-cli-universal" />
+  <param name="useAlternates" value="true" />
+  <param name="username" value="Owain94" />
+  <param name="usernameStyle" value="USERID" />
+</vcs-root>
+
