@@ -1,6 +1,6 @@
 # AngularCliUniversal
 
-[![Build Status](https://travis-ci.org/Owain94/angular-cli-universal.svg?branch=master)](https://travis-ci.org/Owain94/angular-cli-universal)
+[![Build Status](http://136.144.141.239:8111/app/rest/builds/aggregated/strob:(buildType:(project:(id:AngularCliUniversal)))/statusIcon.svg)](http://136.144.141.239:8111/viewType.html?buildTypeId=AngularCliUniversal_Build)
 [![Greenkeeper badge](https://badges.greenkeeper.io/Owain94/angular-cli-universal.svg)](https://greenkeeper.io/)
 [![dependencies Status](https://david-dm.org/Owain94/angular-cli-universal/status.svg)](https://david-dm.org/Owain94/angular-cli-universal)
 [![devDependencies Status](https://david-dm.org/Owain94/angular-cli-universal/dev-status.svg)](https://david-dm.org/Owain94/angular-cli-universal?type=dev)
