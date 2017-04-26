@@ -90,7 +90,7 @@
     "tslint": "5.1.0",
     "typescript": "2.2.2",
     "url-loader": "0.5.8",
-    "webpack-dev-server": "2.4.4"
+    "webpack-dev-server": "2.4.5"
   },
   "greenkeeper": {
     "branchPrefix": "dep-update-",
