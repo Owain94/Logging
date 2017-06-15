@@ -1,8 +1,7 @@
 import * as fs from 'fs';
 import {
   Request,
-  Response,
-  Send
+  Response
 } from 'express';
 
 import {
@@ -42,6 +41,11 @@ export interface RenderOptions extends NgSetupOptions {
   res?: Response;
 }
 
+interface Send {
+    (status: number | null, body?: any): Response;
+    (body?: any): Response;
+}
+
 /**
  * This holds a cached version of each index used.
  */
@@ -70,6 +74,7 @@ export function ngExpressEngine(setupOptions: NgSetupOptions) {
   return function (filePath: string, options: RenderOptions, callback: Send) {
 
     options.providers = options.providers || [];
+    setupOptions.providers = setupOptions.providers || [];
 
     try {
       const moduleOrFactory = options.bootstrap || setupOptions.bootstrap;
@@ -144,7 +149,7 @@ function getFactory(
 /**
  * Get providers of the request and response
  */
-function getReqResProviders(req: Request, res: Response): Provider[] {
+function getReqResProviders(req: Request, res: Response | undefined): Provider[] {
   const providers: Provider[] = [
     {
       provide: REQUEST,
