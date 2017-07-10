@@ -1,0 +1,6 @@
+header(id="header")
+  .row
+    .large-12.columns.align-center
+      h1([innerText]="headerHeading[0]")
+      span.subheading([innerText]="headerHeading[1]")
+      a.button.white.radius.large(*ngIf="headerButton", [routerLink]="headerButton[0]", [innerText]="headerButton[1]")

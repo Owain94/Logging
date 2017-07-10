@@ -7,11 +7,29 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "removeComments": true,
+    "noImplicitAny": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "strictNullChecks": false,
+    "noUnusedLocals": true,
+    "allowUnusedLabels": false,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "allowUnreachableCode": false,
+    "alwaysStrict": true,
     "target": "es5",
-    "skipLibCheck": true,
+    "module": "commonjs",
     "lib": [
       "es2016",
       "dom"
+    ],
+    "plugins": [
+      {
+        "name": "tslint-language-service"
+      },
+      {
+        "name": "@angular/language-service"
+      }
     ]
   }
 }

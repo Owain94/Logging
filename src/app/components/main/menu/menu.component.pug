@@ -1,0 +1,15 @@
+.top
+  .row
+    .large-12.columns
+      nav.top-bar([class.collapsed]="!collapsed")
+        ul.title-area
+          li.name.logo
+          li.toggle-topbar((click)="navBarClick()")
+            a
+              span Menu
+        section.top-bar-section
+          ul.right
+            li
+              a(routerLink="/", (click)="navBarClick(true)") Home
+            li
+              a(routerLink="/cases", (click)="navBarClick(true)") Cases

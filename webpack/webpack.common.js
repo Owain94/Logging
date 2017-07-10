@@ -1,8 +1,9 @@
 const path = require("path");
-const ProgressPlugin = require("webpack/lib/ProgressPlugin");
+const ProgressBarPlugin = require("progress-bar-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const autoprefixer = require("autoprefixer");
-const postcssUrl = require("postcss-url");
+const postcss = require("postcss");
+const url = require("postcss-url");
 const webpack = require("webpack");
 
 const { LoaderOptionsPlugin } = require("webpack");
@@ -44,12 +45,19 @@ module.exports = {
         "loader": "raw-loader"
       },
       {
+        "test": /\.(pug|jade)$/,
+        "loaders": [
+          "raw-loader",
+          "pug-html-loader"
+        ]
+      },
+      {
         "test": /\.(eot|svg)$/,
-        "loader": "file-loader?name=[name].[hash:20].[ext]"
+        "loader": "file-loader?name=[name].[ext]"
       },
       {
         "test": /\.(jpg|png|gif|otf|ttf|woff|woff2|cur|ani)$/,
-        "loader": "url-loader?name=[name].[hash:20].[ext]&limit=10000"
+        "loader": "url-loader?name=[name].[ext]&limit=10000"
       },
       {
         "test": /\.ts$/,
@@ -57,19 +65,16 @@ module.exports = {
       },
       {
         "exclude": [
-          path.join(process.cwd(), "src/styles.css")
+          path.join(process.cwd(), "src/assets/css/foundation.css")
         ],
         "test": /\.css$/,
         "loaders": [
           "exports-loader?module.exports.toString()",
-          "css-loader?{\"sourceMap\":false,\"importLoaders\":1}",
+          "css-loader?{\"sourceMap\":false,\"minimize\":true,\"importLoaders\":1}",
           "postcss-loader?{\"postcss\": {}}"
         ]
       },
       {
-        "exclude": [
-          path.join(process.cwd(), "src/styles.css")
-        ],
         "test": /\.scss$|\.sass$/,
         "loaders": [
           "exports-loader?module.exports.toString()",
@@ -80,36 +85,24 @@ module.exports = {
       },
       {
         "exclude": [
-          path.join(process.cwd(), "src/styles.css")
-        ],
-        "test": /\.less$/,
-        "loaders": [
-          "exports-loader?module.exports.toString()",
-          "css-loader?{\"sourceMap\":false,\"importLoaders\":1}",
-          "postcss-loader?{\"postcss\": {}}",
-          "less-loader"
-        ]
-      },
-      {
-        "exclude": [
-          path.join(process.cwd(), "src/styles.css")
+          path.join(process.cwd(), "src/assets/css/styles.styl")
         ],
         "test": /\.styl$/,
         "loaders": [
           "exports-loader?module.exports.toString()",
-          "css-loader?{\"sourceMap\":false,\"importLoaders\":1}",
+          "css-loader?{\"sourceMap\":false,\"minimize\":true,\"importLoaders\":1}",
           "postcss-loader?{\"postcss\": {}}",
           "stylus-loader?{\"sourceMap\":false,\"paths\":[]}"
         ]
       },
       {
         "include": [
-          path.join(process.cwd(), "src/styles.css")
+          path.join(process.cwd(), "src/assets/css/foundation.css")
         ],
         "test": /\.css$/,
         "loaders": ExtractTextPlugin.extract({
           "use": [
-            "css-loader?{\"sourceMap\":false,\"importLoaders\":1}",
+            "css-loader?{\"sourceMap\":false,\"minimize\":true,\"importLoaders\":1}",
             "postcss-loader?{\"postcss\": {}}"
           ],
           "fallback": "style-loader",
@@ -118,42 +111,12 @@ module.exports = {
       },
       {
         "include": [
-          path.join(process.cwd(), "src/styles.css")
-        ],
-        "test": /\.scss$|\.sass$/,
-        "loaders": ExtractTextPlugin.extract({
-          "use": [
-            "css-loader?{\"sourceMap\":false,\"importLoaders\":1}",
-            "postcss-loader?{\"postcss\": {}}",
-            "sass-loader"
-          ],
-          "fallback": "style-loader",
-          "publicPath": ""
-        })
-      },
-      {
-        "include": [
-          path.join(process.cwd(), "src/styles.css")
-        ],
-        "test": /\.less$/,
-        "loaders": ExtractTextPlugin.extract({
-          "use": [
-            "css-loader?{\"sourceMap\":false,\"importLoaders\":1}",
-            "postcss-loader?{\"postcss\": {}}",
-            "less-loader"
-          ],
-          "fallback": "style-loader",
-          "publicPath": ""
-        })
-      },
-      {
-        "include": [
-          path.join(process.cwd(), "src/styles.css")
+          path.join(process.cwd(), "src/assets/css/styles.styl")
         ],
         "test": /\.styl$/,
         "loaders": ExtractTextPlugin.extract({
           "use": [
-            "css-loader?{\"sourceMap\":false,\"importLoaders\":1}",
+            "css-loader?{\"sourceMap\":false,\"minimize\":true,\"importLoaders\":1}",
             "postcss-loader?{\"postcss\": {}}",
             "stylus-loader?{\"sourceMap\":false,\"paths\":[]}"
           ],
@@ -164,26 +127,28 @@ module.exports = {
     ]
   },
   "plugins": [
+    new webpack.IgnorePlugin(/vertx/),
     new LoaderOptionsPlugin({
       "sourceMap": false,
       "options": {
         "postcss": [
           autoprefixer(),
-          postcssUrl({"url": (URL) => {
-            // Only convert absolute URLs, which CSS-Loader won't process into require().
-            if (!URL.startsWith("/")) {
-                return URL;
-            }
-            return `${URL}`.replace(/\/\/+/g, "/");
-          }})
+          postcss()
+            .use(
+                url(
+                  [
+                    {
+                      filter: "*", url: (URL) => {
+                        if (!URL.startsWith("/")) {
+                          return URL;
+                        }
+                        return `${URL}`.replace(/\/\/+/g, "/");
+                      }
+                    }
+                  ]
+                )
+            )
         ],
-        "sassLoader": {
-          "sourceMap": false,
-          "includePaths": []
-        },
-        "lessLoader": {
-          "sourceMap": false
-        },
         "context": ""
       }
     }),
@@ -193,16 +158,16 @@ module.exports = {
         "favicon.ico"
       ],
       "globOptions": {
-        "cwd": "/Users/Owain/angular/angular-cli-universal/src",
+        "cwd": path.join(process.cwd(), "src"),
         "dot": true,
         "ignore": "**/.gitkeep"
       }
     }),
-    new ProgressPlugin(),
+    new ProgressBarPlugin(),
     new BaseHrefWebpackPlugin({}),
     new ExtractTextPlugin({
       "filename": "[name].bundle.css",
-      "disable": true
+      "allChunks": true
     })
   ],
   "node": {

@@ -1,0 +1,57 @@
+doctype html
+html(itemscope='', itemtype='http://schema.org/Product')
+  head
+    meta(charset='UTF-8')
+
+    base(href='/')
+    title Logging
+
+    meta(http-equiv='language', content='en')
+    meta(name='description', content="Logging")
+    meta(name='author', content='Owain van Brakel')
+    meta(name='robots', content='index, follow')
+    meta(name='revisit-after', content='1 days')
+
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    meta(name='apple-mobile-web-app-capable', content='yes')
+    meta(name='apple-mobile-web-app-status-bar-style', content='default')
+    meta(name='apple-mobile-web-app-title', content="Inkie's webshop")
+
+    link(rel='manifest', href='assets/icons/manifest.json')
+    link(rel='alternate', href='http://example.com/en', hreflang='en')
+  body.pink
+    app-root
+      #wrapper
+        #main
+          #top
+            .row
+              .large-12.columns
+                nav.top-bar([class.collapsed]='!collapsed', #navbar='')
+                  ul.title-area
+                    li.name.logo
+                    li.toggle-topbar((click)='navBarClick()')
+                      a
+                        span Menu
+                  section.top-bar-section
+                    ul.right
+                      li
+                        a Home
+          header#header
+            .row
+              .large-12.columns.align-center
+                h1
+                span.subheading
+              .large-12.columns.align-center
+                img(src='assets/img/header-macbook.png', alt='')
+      footer
+        .row
+          .large-12.columns.align-center
+            span.copyright Gemaakt met
+            span.icon.icon-heart-2.pink
+            span.copyright door
+              a(href='https://owain.nl', target='_blank', rel='noopener') Owain van Brakel
+      #back-top((click)='scrollTo($event)')
+        span.icon.icon-play
+
+    script.
+      // if ('serviceWorker' in navigator) {navigator.serviceWorker.register('/service-worker.js');}

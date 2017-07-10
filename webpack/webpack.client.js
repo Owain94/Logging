@@ -1,6 +1,8 @@
 const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const HtmlWebpackExcludeAssetsPlugin = require("html-webpack-exclude-assets-plugin");
+const ScriptExtHtmlWebpackPlugin = require("script-ext-html-webpack-plugin");
 
 const { CommonsChunkPlugin } = require("webpack").optimize;
 
@@ -13,13 +15,14 @@ const entryPoints = ["inline","polyfills","sw-register","styles","vendor","main"
 module.exports = {
   "entry": {
     "main": [
-      "./src/main.ts"
+      "./src/bootstrap/main.ts"
     ],
     "polyfills": [
-      "./src/polyfills.ts"
+      "./src/polyfills/polyfills.browser.ts"
     ],
     "styles": [
-      "./src/styles.css"
+      "./src/assets/css/foundation.css",
+      "./src/assets/css/styles.styl"
     ]
   },
   "output": {
@@ -30,32 +33,35 @@ module.exports = {
   "target": "web",
   "plugins": [
     new HtmlWebpackPlugin({
-      "template": "./src/index.html",
+      "template": "./src/index.pug",
       "filename": "./index.html",
       "hash": false,
       "inject": true,
       "compile": true,
       "favicon": false,
-      "minify": false,
+      "minify": {
+        "collapseWhitespace": true
+      },
       "cache": true,
       "showErrors": true,
       "chunks": "all",
       "excludeChunks": [],
-      "title": "Webpack App",
-      "xhtml": true,
+      "excludeAssets": [/style.*.js/],
       "chunksSortMode": function sort(left, right) {
         let leftIndex = entryPoints.indexOf(left.names[0]);
         let rightindex = entryPoints.indexOf(right.names[0]);
         if (leftIndex > rightindex) {
             return 1;
-        }
-        else if (leftIndex < rightindex) {
+        } else if (leftIndex < rightindex) {
             return -1;
-        }
-        else {
+        } else {
             return 0;
         }
       }
+    }),
+    new HtmlWebpackExcludeAssetsPlugin(),
+    new ScriptExtHtmlWebpackPlugin({
+      "async": "main"
     }),
     new CommonsChunkPlugin({
       "name": "inline",

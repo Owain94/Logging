@@ -1,12 +1,16 @@
 {
   "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noUnusedLocals": false
+  },
   "include": [
     "src/**/*"
   ],
   "exclude": [
-    "./src/main.server.ts"
+    "./src/bootstrap/main.server.ts"
   ],
   "angularCompilerOptions": {
+    "debug": false,
     "genDir": "src/aot",
     "entryModule": "./src/app/modules/app.server.module#AppServerModule"
   }
