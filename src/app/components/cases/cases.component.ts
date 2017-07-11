@@ -1,7 +1,10 @@
-import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Component, ChangeDetectionStrategy, OnInit, AfterViewChecked, Inject, PLATFORM_ID } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 import { Store } from '@ngrx/store';
+
+import { TransferState } from '../../modules/transfer-state/transfer-state';
 
 import { CaseActions } from './../../store/actions/case.actions';
 
@@ -11,6 +14,8 @@ import { Log } from '../../decorators/log.decorator';
 
 import { Observable } from 'rxjs/Observable';
 
+import 'rxjs/add/operator/take';
+
 @Component({
   selector: 'app-cases',
   templateUrl: './cases.component.pug',
@@ -18,34 +23,31 @@ import { Observable } from 'rxjs/Observable';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 @Log()
-export class CasesComponent implements OnInit {
+export class CasesComponent implements OnInit, AfterViewChecked {
 
   public cases: Observable<any> = null;
   public addCaseForm: FormGroup;
 
-  constructor(private store: Store<Case>,
+  constructor(private transferState: TransferState,
+              private store: Store<Case>,
               private caseActions: CaseActions,
-              private formBuilder: FormBuilder
+              private formBuilder: FormBuilder,
+              @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.cases = store.select('cases');
   }
 
   ngOnInit(): void {
-    this.loadCases();
+    this.loadCasesAndHandleStates();
     this.initForm();
+  }
 
-    this.cases.subscribe((res: any) => {
-      console.log('OBSERVER');
-      console.log(res);
-
-      if (res.type === CaseActions.ADD_CASE) {
-        if (res.error) {
-          console.log('error');
-        } else {
-          this.initForm();
-        }
-      }
-    });
+  ngAfterViewChecked(): void {
+    if (!isPlatformBrowser(this.platformId)) {
+      this.store.take(1).subscribe(state => {
+        this.transferState.set('state', state);
+      });
+    }
   }
 
   private initForm(): void {
@@ -59,11 +61,20 @@ export class CasesComponent implements OnInit {
     this.store.dispatch({ type: 'ADD_CASE', payload: singleCase });
   }
 
-  private loadCases() {
-
-    // this.cases.subscribe((res) => console.log(res));
-
-    this.store.dispatch(this.caseActions.loadCases());
+  private loadCasesAndHandleStates() {
+    this.cases.subscribe((res) => {
+      if (typeof(res.data) === 'undefined') {
+        this.store.dispatch(this.caseActions.loadCases());
+      } else {
+        if (res.type === CaseActions.ADD_CASE) {
+          if (res.error) {
+            console.log('error');
+          } else {
+            this.initForm();
+          }
+        }
+      }
+    });
 
     /* const timeoutId = setTimeout(() => {
       this.cases.subscribe((res) => console.log(res));

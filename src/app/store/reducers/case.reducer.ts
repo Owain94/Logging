@@ -4,7 +4,15 @@ import { CaseActions } from './../actions/case.actions';
 
 import { Case } from '../models/case.model';
 
-export function caseReducer(state: any = [], action: Action) {
+export function initialState(): any {
+  if (typeof(window) !== 'undefined' && typeof(window['TRANSFER_STATE'].state) !== 'undefined') {
+    return window['TRANSFER_STATE'].state.cases;
+  } else {
+    return [];
+  }
+}
+
+export function caseReducer(state: any = initialState(), action: Action) {
 
   switch (action.type) {
 
