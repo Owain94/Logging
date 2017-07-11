@@ -36,7 +36,7 @@ app-header([headerHeading]="['Cases', '']", [headerButton]="button")
                 span.icon.icon-pencil
 
             .large-1.medium-12.small-12.columns.actions-margin.text-center-actions
-              a((click)="delete(case._id)")
+              a((click)="deleteCase({_id: case._id})")
                 span.icon.icon-trash
 
             hr.hr-margin

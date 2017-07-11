@@ -49,11 +49,21 @@ export function caseReducer(state: any = initialState(), action: Action) {
     case CaseActions.DELETE_CASE_SUCCESS: {
       return {
         data: state.data.filter((singleCase: Case) => {
-          return singleCase._id !== action.payload.id;
+          return singleCase._id !== action.payload._id;
         }),
         type: CaseActions.DELETE_CASE,
         error: true
       };
+    }
+
+    case CaseActions.DELETE_CASE_FAILURE: {
+      return {
+        data: [
+          ...state.data
+        ],
+        type: CaseActions.DELETE_CASE,
+        error: true
+      }
     }
 
     default: {

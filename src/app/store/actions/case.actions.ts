@@ -14,8 +14,10 @@ export class CaseActions {
   static ADD_CASE_FAILURE = 'ADD_CASE_FAILURE';
   static EDIT_CASE = 'EDIT_CASE';
   static EDIT_CASE_SUCCESS = 'EDIT_CASE_SUCCESS';
+  static EDIT_CASE_FAILURE = 'EDIT_CASE_FAILURE';
   static DELETE_CASE = 'DELETE_CASE';
   static DELETE_CASE_SUCCESS = 'DELETE_CASE_SUCCESS';
+  static DELETE_CASE_FAILURE = 'DELETE_CASE_FAILURE';
 
   loadCases(): Action {
     return {
@@ -54,6 +56,12 @@ export class CaseActions {
     return {
       type: CaseActions.DELETE_CASE_SUCCESS,
       payload: singleCase
+    };
+  }
+
+  deleteCaseFailure(): Action {
+    return {
+      type: CaseActions.DELETE_CASE_FAILURE
     };
   }
 }

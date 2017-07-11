@@ -21,17 +21,16 @@ export class CaseEffects {
   loadCases: Observable<Action> = this.actions
     .ofType(CaseActions.REQUEST_CASES)
     .switchMap((action: Action) => this.caseService.loadCases())
-    .map((cases: Array<Case>) => this.caseActions.loadCasesSuccess(cases)
-    );
+    .map((cases: Array<Case>) => this.caseActions.loadCasesSuccess(cases));
 
   @Effect()
   addCase = this.actions
     .ofType(CaseActions.ADD_CASE)
     .map((action: Action) => action.payload)
     .switchMap((singleCase: Case) => this.caseService.addCase(singleCase))
-    .map((singleCase: Case) => {
-      return JSON.parse(singleCase.error) ? this.caseActions.addCaseFailure() : this.caseActions.addCaseSuccess(singleCase);
-    });
+    .map((singleCase: Case) =>
+      JSON.parse(singleCase.error) ? this.caseActions.addCaseFailure() : this.caseActions.addCaseSuccess(singleCase)
+    );
 
   @Effect()
   editCases: Observable<Action> = this.actions
@@ -41,10 +40,12 @@ export class CaseEffects {
 
   @Effect()
   deleteCase = this.actions
-    .ofType(CaseActions.DELETE_CASE_SUCCESS)
+    .ofType(CaseActions.DELETE_CASE)
     .map((action: Action) => action.payload)
     .switchMap((singleCase: Case) => this.caseService.deleteCase(singleCase))
-    .map((singleCase: Case) => this.caseActions.deleteCaseSuccess(singleCase));
+    .map((singleCase: Case) =>
+      JSON.parse(singleCase.error) ? this.caseActions.deleteCaseFailure() : this.caseActions.deleteCaseSuccess(singleCase)
+    );
 
   constructor(private actions: Actions,
               private caseService: CaseService,

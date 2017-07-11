@@ -86,7 +86,7 @@ export class CasesComponent implements OnInit, AfterViewChecked {
     this.store.dispatch({ type: 'ADD_CASE', payload: singleCase });
   }
 
-  deleteCase(singleCase: Case) {
+  public deleteCase(singleCase: Case) {
     this.store.dispatch({ type: 'DELETE_CASE', payload: singleCase });
   }
 

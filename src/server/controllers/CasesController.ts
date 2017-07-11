@@ -48,7 +48,14 @@ class CasesController implements IBaseController<CasesBusiness> {
       const _id: string = req.params._id;
       const casesBusiness = new CasesBusiness();
       casesBusiness.delete(_id, (error, result) => {
-        res.send({'error': error ? 'true' : 'false'});
+        if (error) {
+          res.send({'error': 'true'});
+        } else {
+          res.send({
+            'error': 'false',
+            '_id': req.params._id
+          });
+        }
       });
     } catch (e) {
       console.log(e);

@@ -43,7 +43,7 @@ export class CaseService {
 
   deleteCase(singleCase: Case): Observable<Object> {
     return this.http.delete(`${url}/api/cases/${singleCase._id}`, this.options)
-      .map((res) => singleCase)
+      .map((res) => res.json())
       .catch((error: any) => Observable.throw({ error: 'true' }));
   }
 }
