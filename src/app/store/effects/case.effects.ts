@@ -36,7 +36,9 @@ export class CaseEffects {
   editCases: Observable<Action> = this.actions
     .ofType(CaseActions.EDIT_CASE)
     .switchMap((action: Action) => this.caseService.editCase(action.payload))
-    .map((singleCase: Case) => this.caseActions.editCaseSuccess(singleCase));
+    .map((singleCase: Case) =>
+      JSON.parse(singleCase.error) ? this.caseActions.editCaseFailure() : this.caseActions.editCaseSuccess(singleCase)
+    );
 
   @Effect()
   deleteCase = this.actions

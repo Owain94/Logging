@@ -57,37 +57,57 @@ export class CasesComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  public submitForm(singleCase: Case): void {
-    this.store.dispatch({ type: 'ADD_CASE', payload: singleCase });
-  }
-
   private loadCasesAndHandleStates() {
     this.cases.subscribe((res) => {
       if (typeof(res.data) === 'undefined') {
         this.store.dispatch(this.caseActions.loadCases());
       } else {
-        if (res.type === CaseActions.ADD_CASE) {
-          if (res.error) {
-            console.log('error');
-          } else {
-            this.initForm();
+        switch (res.type) {
+
+          case CaseActions.ADD_CASE: {
+            if (res.error) {
+              console.log('ADD_CASE error');
+            } else {
+              this.initForm();
+            }
+
+            break;
+          }
+
+          case CaseActions.EDIT_CASE: {
+            if (res.error) {
+              console.log('EDIT_CASE error');
+            } else {
+              console.log('EDIT_CASE success');
+            }
+
+            break;
+          }
+
+          case CaseActions.DELETE_CASE: {
+            if (res.error) {
+              console.log('DELETE_CASE error');
+            } else {
+              console.log('DELETE_CASE success');
+            }
+
+            break;
           }
         }
       }
     });
-
-    /* const timeoutId = setTimeout(() => {
-      this.cases.subscribe((res) => console.log(res));
-      clearTimeout(timeoutId);
-    }, 1000); */
   }
 
-  addCase(singleCase: Case) {
-    this.store.dispatch({ type: 'ADD_CASE', payload: singleCase });
+  public submitForm(singleCase: Case): void {
+    this.store.dispatch({ type: CaseActions.ADD_CASE, payload: singleCase });
+  }
+
+  public editCase(singleCase: Case) {
+    this.store.dispatch({ type: CaseActions.EDIT_CASE, payload: singleCase });
   }
 
   public deleteCase(singleCase: Case) {
-    this.store.dispatch({ type: 'DELETE_CASE', payload: singleCase });
+    this.store.dispatch({ type: CaseActions.DELETE_CASE, payload: singleCase });
   }
 
   public trackByFn(index: number, item: Case): string {

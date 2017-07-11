@@ -1,0 +1,28 @@
+.row
+  div(*ngIf='editing; else not_editing')
+    form([formGroup]='editCaseForm', (ngSubmit)='submitForm(editCaseForm.value)')
+      .large-3.medium-12.small-12.columns
+        label([ngClass]='{ "error": !editCaseForm.controls["name"].valid && editCaseForm.controls["name"].touched }') Name
+          input(type='text', [formControl]='editCaseForm.controls["name"]', [ngClass]='{ "error": !editCaseForm.controls["name"].valid && editCaseForm.controls["name"].touched }')
+        small.error(*ngIf='!editCaseForm.controls["name"].valid && editCaseForm.controls["name"].touched') Name is mandatory
+
+      .large-7.medium-12.small-12.columns
+        label([ngClass]='{ "error": !editCaseForm.controls["description"].valid && editCaseForm.controls["description"].touched }') Description
+          input(type='text', [formControl]='editCaseForm.controls["description"]', [ngClass]='{ "error": !editCaseForm.controls["description"].valid && editCaseForm.controls["description"].touched }')
+        small.error(*ngIf='!editCaseForm.controls["description"].valid && editCaseForm.controls["description"].touched') Description is mandatory
+
+      .large-1.medium-12.small-12.columns.end
+        button.button.button-margin(type='submit', [disabled]='!editCaseForm.valid || disabled') Save
+
+  ng-template(#not_editing='')
+    .large-3.medium-12.small-12.columns([innerText]="'Name: ' + singleCase.name")
+    .large-7.medium-12.small-12.columns([innerText]="'Description: ' + singleCase.description")
+    .large-1.medium-12.small-12.columns.actions-margin.text-center-actions
+      a((click)="editCase()")
+        span.icon.icon-pencil
+
+    .large-1.medium-12.small-12.columns.actions-margin.text-center-actions
+      a((click)="deleteCase()")
+        span.icon.icon-trash
+
+  hr.hr-margin

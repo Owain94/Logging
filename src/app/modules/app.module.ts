@@ -22,6 +22,7 @@ import { MenuComponent } from './../components/main/menu/menu.component';
 import { FooterComponent } from './../components/main/footer/footer.component';
 import { HomeComponent } from './../components/home/home.component';
 import { CasesComponent } from './../components/cases/cases.component';
+import { CaseComponent } from './../components/cases/case/case.component';
 import { NotFoundComponent } from './../components/notfound/notfound.component';
 
 import { CaseService } from '../services/case.service';
@@ -54,6 +55,7 @@ export function provideErrorHandler() {
     FooterComponent,
     HomeComponent,
     CasesComponent,
+    CaseComponent,
     NotFoundComponent
   ],
   imports: [

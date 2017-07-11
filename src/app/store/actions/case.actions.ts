@@ -52,6 +52,12 @@ export class CaseActions {
     };
   }
 
+  editCaseFailure(): Action {
+    return {
+      type: CaseActions.EDIT_CASE_FAILURE
+    };
+  }
+
   deleteCaseSuccess(singleCase: Case): Action {
     return {
       type: CaseActions.DELETE_CASE_SUCCESS,
