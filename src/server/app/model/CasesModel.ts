@@ -1,10 +1,10 @@
 import ICasesModel = require('./interfaces/ICasesModel');
 
 class CasesModel {
-  private categoriesModel: ICasesModel;
+  private casesModel: ICasesModel;
 
   constructor(casesModel: ICasesModel) {
-    this.categoriesModel = casesModel;
+    this.casesModel = casesModel;
   }
 }
 

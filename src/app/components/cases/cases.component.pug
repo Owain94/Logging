@@ -2,5 +2,45 @@ app-header([headerHeading]="['Cases', '']", [headerButton]="button")
 
 .section
   .row
+    .large-12.columns.text-center
+      h4 Add a case
+
+  form([formGroup]="addCaseForm", (ngSubmit)="submitForm(addCaseForm.value)")
+    .row
+      .large-3.medium-12.small-12.columns
+        label([ngClass]="{ 'error': !addCaseForm.controls['name'].valid && addCaseForm.controls['name'].touched }") Name
+          input(type="text", [formControl]="addCaseForm.controls['name']", [ngClass]="{ 'error': !addCaseForm.controls['name'].valid && addCaseForm.controls['name'].touched }")
+        small.error(*ngIf="!addCaseForm.controls['name'].valid && addCaseForm.controls['name'].touched") Name is mandatory
+
+      .large-7.medium-12.small-12.columns
+        label([ngClass]="{ 'error': !addCaseForm.controls['description'].valid && addCaseForm.controls['description'].touched }") Description
+          input(type="text", [formControl]="addCaseForm.controls['description']", [ngClass]="{ 'error': !addCaseForm.controls['description'].valid && addCaseForm.controls['description'].touched }")
+        small.error(*ngIf="!addCaseForm.controls['description'].valid && addCaseForm.controls['description'].touched") Description is mandatory
+
+      .large-1.medium-12.small-12.columns.end
+        button.button.button-margin(type="submit", [disabled]="!addCaseForm.valid || disabled") Add
+
+  .row
+    .large-12.columns.text-center
+      h4 All cases
+
+  .row
     .large-12.columns
-      h2 CASES
+      div(*ngIf='(cases | async) != null; else loading_cases')
+        div(*ngIf='(cases | async)?.data?.length !== 0; else no_cases')
+          .row(*ngFor="let case of (cases | async)?.data; let i = index; trackBy: trackByFn")
+            .large-3.medium-12.small-12.columns([innerText]="'Name: ' + case.name")
+            .large-7.medium-12.small-12.columns([innerText]="'Description: ' + case.description")
+            .large-1.medium-12.small-12.columns.actions-margin.text-center-actions
+              a((click)="edit(case._id)")
+                span.icon.icon-pencil
+
+            .large-1.medium-12.small-12.columns.actions-margin.text-center-actions
+              a((click)="delete(case._id)")
+                span.icon.icon-trash
+
+            hr.hr-margin
+
+        ng-template(#no_cases='') No cases found
+
+      ng-template(#loading_cases='') Loading cases

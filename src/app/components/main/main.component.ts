@@ -4,6 +4,7 @@ import { Router, NavigationEnd } from '@angular/router';
 
 import { TransferState } from '../../modules/transfer-state/transfer-state';
 
+import { Log } from '../../decorators/log.decorator';
 import { AutoUnsubscribe } from '../../decorators/auto.unsubscribe.decorator';
 
 import { Subscription } from 'rxjs/Subscription';
@@ -14,7 +15,7 @@ import { Subscription } from 'rxjs/Subscription';
   styleUrls: ['./main.component.styl'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-
+@Log()
 @AutoUnsubscribe()
 export class MainComponent implements OnInit, OnDestroy {
 

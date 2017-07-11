@@ -7,7 +7,11 @@ const mongooseConnection = DataAccess.mongooseConnection;
 class CasesSchema {
   static get schema() {
     return mongoose.Schema({
-      category: {
+      name: {
+        type: String,
+        required: true
+      },
+      description: {
         type: String,
         required: true
       }

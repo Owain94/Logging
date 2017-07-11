@@ -10,7 +10,18 @@ class CasesController implements IBaseController<CasesBusiness> {
       const cases: ICasesModel = <ICasesModel>req.body;
       const casesBusiness = new CasesBusiness();
       casesBusiness.create(cases, (error, result) => {
-        res.send({'error': error ? 'true' : 'false'});
+        console.log(error);
+        console.log(result);
+        if (error) {
+          res.send({'error': 'true'});
+        } else {
+          res.send({
+            'error': 'false',
+            '_id': result._id,
+            'name': result.name,
+            'description': result.description
+          });
+        }
       });
     } catch (e)  {
       console.log(e);
