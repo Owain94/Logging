@@ -11,10 +11,12 @@ import { CaseActions } from './../../store/actions/case.actions';
 import { Case } from './../../store/models/case.model';
 
 import { Log } from '../../decorators/log.decorator';
+import { AutoUnsubscribe } from '../../decorators/auto.unsubscribe.decorator';
 
 import { NotificationsService } from '../../services/notifications.service';
 
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 
 import 'rxjs/add/operator/take';
 
@@ -25,9 +27,12 @@ import 'rxjs/add/operator/take';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 @Log()
+@AutoUnsubscribe()
 export class CasesComponent implements OnInit, AfterViewChecked {
 
   public cases: Observable<any> = null;
+  public casesSubscription: Subscription;
+  public storeSubscription: Subscription;
   public addCaseForm: FormGroup;
 
   constructor(private transferState: TransferState,
@@ -47,7 +52,7 @@ export class CasesComponent implements OnInit, AfterViewChecked {
 
   ngAfterViewChecked(): void {
     if (!isPlatformBrowser(this.platformId)) {
-      this.store.take(1).subscribe(state => {
+      this.storeSubscription = this.store.take(1).subscribe(state => {
         this.transferState.set('state', state);
       });
     }
@@ -61,7 +66,7 @@ export class CasesComponent implements OnInit, AfterViewChecked {
   }
 
   private loadCasesAndHandleStates() {
-    this.cases.subscribe((res) => {
+    this.casesSubscription = this.cases.subscribe((res) => {
       if (typeof(res.data) === 'undefined') {
         this.store.dispatch(this.caseActions.loadCases());
       } else {
