@@ -24,8 +24,11 @@ import { HomeComponent } from './../components/home/home.component';
 import { CasesComponent } from './../components/cases/cases.component';
 import { CaseComponent } from './../components/cases/case/case.component';
 import { NotFoundComponent } from './../components/notfound/notfound.component';
+import { NotificationsComponent } from '../components/notifications/notifications.component';
+import { NotificationComponent } from '../components/notifications/notification/notification.component';
 
 import { CaseService } from '../services/case.service';
+import { NotificationsService } from '../services/notifications.service';
 
 import * as Raven from 'raven-js';
 
@@ -56,7 +59,10 @@ export function provideErrorHandler() {
     HomeComponent,
     CasesComponent,
     CaseComponent,
-    NotFoundComponent
+    NotFoundComponent,
+
+    NotificationComponent,
+    NotificationsComponent
   ],
   imports: [
     CommonModule,
@@ -79,7 +85,9 @@ export function provideErrorHandler() {
       useFactory: provideErrorHandler
     },
     CaseActions,
-    CaseService
+    CaseService,
+
+    NotificationsService
   ],
   exports: [
     MainComponent

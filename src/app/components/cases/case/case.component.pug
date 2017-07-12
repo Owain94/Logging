@@ -15,14 +15,14 @@
         button.button.button-margin(type='submit', [disabled]='!editCaseForm.valid || disabled') Save
 
   ng-template(#not_editing='')
-    .large-3.medium-12.small-12.columns([innerText]="'Name: ' + singleCase.name")
-    .large-7.medium-12.small-12.columns([innerText]="'Description: ' + singleCase.description")
+    .large-3.medium-12.small-12.columns([innerText]='"Name: " + singleCase.name')
+    .large-7.medium-12.small-12.columns([innerText]='"Description: " + singleCase.description')
     .large-1.medium-12.small-12.columns.actions-margin.text-center-actions
-      a((click)="editCase()")
+      a((click)='editCase()')
         span.icon.icon-pencil
 
     .large-1.medium-12.small-12.columns.actions-margin.text-center-actions
-      a((click)="deleteCase()")
+      a((click)='deleteCase()')
         span.icon.icon-trash
 
   hr.hr-margin

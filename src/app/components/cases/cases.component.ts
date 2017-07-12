@@ -12,6 +12,8 @@ import { Case } from './../../store/models/case.model';
 
 import { Log } from '../../decorators/log.decorator';
 
+import { NotificationsService } from '../../services/notifications.service';
+
 import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/operator/take';
@@ -32,6 +34,7 @@ export class CasesComponent implements OnInit, AfterViewChecked {
               private store: Store<Case>,
               private caseActions: CaseActions,
               private formBuilder: FormBuilder,
+              private notificationsService: NotificationsService,
               @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.cases = store.select('cases');
@@ -66,9 +69,10 @@ export class CasesComponent implements OnInit, AfterViewChecked {
 
           case CaseActions.ADD_CASE: {
             if (res.error) {
-              console.log('ADD_CASE error');
+              this.notification(false, 'Couldn\'t add case, try again later.');
             } else {
               this.initForm();
+              this.notification(false, 'Case successfully added.');
             }
 
             break;
@@ -76,9 +80,9 @@ export class CasesComponent implements OnInit, AfterViewChecked {
 
           case CaseActions.EDIT_CASE: {
             if (res.error) {
-              console.log('EDIT_CASE error');
+              this.notification(false, 'Couldn\'t edit case, try again later.');
             } else {
-              console.log('EDIT_CASE success');
+              this.notification(false, 'Case successfully edited.');
             }
 
             break;
@@ -86,9 +90,9 @@ export class CasesComponent implements OnInit, AfterViewChecked {
 
           case CaseActions.DELETE_CASE: {
             if (res.error) {
-              console.log('DELETE_CASE error');
+              this.notification(false, 'Couldn\'t delete case, try again later.');
             } else {
-              console.log('DELETE_CASE success');
+              this.notification(false, 'Case successfully deleted.');
             }
 
             break;
@@ -96,6 +100,20 @@ export class CasesComponent implements OnInit, AfterViewChecked {
         }
       }
     });
+  }
+
+  private notification(error: boolean, description: string) {
+    if (error) {
+      this.notificationsService.error(
+        'Error',
+        description
+      );
+    } else {
+      this.notificationsService.success(
+        'Success',
+        description
+      );
+    }
   }
 
   public submitForm(singleCase: Case): void {
