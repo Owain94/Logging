@@ -43,11 +43,13 @@ export class CaseComponent implements OnInit {
   }
 
   public submitForm(singleCase: Case): void {
-    this.onEdit.emit({
-      _id: this.singleCase._id,
-      name: singleCase.name,
-      description: singleCase.description
-    });
+    if (singleCase.name !== this.singleCase.name || singleCase.description !== this.singleCase.description) {
+      this.onEdit.emit({
+        _id: this.singleCase._id,
+        name: singleCase.name,
+        description: singleCase.description
+      });
+    }
     this.editing = false;
   }
 
