@@ -6,11 +6,12 @@ import { Store } from '@ngrx/store';
 
 import { TransferState } from '../../modules/transfer-state/transfer-state';
 
-import { CaseActions } from './../../store/actions/case.actions';
+import { CaseActions } from '../../store/actions/case.actions';
 
-import { Case } from './../../store/models/case.model';
+import { Case } from '../../store/models/case.model';
 
 import { Log } from '../../decorators/log.decorator';
+import { logObservable } from '../../decorators/log.observable.decorator';
 import { AutoUnsubscribe } from '../../decorators/auto.unsubscribe.decorator';
 
 import { NotificationsService } from '../../services/notifications.service';
@@ -30,7 +31,7 @@ import 'rxjs/add/operator/take';
 @AutoUnsubscribe()
 export class CasesComponent implements OnInit, AfterViewChecked {
 
-  public cases: Observable<any> = null;
+  @logObservable public cases: Observable<any> = null;
   public casesSubscription: Subscription;
   public storeSubscription: Subscription;
   public addCaseForm: FormGroup;

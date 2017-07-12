@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
-import { Case } from './../../../store/models/case.model';
+import { Case } from '../../../store/models/case.model';
 
 import { Log } from '../../../decorators/log.decorator';
 
