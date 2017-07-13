@@ -12,20 +12,16 @@ export function logObservable(target: any, propertyKey: string ) {
       propertyValue = value.do(res => {
         const isArrayOfObjects = Array.isArray(res) && typeof res[0] === 'object';
         const logType = isArrayOfObjects ? 'table' : 'log';
-        console.log(`%c Begin observable`, `color: #9E9E9E; font-weight: bold`, propertyKey);
-        console.groupCollapsed(propertyKey);
+        console.groupCollapsed(`Observable: ${propertyKey}`);
         console[logType](res)
-        console.groupEnd();
 
         if (Array.isArray(res.data)) {
-          console.log(`%c Begin data`, `color: #eee; font-weight: bold`, propertyKey);
-          console.groupCollapsed(propertyKey);
-          console.table(res)
-          console.groupEnd();
-          console.log(`%c End data`, `color: #eee; font-weight: bold`, propertyKey);
+          console.groupCollapsed(`Data: ${propertyKey}`);
+          console.table(res.data)
+        console.groupEnd();
         }
 
-        console.log(`%c End observable`, `color: #9E9E9E; font-weight: bold`, propertyKey);
+        console.groupEnd();
       });
     } else {
       propertyValue = value;
