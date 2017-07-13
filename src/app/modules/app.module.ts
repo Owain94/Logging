@@ -3,13 +3,15 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { StoreModule } from '@ngrx/store';
+import { compose } from '@ngrx/core';
+import { StoreModule, combineReducers } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { RoutingModule } from './routing/routing.module';
 import { TransferHttpModule } from './transfer-http/transfer-http.module';
 
+import { logger } from '../store/reducers/logging.reducer';
 import { caseReducer } from '../store/reducers/case.reducer';
 import { settingsReducer } from '../store/reducers/settings.reducer';
 
@@ -55,6 +57,22 @@ export function provideErrorHandler() {
   // }
 }
 
+const reducers = {
+  cases: caseReducer,
+  settings: settingsReducer
+};
+
+const developmentReducer = compose(logger, combineReducers)(reducers);
+const productionReducer = combineReducers(reducers);
+
+export function reducer(state: any, action: any) {
+  if (process.env.NODE_ENV === 'production') {
+    return productionReducer(state, action);
+  } else {
+    return developmentReducer(state, action);
+  }
+}
+
 @NgModule({
   declarations: [
     MainComponent,
@@ -77,10 +95,9 @@ export function provideErrorHandler() {
     ReactiveFormsModule,
     RoutingModule,
 
-    StoreModule.provideStore({
-      cases: caseReducer,
-      settings: settingsReducer
-    }),
+    StoreModule.provideStore(
+      reducer
+    ),
     EffectsModule.run(CaseEffects),
     EffectsModule.run(SettingsEffects),
     StoreDevtoolsModule.instrumentOnlyWithExtension({
