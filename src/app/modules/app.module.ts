@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { compose } from '@ngrx/core';
 import { StoreModule, combineReducers } from '@ngrx/store';
+import { routerReducer, RouterStoreModule } from '@ngrx/router-store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
@@ -58,6 +59,7 @@ export function provideErrorHandler() {
 }
 
 const reducers = {
+  router: routerReducer,
   cases: caseReducer,
   settings: settingsReducer
 };
@@ -98,6 +100,7 @@ export function reducer(state: any, action: any) {
     StoreModule.provideStore(
       reducer
     ),
+    RouterStoreModule.connectRouter(),
     EffectsModule.run(CaseEffects),
     EffectsModule.run(SettingsEffects),
     StoreDevtoolsModule.instrumentOnlyWithExtension({
