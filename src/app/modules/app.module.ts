@@ -11,10 +11,13 @@ import { RoutingModule } from './routing/routing.module';
 import { TransferHttpModule } from './transfer-http/transfer-http.module';
 
 import { caseReducer } from '../store/reducers/case.reducer';
+import { settingsReducer } from '../store/reducers/settings.reducer';
 
 import { CaseActions } from '../store/actions/case.actions';
+import { SettingsActions } from '../store/actions/settings.actions';
 
 import { CaseEffects } from '../store/effects/case.effects';
+import { SettingsEffects } from '../store/effects/settings.effects';
 
 import { MainComponent } from '../components/main/main.component';
 import { HeaderComponent } from './../components/main/header/header.component';
@@ -23,12 +26,14 @@ import { FooterComponent } from './../components/main/footer/footer.component';
 import { HomeComponent } from './../components/home/home.component';
 import { CasesComponent } from './../components/cases/cases.component';
 import { CaseComponent } from './../components/cases/case/case.component';
+import { SettingsComponent } from '../components/settings/settings.component';
 import { NotFoundComponent } from './../components/notfound/notfound.component';
 import { NotificationsComponent } from '../components/notifications/notifications.component';
 import { NotificationComponent } from '../components/notifications/notification/notification.component';
 
 import { CaseService } from '../services/case.service';
 import { NotificationsService } from '../services/notifications.service';
+import { SettingsService } from '../services/settings.service';
 
 import * as Raven from 'raven-js';
 
@@ -59,6 +64,7 @@ export function provideErrorHandler() {
     HomeComponent,
     CasesComponent,
     CaseComponent,
+    SettingsComponent,
     NotFoundComponent,
 
     NotificationComponent,
@@ -72,9 +78,11 @@ export function provideErrorHandler() {
     RoutingModule,
 
     StoreModule.provideStore({
-      cases: caseReducer
+      cases: caseReducer,
+      settings: settingsReducer
     }),
     EffectsModule.run(CaseEffects),
+    EffectsModule.run(SettingsEffects),
     StoreDevtoolsModule.instrumentOnlyWithExtension({
       maxAge: 5
     })
@@ -85,7 +93,9 @@ export function provideErrorHandler() {
       useFactory: provideErrorHandler
     },
     CaseActions,
+    SettingsActions,
     CaseService,
+    SettingsService,
 
     NotificationsService
   ],

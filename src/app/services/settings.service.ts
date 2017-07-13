@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 
-import { Case } from '../store/models/case.model';
+import { Settings } from '../store/models/settings.model';
 
 import { url } from '../../helpers/constants';
 
@@ -13,7 +13,7 @@ import 'rxjs/add/operator/catch';
 
 
 @Injectable()
-export class CaseService {
+export class SettingsService {
   private options: RequestOptions;
 
   constructor(private http: Http) {
@@ -22,26 +22,20 @@ export class CaseService {
     this.options = new RequestOptions({ headers: headers });
   }
 
-  loadCases(): Observable<Array<Case>> {
-    return this.http.get(`${url}/api/cases`)
+  loadSettings(): Observable<Settings> {
+    return this.http.get(`${url}/api/settings`)
       .map(res => res.json())
       .catch((error: any) => Observable.throw({ error: 'true' }));
   }
 
-  addCase(singleCase: Case): Observable<Object> {
-    return this.http.post(`${url}/api/cases`, singleCase, this.options)
+  addSettings(settings: Settings): Observable<Object> {
+    return this.http.post(`${url}/api/settings`, settings, this.options)
       .map((res) => res.json())
       .catch((error: any) => Observable.throw({ error: 'true' }));
   }
 
-  editCase(singleCase: Case): Observable<Object> {
-    return this.http.put(`${url}/api/cases/${singleCase._id}`, singleCase, this.options)
-      .map((res) => res.json())
-      .catch((error: any) => Observable.throw({ error: 'true' }));
-  }
-
-  deleteCase(singleCase: Case): Observable<Object> {
-    return this.http.delete(`${url}/api/cases/${singleCase._id}`, this.options)
+  editSettings(settings: Settings): Observable<Object> {
+    return this.http.put(`${url}/api/settings/${settings._id}`, settings, this.options)
       .map((res) => res.json())
       .catch((error: any) => Observable.throw({ error: 'true' }));
   }

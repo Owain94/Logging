@@ -5,7 +5,9 @@ import { CaseActions } from './../actions/case.actions';
 import { Case } from '../models/case.model';
 
 export function initialState(): any {
-  if (typeof(window) !== 'undefined' && typeof(window['TRANSFER_STATE'].state) !== 'undefined') {
+  if (typeof(window) !== 'undefined' &&
+      typeof(window['TRANSFER_STATE'].state) !== 'undefined' &&
+      typeof(window['TRANSFER_STATE'].state.cases) !== 'undefined') {
     return window['TRANSFER_STATE'].state.cases;
   } else {
     return [];
@@ -48,10 +50,6 @@ export function caseReducer(state: any = initialState(), action: Action) {
 
     case CaseActions.EDIT_CASE_SUCCESS: {
       const caseIndex = state.data.findIndex((singleCase: Case) => singleCase._id === action.payload._id);
-
-      console.log(caseIndex);
-      console.log(action.payload);
-      console.log(state.data);
 
       return {
         data: [

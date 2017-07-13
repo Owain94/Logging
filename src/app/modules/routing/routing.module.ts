@@ -5,6 +5,7 @@ import { IdlePreloadModule, IdlePreload } from './idle.preload.module';
 
 import { HomeComponent } from '../../components/home/home.component';
 import { CasesComponent } from '../../components/cases/cases.component';
+import { SettingsComponent } from '../../components/settings/settings.component';
 import { NotFoundComponent } from '../../components/notfound/notfound.component';
 
 const routes: Routes = [
@@ -16,6 +17,10 @@ const routes: Routes = [
   {
     path: 'cases',
     component: CasesComponent,
+  },
+  {
+    path: 'settings',
+    component: SettingsComponent,
   },
   {
     path: '404',

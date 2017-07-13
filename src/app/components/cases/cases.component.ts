@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Component, ChangeDetectionStrategy, OnInit, AfterViewChecked, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit, AfterViewChecked, Inject, PLATFORM_ID, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 import { Store } from '@ngrx/store';
@@ -32,15 +32,17 @@ import 'rxjs/add/operator/take';
 export class CasesComponent implements OnInit, AfterViewChecked {
 
   @logObservable public cases: Observable<any> = null;
-  public casesSubscription: Subscription;
-  public storeSubscription: Subscription;
-  public addCaseForm: FormGroup;
+
+  private casesSubscription: Subscription;
+  private storeSubscription: Subscription;
+  private addCaseForm: FormGroup;
 
   constructor(private transferState: TransferState,
               private store: Store<Case>,
               private caseActions: CaseActions,
               private formBuilder: FormBuilder,
               private notificationsService: NotificationsService,
+              private changeDetectorRef: ChangeDetectorRef,
               @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.cases = store.select('cases');
@@ -72,6 +74,14 @@ export class CasesComponent implements OnInit, AfterViewChecked {
         this.store.dispatch(this.caseActions.loadCases());
       } else {
         switch (res.type) {
+
+          case CaseActions.LOAD_CASES: {
+            if (res.error) {
+              this.notification(false, 'Couldn\'t load cases, try again later.');
+            }
+
+            break;
+          }
 
           case CaseActions.ADD_CASE: {
             if (res.error) {
@@ -120,6 +130,8 @@ export class CasesComponent implements OnInit, AfterViewChecked {
         description
       );
     }
+
+    this.changeDetectorRef.markForCheck();
   }
 
   public submitForm(singleCase: Case): void {
