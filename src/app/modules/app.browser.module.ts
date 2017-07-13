@@ -11,7 +11,7 @@ import { MainComponent } from '../components/main/main.component';
   imports: [
     BrowserAnimationsModule,
     BrowserModule.withServerTransition({
-        appId: 'inkies'
+        appId: 'logging'
     }),
     BrowserTransferStateModule,
     AppModule

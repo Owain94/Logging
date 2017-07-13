@@ -26,7 +26,7 @@ export function onBootstrap(appRef: ApplicationRef, transferState: TransferState
 @NgModule({
   imports: [
     BrowserModule.withServerTransition({
-        appId: 'inkies'
+        appId: 'logging'
     }),
     ServerModule,
     ServerTransferStateModule,
