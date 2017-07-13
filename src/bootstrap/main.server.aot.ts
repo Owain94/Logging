@@ -1,11 +1,11 @@
 import '../polyfills/polyfills.server';
 import { enableProdMode } from '@angular/core';
-import { AppServerModuleNgFactory } from './../aot/src/app/modules/app.server.module.ngfactory';
-import { ngExpressEngine } from './../app/modules/ng-express-engine/express-engine';
+import { AppServerModuleNgFactory } from '../aot/src/app/modules/app.server.module.ngfactory';
+import { ngExpressEngine } from '../app/modules/ng-express-engine/express-engine';
 
 import * as express from 'express';
 import { Request, Response } from 'express';
-import { ROUTES } from './../helpers/routes';
+import { ROUTES } from '../helpers/routes';
 import { Routes } from '../server/config/routes/Routes';
 
 const fs = require('fs');

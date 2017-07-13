@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Action } from '@ngrx/store'
 
-import { Case } from './../models/case.model';
+import { Case } from '../models/case.model';
 
 @Injectable()
 export class CaseActions {

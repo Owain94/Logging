@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Action } from '@ngrx/store'
 
-import { Settings } from './../models/settings.model';
+import { Settings } from '../models/settings.model';
 
 @Injectable()
 export class SettingsActions {

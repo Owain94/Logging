@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 
-import { CaseActions } from './../actions/case.actions';
+import { CaseActions } from '../actions/case.actions';
 
 import { Case } from '../models/case.model';
 

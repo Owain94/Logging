@@ -11,12 +11,12 @@ import 'rxjs/add/operator/take';
 
 @Component({
   selector: 'app-case',
-  templateUrl: './case.component.pug',
-  styleUrls: ['./case.component.styl'],
+  templateUrl: './case.row.component.pug',
+  styleUrls: ['./case.row.component.styl'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 @Log()
-export class CaseComponent implements OnInit {
+export class CaseRowComponent implements OnInit {
 
   @Input('singleCase') public singleCase: Case;
 

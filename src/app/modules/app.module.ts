@@ -22,14 +22,14 @@ import { CaseEffects } from '../store/effects/case.effects';
 import { SettingsEffects } from '../store/effects/settings.effects';
 
 import { MainComponent } from '../components/main/main.component';
-import { HeaderComponent } from './../components/main/header/header.component';
-import { MenuComponent } from './../components/main/menu/menu.component';
-import { FooterComponent } from './../components/main/footer/footer.component';
-import { HomeComponent } from './../components/home/home.component';
-import { CasesComponent } from './../components/cases/cases.component';
-import { CaseComponent } from './../components/cases/case/case.component';
+import { HeaderComponent } from '../components/main/header/header.component';
+import { MenuComponent } from '../components/main/menu/menu.component';
+import { FooterComponent } from '../components/main/footer/footer.component';
+import { HomeComponent } from '../components/home/home.component';
+import { CasesComponent } from '../components/cases/cases.component';
+import { CaseRowComponent } from '../components/cases/case-row/case.row.component';
 import { SettingsComponent } from '../components/settings/settings.component';
-import { NotFoundComponent } from './../components/notfound/notfound.component';
+import { NotFoundComponent } from '../components/notfound/notfound.component';
 import { NotificationsComponent } from '../components/notifications/notifications.component';
 import { NotificationComponent } from '../components/notifications/notification/notification.component';
 
@@ -81,7 +81,7 @@ export function reducer(state: any, action: any) {
     FooterComponent,
     HomeComponent,
     CasesComponent,
-    CaseComponent,
+    CaseRowComponent,
     SettingsComponent,
     NotFoundComponent,
 

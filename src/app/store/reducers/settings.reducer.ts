@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 
-import { SettingsActions } from './../actions/settings.actions';
+import { SettingsActions } from '../actions/settings.actions';
 
 export function initialState(): any {
   if (typeof(window) !== 'undefined' &&

@@ -1,10 +1,10 @@
 import '../polyfills/polyfills.server';
-import { AppServerModule } from './../app/modules/app.server.module';
-import { ngExpressEngine } from './../app/modules/ng-express-engine/express-engine';
+import { AppServerModule } from '../app/modules/app.server.module';
+import { ngExpressEngine } from '../app/modules/ng-express-engine/express-engine';
 
 import * as express from 'express';
 import { Request, Response } from 'express';
-import { ROUTES } from './../helpers/routes';
+import { ROUTES } from '../helpers/routes';
 import { Routes } from '../server/config/routes/Routes';
 
 const fs = require('fs');
