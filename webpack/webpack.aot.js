@@ -1,4 +1,5 @@
 const { AotPlugin } = require("@ngtools/webpack");
+const { webpack } = require("webpack");
 
 const tsConfig = {
   client: "./tsconfig.app.json",
@@ -25,7 +26,7 @@ const mainPath = {
 function getAotPlugin(platform, aot) {
   return new AotPlugin({
     "mainPath": mainPath[platform],
-    "tsConfigPath":aot ? tsConfigAot[platform] : tsConfig[platform],
+    "tsConfigPath": aot ? tsConfigAot[platform] : tsConfig[platform],
     "skipCodeGeneration": !aot
   });
 }

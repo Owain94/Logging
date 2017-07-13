@@ -7,11 +7,10 @@ const url = require("postcss-url");
 const webpack = require("webpack");
 
 const { LoaderOptionsPlugin } = require("webpack");
-const { GlobCopyWebpackPlugin, BaseHrefWebpackPlugin } = require("@angular/cli/plugins/webpack");
 const { AotPlugin } = require("@ngtools/webpack");
 
 module.exports = {
-  "devtool": "source-map",
+  "devtool": "inline-source-map",
   "resolve": {
     "extensions": [
       ".ts",
@@ -152,19 +151,7 @@ module.exports = {
         "context": ""
       }
     }),
-    new GlobCopyWebpackPlugin({
-      "patterns": [
-        "assets",
-        "favicon.ico"
-      ],
-      "globOptions": {
-        "cwd": path.join(process.cwd(), "src"),
-        "dot": true,
-        "ignore": "**/.gitkeep"
-      }
-    }),
     new ProgressBarPlugin(),
-    new BaseHrefWebpackPlugin({}),
     new ExtractTextPlugin({
       "filename": "[name].bundle.css",
       "allChunks": true

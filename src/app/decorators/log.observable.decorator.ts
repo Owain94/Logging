@@ -1,5 +1,7 @@
 import { Observable } from 'rxjs/Observable';
 
+import 'rxjs/add/operator/do';
+
 export function logObservable(target: any, propertyKey: string ) {
   let propertyValue: any;
 

@@ -1,9 +1,4 @@
 const webpack = require("webpack");
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const autoprefixer = require("autoprefixer");
-const postcssUrl = require("postcss-url");
-
-const { NoEmitOnErrorsPlugin } = require("webpack");
 
 /**
  * This is a prod config to be merged with the Client config
