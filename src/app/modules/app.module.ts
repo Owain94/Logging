@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MdButtonModule, MdDialogModule } from '@angular/material';
 
 import { compose } from '@ngrx/core';
 import { StoreModule, combineReducers } from '@ngrx/store';
@@ -33,6 +34,7 @@ import { SettingsComponent } from '../components/settings/settings.component';
 import { NotFoundComponent } from '../components/notfound/notfound.component';
 import { NotificationsComponent } from '../components/notifications/notifications.component';
 import { NotificationComponent } from '../components/notifications/notification/notification.component';
+import { ConfirmDialogComponent } from '../components/confirm-dialog/confirm.dialog.component';
 
 import { CaseService } from '../services/case.service';
 import { NotificationsService } from '../services/notifications.service';
@@ -86,11 +88,18 @@ export function reducer(state: any, action: any) {
     CaseRowComponent,
     SettingsComponent,
     NotFoundComponent,
+    ConfirmDialogComponent,
 
     NotificationComponent,
     NotificationsComponent
   ],
+  entryComponents: [
+    ConfirmDialogComponent,
+  ],
   imports: [
+    MdButtonModule,
+    MdDialogModule,
+
     CommonModule,
     HttpModule,
     TransferHttpModule,

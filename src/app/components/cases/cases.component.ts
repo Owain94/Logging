@@ -1,6 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Component, ChangeDetectionStrategy, OnInit, AfterViewChecked, Inject, PLATFORM_ID, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { MdDialog } from '@angular/material';
 
 import { Store } from '@ngrx/store';
 
@@ -9,6 +10,8 @@ import { TransferState } from '../../modules/transfer-state/transfer-state';
 import { CaseActions } from '../../store/actions/case.actions';
 
 import { Case } from '../../store/models/case.model';
+
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm.dialog.component';
 
 import { Log } from '../../decorators/log.decorator';
 import { logObservable } from '../../decorators/log.observable.decorator';
@@ -37,7 +40,8 @@ export class CasesComponent implements OnInit, AfterViewChecked {
   private storeSubscription: Subscription;
   private addCaseForm: FormGroup;
 
-  constructor(private transferState: TransferState,
+  constructor(public dialog: MdDialog,
+              private transferState: TransferState,
               private store: Store<Case>,
               private caseActions: CaseActions,
               private formBuilder: FormBuilder,
@@ -143,7 +147,14 @@ export class CasesComponent implements OnInit, AfterViewChecked {
   }
 
   public deleteCase(singleCase: Case) {
-    this.store.dispatch({ type: CaseActions.DELETE_CASE, payload: singleCase });
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: singleCase.name,
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.store.dispatch({ type: CaseActions.DELETE_CASE, payload: singleCase });
+      }
+    });
   }
 
   public trackByFn(index: number, item: Case): string {
