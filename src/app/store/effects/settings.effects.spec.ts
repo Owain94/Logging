@@ -72,15 +72,22 @@ describe('The settings effects', () => {
 
   let runner: EffectsRunner;
   let settingsEffects: SettingsEffects;
+  let settingsActions: SettingsActions;
 
   beforeEach(inject([
       EffectsRunner,
-      SettingsEffects
-    ], (_runner: EffectsRunner, _settingsEffects: SettingsEffects) => {
+      SettingsEffects,
+      SettingsActions
+    ], (_runner: EffectsRunner, _settingsEffects: SettingsEffects, _settingsActions: SettingsActions) => {
       runner = _runner;
       settingsEffects = _settingsEffects;
+      settingsActions = _settingsActions;
     }
   ));
+
+  it('should return a REQUEST_SETTINGS action', () => {
+    expect(settingsActions.loadSettings().type).toEqual(SettingsActions.REQUEST_SETTINGS);
+  });
 
   it('should return a LOAD_SETTINGS action after REQUEST_SETTINGS', () => {
     runner.queue({ type: SettingsActions.REQUEST_SETTINGS });

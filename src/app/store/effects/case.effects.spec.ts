@@ -57,15 +57,22 @@ describe('The case effects', () => {
 
   let runner: EffectsRunner;
   let caseEffects: CaseEffects;
+  let caseActions: CaseActions;
 
   beforeEach(inject([
       EffectsRunner,
-      CaseEffects
-    ], (_runner: EffectsRunner, _caseEffects: CaseEffects) => {
+      CaseEffects,
+      CaseActions
+    ], (_runner: EffectsRunner, _caseEffects: CaseEffects, _caseActions: CaseActions) => {
       runner = _runner;
       caseEffects = _caseEffects;
+      caseActions = _caseActions;
     }
   ));
+
+  it('should return a REQUEST_CASES action', () => {
+    expect(caseActions.loadCases().type).toEqual(CaseActions.REQUEST_CASES);
+  });
 
   it('should return a LOAD_CASES_SUCCESS action after REQUEST_CASES', () => {
     runner.queue({ type: CaseActions.REQUEST_CASES });
