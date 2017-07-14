@@ -4,6 +4,7 @@ import { SettingsActions } from '../actions/settings.actions';
 
 export function initialState(): any {
   if (typeof(window) !== 'undefined' &&
+      typeof(window['TRANSFER_STATE']) !== 'undefined' &&
       typeof(window['TRANSFER_STATE'].state) !== 'undefined' &&
       typeof(window['TRANSFER_STATE'].state.settings) !== 'undefined') {
     return window['TRANSFER_STATE'].state.settings;

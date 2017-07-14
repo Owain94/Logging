@@ -6,6 +6,7 @@ import { Case } from '../models/case.model';
 
 export function initialState(): any {
   if (typeof(window) !== 'undefined' &&
+      typeof(window['TRANSFER_STATE']) !== 'undefined' &&
       typeof(window['TRANSFER_STATE'].state) !== 'undefined' &&
       typeof(window['TRANSFER_STATE'].state.cases) !== 'undefined') {
     return window['TRANSFER_STATE'].state.cases;

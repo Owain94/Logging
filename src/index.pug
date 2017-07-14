@@ -21,37 +21,5 @@ html(itemscope='', itemtype='http://schema.org/Product')
     link(rel='alternate', href='http://example.com/en', hreflang='en')
   body.pink
     app-root
-      #wrapper
-        #main
-          #top
-            .row
-              .large-12.columns
-                nav.top-bar([class.collapsed]='!collapsed', #navbar='')
-                  ul.title-area
-                    li.name.logo
-                    li.toggle-topbar((click)='navBarClick()')
-                      a
-                        span Menu
-                  section.top-bar-section
-                    ul.right
-                      li
-                        a Home
-          header#header
-            .row
-              .large-12.columns.align-center
-                h1
-                span.subheading
-              .large-12.columns.align-center
-                img(src='assets/img/header-macbook.png', alt='')
-      footer
-        .row
-          .large-12.columns.align-center
-            span.copyright Gemaakt met
-            span.icon.icon-heart-2.pink
-            span.copyright door
-              a(href='https://owain.nl', target='_blank', rel='noopener') Owain van Brakel
-      #back-top((click)='scrollTo($event)')
-        span.icon.icon-play
-
     script.
       // if ('serviceWorker' in navigator) {navigator.serviceWorker.register('/service-worker.js');}
