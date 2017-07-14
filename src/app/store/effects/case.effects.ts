@@ -33,7 +33,7 @@ export class CaseEffects {
     );
 
   @Effect()
-  editCases: Observable<Action> = this.actions
+  editCase: Observable<Action> = this.actions
     .ofType(CaseActions.EDIT_CASE)
     .switchMap((action: Action) => this.caseService.editCase(action.payload))
     .map((singleCase: Case) =>
