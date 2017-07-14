@@ -32,16 +32,9 @@ const payloadEdit = {
 }
 
 describe('The settings reducer', () => {
-  it('initial state should roturn empty', () => {
+  it('initial state should return empty', () => {
     expect(
       initialState()
-    )
-    .toEqual([]);
-  });
-
-  it('should handle initial state', () => {
-    expect(
-      settingsReducer([], { type: '' })
     )
     .toEqual([]);
   });

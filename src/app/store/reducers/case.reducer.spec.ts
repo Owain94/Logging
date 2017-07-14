@@ -33,13 +33,6 @@ describe('The case reducer', () => {
     .toEqual([]);
   });
 
-  it('should handle initial state', () => {
-    expect(
-      caseReducer([], { type: '' })
-    )
-    .toEqual([]);
-  });
-
   it('should fall through when the action type is invalid', () => {
     expect(
       caseReducer([], { type: '' })

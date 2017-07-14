@@ -5,6 +5,7 @@ import { CaseActions } from '../actions/case.actions';
 import { Case } from '../models/case.model';
 
 export function initialState(): any {
+  /* istanbul ignore if */
   if (typeof(window) !== 'undefined' &&
       typeof(window['TRANSFER_STATE']) !== 'undefined' &&
       typeof(window['TRANSFER_STATE'].state) !== 'undefined' &&

@@ -3,6 +3,7 @@ import { Action } from '@ngrx/store';
 import { SettingsActions } from '../actions/settings.actions';
 
 export function initialState(): any {
+  /* istanbul ignore if */
   if (typeof(window) !== 'undefined' &&
       typeof(window['TRANSFER_STATE']) !== 'undefined' &&
       typeof(window['TRANSFER_STATE'].state) !== 'undefined' &&
