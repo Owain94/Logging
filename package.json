@@ -26,7 +26,7 @@
     "lint": "ng lint",
     "lint-staged": "lint-staged",
     "stylelint-staged": "stylelint",
-    "preprotractor": "webdriver-manager update --standalone false --gecko false --quiet",
+    "preprotractor": "webdriver-manager update",
     "protractor": "npm-run-all -p -r protractor:server protractor:live",
     "protractor:live": "protractor ./protractor.conf.js",
     "protractor:delay": "sleep 3 && npm run protractor ./protractor.conf.js",
