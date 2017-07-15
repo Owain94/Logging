@@ -27,6 +27,13 @@ run build:all:aot]]></param>
           <param name="yarn_commands" value="run codacy:test" />
         </parameters>
       </runner>
+      <runner id="RUNNER_12" name="" type="jonnyzzz.yarn">
+        <parameters>
+          <param name="teamcity.step.mode" value="default" />
+          <param name="yarn_commands"><![CDATA[run preprotractor
+run protractor]]></param>
+        </parameters>
+      </runner>
     </build-runners>
     <vcs-settings>
       <vcs-entry-ref root-id="Logging_HttpsGithubComOwain94LoggingRefsHeadsMaster" />
