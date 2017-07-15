@@ -1,0 +1,2 @@
+# Logging
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/94a66170f1b94efa84d0f357dbf43c08)](https://www.codacy.com/app/Owain94/Logging?utm_source=github.com&utm_medium=referral&utm_content=Owain94/Logging&utm_campaign=badger)
