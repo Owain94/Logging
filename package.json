@@ -117,7 +117,7 @@
     "node-loader": "0.6.0",
     "nodemon": "1.11.0",
     "npm-run-all": "4.0.2",
-    "phantomjs": "2.1.7",
+    "phantomjs-prebuilt": "2.1.14",
     "postcss-loader": "2.0.6",
     "postcss-url": "7.0.0",
     "pre-commit": "1.2.2",
