@@ -5,3 +5,4 @@
 [![devDependencies Status](https://david-dm.org/Owain94/Logging/dev-status.svg)](https://david-dm.org/Owain94/Logging?type=dev)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/94a66170f1b94efa84d0f357dbf43c08)](https://www.codacy.com/app/Owain94/Logging?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Owain94/Logging&amp;utm_campaign=Badge_Grade)
 [![codebeat badge](https://codebeat.co/badges/40a1f148-2339-45a7-b92c-bf4292796c83)](https://codebeat.co/projects/github-com-owain94-logging-master)
+[![codecov](https://codecov.io/gh/Owain94/Logging/branch/master/graph/badge.svg)](https://codecov.io/gh/Owain94/Logging)
