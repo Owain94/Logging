@@ -38,7 +38,8 @@ export class CasesComponent implements OnInit, AfterViewChecked {
 
   private casesSubscription: Subscription;
   private storeSubscription: Subscription;
-  private addCaseForm: FormGroup;
+
+  public addCaseForm: FormGroup;
 
   constructor(public dialog: MdDialog,
               private transferState: TransferState,

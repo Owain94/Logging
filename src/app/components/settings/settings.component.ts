@@ -190,4 +190,8 @@ export class SettingsComponent implements OnInit, AfterContentInit, AfterViewChe
       this.store.dispatch({ type: SettingsActions.ADD_SETTINGS, payload: settings });
     }
   }
+
+  public trackByFn(index: number, item: Case): string {
+    return(item._id);
+  }
 }

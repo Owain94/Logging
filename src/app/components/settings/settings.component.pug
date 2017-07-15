@@ -1,4 +1,4 @@
-app-header([headerHeading]="['Settings', '']", [headerButton]="button")
+app-header([headerHeading]="['Settings', '']")
 
 .section
   .row
@@ -31,6 +31,6 @@ app-header([headerHeading]="['Settings', '']", [headerButton]="button")
 
     .row
       .large-2.columns.end
-        button.button(type="submit", [disabled]="!settingsForm.valid || disabled") save
+        button.button(type="submit", [disabled]="!settingsForm.valid") save
 
 app-notifications

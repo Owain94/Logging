@@ -1,5 +1,5 @@
 {
-  "name": "angular-cli-universal",
+  "name": "angular-logging",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
@@ -11,14 +11,13 @@
     "build:client": "./node_modules/webpack/bin/webpack.js --env.client -d",
     "build:client:aot": "./node_modules/webpack/bin/webpack.js --env.aot --env.client",
     "build:server": "./node_modules/webpack/bin/webpack.js --env.server -d && npm run clean:build",
-    "build:server:aot": "ngc -p tsconfig.server.aot.json && ./node_modules/webpack/bin/webpack.js --env.aot --env.server && npm run clean:build",
+    "build:server:aot": "./node_modules/webpack/bin/webpack.js --env.aot --env.server && npm run clean:build",
     "watch:all": "npm run clean:all && npm run watch:client & npm run watch:server",
     "watch:client": "./node_modules/webpack/bin/webpack.js --env.client -d --watch",
     "watch:server": "./node_modules/webpack/bin/webpack.js --env.server -d --watch",
     "clean:all": "rimraf dist && rimraf src/aot",
     "clean:build": "rimraf dist/out-tsc && rimraf src/aot",
     "clean:dist": "rimraf dist",
-    "ngc:server": "ngc -p tsconfig.server.json",
     "server": "nodemon dist/main.server.bundle.js",
     "sw": "sw-precache --root=dist --config=sw-precache-config.js",
     "test": "karma start ./karma.conf.js",
