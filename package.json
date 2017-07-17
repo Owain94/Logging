@@ -113,7 +113,7 @@
     "karma-sourcemap-loader": "0.3.7",
     "karma-webpack": "2.0.4",
     "less-loader": "4.0.5",
-    "lint-staged": "4.0.1",
+    "lint-staged": "4.0.2",
     "node-loader": "0.6.0",
     "nodemon": "1.11.0",
     "npm-run-all": "4.0.2",
