@@ -58,6 +58,9 @@ run protractor]]></param>
           <param name="vcsRootId" value="Logging_HttpsGithubComOwain94LoggingRefsHeadsMaster" />
         </parameters>
       </extension>
+      <extension id="perfmon" type="perfmon">
+        <parameters />
+      </extension>
     </build-extensions>
     <cleanup />
   </settings>
