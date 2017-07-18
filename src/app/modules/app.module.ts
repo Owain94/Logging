@@ -22,7 +22,7 @@ import { SettingsActions } from '../store/actions/settings.actions';
 
 import { CaseEffects } from '../store/effects/case.effects';
 import { SettingsEffects } from '../store/effects/settings.effects';
-
+import { CaseComponent } from '../components/cases/case/case.component';
 import { MainComponent } from '../components/main/main.component';
 import { HeaderComponent } from '../components/main/header/header.component';
 import { MenuComponent } from '../components/main/menu/menu.component';
@@ -30,6 +30,7 @@ import { FooterComponent } from '../components/main/footer/footer.component';
 import { HomeComponent } from '../components/home/home.component';
 import { CasesComponent } from '../components/cases/cases.component';
 import { CaseRowComponent } from '../components/cases/case-row/case.row.component';
+
 import { SettingsComponent } from '../components/settings/settings.component';
 import { NotFoundComponent } from '../components/notfound/notfound.component';
 import { NotificationsComponent } from '../components/notifications/notifications.component';
@@ -42,9 +43,9 @@ import { SettingsService } from '../services/settings.service';
 
 import * as Raven from 'raven-js';
 
-Raven
-  .config('https://03d884b718be42638de950df2a94a5d3@sentry.io/189340')
-  .install();
+// Raven
+//   .config('https://03d884b718be42638de950df2a94a5d3@sentry.io/189340')
+//   .install();
 
 export class RavenErrorHandler implements ErrorHandler {
   handleError(err: any): void {
@@ -77,6 +78,32 @@ export function reducer(state: any, action: any) {
   }
 }
 
+const modules = [
+  MdButtonModule,
+  MdDialogModule,
+
+  CommonModule,
+  HttpModule,
+  TransferHttpModule,
+  ReactiveFormsModule,
+  RoutingModule,
+
+  StoreModule.provideStore(
+    reducer
+  ),
+  RouterStoreModule.connectRouter(),
+  EffectsModule.run(CaseEffects),
+  EffectsModule.run(SettingsEffects)
+];
+
+if (process.env.NODE_ENV === 'development') {
+  modules.push(
+    StoreDevtoolsModule.instrumentOnlyWithExtension({
+      maxAge: 5
+    })
+  );
+}
+
 @NgModule({
   declarations: [
     MainComponent,
@@ -86,6 +113,7 @@ export function reducer(state: any, action: any) {
     HomeComponent,
     CasesComponent,
     CaseRowComponent,
+    CaseComponent,
     SettingsComponent,
     NotFoundComponent,
     ConfirmDialogComponent,
@@ -97,24 +125,7 @@ export function reducer(state: any, action: any) {
     ConfirmDialogComponent,
   ],
   imports: [
-    MdButtonModule,
-    MdDialogModule,
-
-    CommonModule,
-    HttpModule,
-    TransferHttpModule,
-    ReactiveFormsModule,
-    RoutingModule,
-
-    StoreModule.provideStore(
-      reducer
-    ),
-    RouterStoreModule.connectRouter(),
-    EffectsModule.run(CaseEffects),
-    EffectsModule.run(SettingsEffects),
-    StoreDevtoolsModule.instrumentOnlyWithExtension({
-      maxAge: 5
-    })
+    ...modules
   ],
   providers: [
     {
