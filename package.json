@@ -51,7 +51,7 @@
     "@ngrx/core": "1.2.0",
     "@ngrx/effects": "2.0.4",
     "@ngrx/router-store": "4.0.0",
-    "@ngrx/store": "2.2.3",
+    "@ngrx/store": "4.0.0",
     "@ngrx/store-devtools": "4.0.0",
     "body-parser": "1.17.2",
     "compression": "1.7.0",
