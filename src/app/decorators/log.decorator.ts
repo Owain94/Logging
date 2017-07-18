@@ -1,6 +1,6 @@
 export function Log(): ClassDecorator {
   return function (constructor: any) {
-    if (process.env.NODE_ENV !== 'production' && typeof(window) !== 'undefined') {
+    if (process.env.NODE_ENV === 'development' && typeof(window) !== 'undefined') {
       const LIFECYCLE_HOOKS = [
         'ngOnInit',
         'ngOnChanges',

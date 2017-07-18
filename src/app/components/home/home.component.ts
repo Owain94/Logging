@@ -67,7 +67,6 @@ export class HomeComponent implements OnInit, AfterViewChecked {
 
   private loadSettingsAndHandleStates() {
     this.settingsSubscription = this.settings.subscribe((res) => {
-      console.log(res);
       if (typeof(res.data) === 'undefined') {
         this.store.dispatch(this.settingsActions.loadSettings());
       }
