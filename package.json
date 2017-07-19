@@ -119,7 +119,7 @@
     "npm-run-all": "4.0.2",
     "phantomjs-prebuilt": "2.1.14",
     "postcss-loader": "2.0.6",
-    "postcss-url": "7.0.0",
+    "postcss-url": "7.1.0",
     "pre-commit": "1.2.2",
     "progress-bar-webpack-plugin": "1.10.0",
     "protractor": "5.1.2",
