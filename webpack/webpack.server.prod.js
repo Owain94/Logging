@@ -4,7 +4,6 @@
 module.exports = {
   "module": {
     "rules": [
-      
       {
         "enforce": "pre",
         "test": /\.js$/,
