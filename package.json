@@ -23,7 +23,7 @@
     "test": "karma start ./karma.conf.js",
     "watch:test": "karma start ./karma.conf.js --auto-watch --no-single-run",
     "codacy:test": "npm run test && cat ./coverage/lcov.info | ./node_modules/.bin/codacy-coverage --language typescript && codecov -f coverage/*.json",
-    "lint": "ng lint",
+    "lint": "tslint --type-check --project tsconfig.app.json && tslint --type-check --project tsconfig.server.json",
     "lint-staged": "lint-staged",
     "stylelint-staged": "stylelint",
     "preprotractor": "webdriver-manager update",
