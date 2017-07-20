@@ -27,8 +27,8 @@ module.exports = {
   },
   "output": {
     "path": path.join(process.cwd(), "dist"),
-    "filename": "[name].bundle.js",
-    "chunkFilename": "[id].chunk.js"
+    "filename": "[name].[chunkhash:5].bundle.js",
+    "chunkFilename": "[id].[chunkhash:5].chunk.js"
   },
   "target": "web",
   "plugins": [

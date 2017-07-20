@@ -141,7 +141,7 @@ module.exports = {
     }),
     new ProgressBarPlugin(),
     new ExtractTextPlugin({
-      "filename": "[name].bundle.css",
+      "filename": "[name].[contenthash:5].bundle.css",
       "allChunks": true
     })
   ],
