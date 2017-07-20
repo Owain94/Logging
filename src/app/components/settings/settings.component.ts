@@ -108,7 +108,7 @@ export class SettingsComponent implements OnInit, AfterContentInit, AfterViewChe
 
           case CaseActions.LOAD_CASES: {
             if (res.error) {
-              this.notification(false, 'Couldn\'t load cases, try again later.');
+              this.notification(true, 'Couldn\'t load cases, try again later.');
             } else {
               this.allCases = res.data;
             }

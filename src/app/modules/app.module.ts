@@ -16,12 +16,16 @@ import { TransferHttpModule } from './transfer-http/transfer-http.module';
 import { logger } from '../store/reducers/logging.reducer';
 import { caseReducer } from '../store/reducers/case.reducer';
 import { settingsReducer } from '../store/reducers/settings.reducer';
+import { logReducer } from '../store/reducers/log.reducer';
 
 import { CaseActions } from '../store/actions/case.actions';
 import { SettingsActions } from '../store/actions/settings.actions';
+import { LogActions } from './../store/actions/log.actions';
 
 import { CaseEffects } from '../store/effects/case.effects';
 import { SettingsEffects } from '../store/effects/settings.effects';
+import { LogEffects } from './../store/effects/log.effects';
+
 import { CaseComponent } from '../components/cases/case/case.component';
 import { MainComponent } from '../components/main/main.component';
 import { HeaderComponent } from '../components/main/header/header.component';
@@ -30,16 +34,18 @@ import { FooterComponent } from '../components/main/footer/footer.component';
 import { HomeComponent } from '../components/home/home.component';
 import { CasesComponent } from '../components/cases/cases.component';
 import { CaseRowComponent } from '../components/cases/case-row/case.row.component';
-
 import { SettingsComponent } from '../components/settings/settings.component';
 import { NotFoundComponent } from '../components/notfound/notfound.component';
 import { NotificationsComponent } from '../components/notifications/notifications.component';
 import { NotificationComponent } from '../components/notifications/notification/notification.component';
-import { ConfirmDialogComponent } from '../components/confirm-dialog/confirm.dialog.component';
+import { CaseDeleteDialogComponent } from '../components/cases/case-delete-dialog/case.delete.dialog.component';
 
-import { CaseService } from '../services/case.service';
+import { CapitalizePipe } from '../pipes/capitalize.pipe';
+
 import { NotificationsService } from '../services/notifications.service';
+import { CaseService } from '../services/case.service';
 import { SettingsService } from '../services/settings.service';
+import { LogService } from './../services/log.service';
 
 import * as Raven from 'raven-js';
 
@@ -64,7 +70,8 @@ export function provideErrorHandler() {
 const reducers = {
   router: routerReducer,
   cases: caseReducer,
-  settings: settingsReducer
+  settings: settingsReducer,
+  log: logReducer
 };
 
 const developmentReducer = compose(logger, combineReducers)(reducers);
@@ -93,7 +100,8 @@ const modules = [
   ),
   RouterStoreModule.connectRouter(),
   EffectsModule.run(CaseEffects),
-  EffectsModule.run(SettingsEffects)
+  EffectsModule.run(SettingsEffects),
+  EffectsModule.run(LogEffects)
 ];
 
 if (process.env.NODE_ENV === 'development') {
@@ -116,13 +124,13 @@ if (process.env.NODE_ENV === 'development') {
     CaseComponent,
     SettingsComponent,
     NotFoundComponent,
-    ConfirmDialogComponent,
-
+    CaseDeleteDialogComponent,
     NotificationComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    CapitalizePipe
   ],
   entryComponents: [
-    ConfirmDialogComponent,
+    CaseDeleteDialogComponent
   ],
   imports: [
     ...modules
@@ -134,8 +142,10 @@ if (process.env.NODE_ENV === 'development') {
     },
     CaseActions,
     SettingsActions,
+    LogActions,
     CaseService,
     SettingsService,
+    LogService,
 
     NotificationsService
   ],

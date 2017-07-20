@@ -11,7 +11,7 @@ import { CaseActions } from '../../store/actions/case.actions';
 
 import { Case } from '../../store/models/case.model';
 
-import { ConfirmDialogComponent } from '../confirm-dialog/confirm.dialog.component';
+import { CaseDeleteDialogComponent } from '../cases/case-delete-dialog/case.delete.dialog.component';
 
 import { Log } from '../../decorators/log.decorator';
 import { logObservable } from '../../decorators/log.observable.decorator';
@@ -82,7 +82,7 @@ export class CasesComponent implements OnInit, AfterViewChecked {
 
           case CaseActions.LOAD_CASES: {
             if (res.error) {
-              this.notification(false, 'Couldn\'t load cases, try again later.');
+              this.notification(true, 'Couldn\'t load cases, try again later.');
             }
 
             break;
@@ -90,7 +90,7 @@ export class CasesComponent implements OnInit, AfterViewChecked {
 
           case CaseActions.ADD_CASE: {
             if (res.error) {
-              this.notification(false, 'Couldn\'t add case, try again later.');
+              this.notification(true, 'Couldn\'t add case, try again later.');
             } else {
               this.initForm();
               this.notification(false, 'Case successfully added.');
@@ -101,7 +101,7 @@ export class CasesComponent implements OnInit, AfterViewChecked {
 
           case CaseActions.EDIT_CASE: {
             if (res.error) {
-              this.notification(false, 'Couldn\'t edit case, try again later.');
+              this.notification(true, 'Couldn\'t edit case, try again later.');
             } else {
               this.notification(false, 'Case successfully edited.');
             }
@@ -111,7 +111,7 @@ export class CasesComponent implements OnInit, AfterViewChecked {
 
           case CaseActions.DELETE_CASE: {
             if (res.error) {
-              this.notification(false, 'Couldn\'t delete case, try again later.');
+              this.notification(true, 'Couldn\'t delete case, try again later.');
             } else {
               this.notification(false, 'Case successfully deleted.');
             }
@@ -148,8 +148,8 @@ export class CasesComponent implements OnInit, AfterViewChecked {
   }
 
   public deleteCase(singleCase: Case) {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data: singleCase.name,
+    const dialogRef = this.dialog.open(CaseDeleteDialogComponent, {
+      data: `${singleCase.name} - ${singleCase.description}`,
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
