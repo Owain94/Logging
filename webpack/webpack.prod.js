@@ -7,9 +7,6 @@ module.exports = {
   "plugins": [
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.optimize.UglifyJsPlugin({
-      "output": {
-        "comments": false
-      },
       "mangle": {
         "keep_fnames": true,
         "screw_ie8": true
@@ -25,8 +22,10 @@ module.exports = {
         "if_return": true,
         "join_vars": true,
         "negate_iife": false,
-        "screw_ie8": true
-      }
+        "screw_ie8": true,
+        "pure_getters": true
+      },
+      "comments": false
     }),
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify("production")

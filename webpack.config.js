@@ -4,9 +4,11 @@ const commonPartial = require("./webpack/webpack.common");
 const clientPartial = require("./webpack/webpack.client");
 const clientProdPartial = require("./webpack/webpack.client.prod");
 const serverPartial = require("./webpack/webpack.server");
+const serverProdPartial = require("./webpack/webpack.server.prod");
 const devPartial = require("./webpack/webpack.dev");
 const prodPartial = require("./webpack/webpack.prod");
 const testPartial = require("./webpack/webpack.test");
+const PurifyPlugin = require('ngo').PurifyPlugin;
 const { getAotPlugin } = require("./webpack/webpack.aot");
 
 module.exports = function (options, webpackOptions) {
@@ -31,7 +33,18 @@ module.exports = function (options, webpackOptions) {
 
   if (options.aot) {
     clientConfig = webpackMerge({}, clientConfig, webpackMerge({}, clientProdPartial, prodPartial));
-    serverConfig = webpackMerge({}, serverConfig, prodPartial);
+    serverConfig = webpackMerge({}, serverConfig, webpackMerge({}, serverProdPartial, prodPartial));
+
+    const ngoLoaderRule = {
+      loader: 'ngo/webpack-loader',
+      options: {
+        sourceMap: true
+      }
+    }
+
+    clientConfig.module.rules.push({ test: /\.ts$/, use: [ngoLoaderRule, '@ngtools/webpack'] })
+    clientConfig.module.rules.push({ test: /\.js$/, use: [ngoLoaderRule] })
+    clientConfig.plugins.unshift(new PurifyPlugin());
   } else {
     clientConfig = webpackMerge({}, clientConfig, devPartial);
     serverConfig = webpackMerge({}, serverConfig, devPartial);
