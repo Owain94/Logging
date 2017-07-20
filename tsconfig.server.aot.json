@@ -6,9 +6,6 @@
   "include": [
     "src/**/*"
   ],
-  "exclude": [
-    "./src/bootstrap/main.server.ts"
-  ],
   "angularCompilerOptions": {
     "debug": false,
     "genDir": "src/aot",

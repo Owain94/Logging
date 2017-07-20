@@ -16,7 +16,6 @@ module.exports = function (options, webpackOptions) {
   console.log(`Running build for ${options.client ? "client" : options.server ? "server" : "test"} with ${options.aot ? "AoT" : "JiT"} compilation`);
 
   let serverConfig = webpackMerge({}, commonPartial, serverPartial, {
-    entry: options.aot ? "./src/bootstrap/main.server.aot.ts" : serverPartial.entry.main, // Temporary
     plugins: [
       getAotPlugin("server", !!options.aot)
     ]

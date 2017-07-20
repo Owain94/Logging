@@ -13,7 +13,7 @@ const tsConfigAot = {
 
 const mainPath = {
   client: "./src/bootstrap/main.ts",
-  server: "./src/bootstrap/app/app.server.module.ts#AppServerModule"
+  server: "./src/bootstrap/main.server.ts"
 };
 
 /**
