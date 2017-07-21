@@ -90,7 +90,7 @@ export class SettingsComponent implements OnInit, AfterContentInit, AfterViewChe
 
   ngAfterViewChecked(): void {
     if (!isPlatformBrowser(this.platformId)) {
-      this.storeSubscription = this.store.take(1).subscribe(state => {
+      this.storeSubscription = this.store.take(3).subscribe(state => {
         this.transferState.set('state', state);
       });
     }
