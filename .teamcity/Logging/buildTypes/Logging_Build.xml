@@ -14,11 +14,10 @@
           <param name="yarn_commands" value="install" />
         </parameters>
       </runner>
-      <runner id="RUNNER_10" name="Run: yarn build" type="jonnyzzz.yarn">
+      <runner id="RUNNER_13" name="Run: yarn lint" type="jonnyzzz.yarn">
         <parameters>
           <param name="teamcity.step.mode" value="default" />
-          <param name="yarn_commands"><![CDATA[run build:all
-run build:all:aot]]></param>
+          <param name="yarn_commands" value="run lint" />
         </parameters>
       </runner>
       <runner id="RUNNER_11" name="Run: yarn test" type="jonnyzzz.yarn">
@@ -35,10 +34,11 @@ run build:client
 run protractor]]></param>
         </parameters>
       </runner>
-      <runner id="RUNNER_13" name="Run: yarn lint" type="jonnyzzz.yarn">
+      <runner id="RUNNER_10" name="Run: yarn build" type="jonnyzzz.yarn">
         <parameters>
           <param name="teamcity.step.mode" value="default" />
-          <param name="yarn_commands" value="run lint" />
+          <param name="yarn_commands"><![CDATA[run build:all
+run build:all:aot]]></param>
         </parameters>
       </runner>
     </build-runners>
