@@ -24,6 +24,7 @@ import { logObservable } from '../../../decorators/log.observable.decorator';
 import { AutoUnsubscribe } from '../../../decorators/auto.unsubscribe.decorator';
 
 import { NotificationsService } from '../../../services/notifications.service';
+import { WebworkerService } from '../../../services/webworker.service';
 
 import { Subscription } from 'rxjs/Subscription';
 import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
@@ -73,11 +74,44 @@ export class CaseComponent implements OnInit, AfterViewChecked {
   // tslint:disable-next-line:no-inferrable-types
   public browser: boolean = false;
 
+  private static handleLog(input: any) {
+    const res = input[0];
+    const id = input[1];
+
+    const allLogs = res.data.filter((log: LogItem) => {
+      return log.case === id;
+    });
+
+    const allCategories =
+      allLogs.map(
+        (item: any) =>
+          item.why.split('[')[1].split(']')[0].trim()).filter(
+            (value: any, index: any, self: any) =>
+              self.indexOf(value) === index);
+
+    const allCategorizedLogs = { }
+    for (const cat in allCategories) {
+      if (allCategories.hasOwnProperty(cat)) {
+        allCategorizedLogs[allCategories[cat]] = allLogs.filter((log: LogItem) => {
+          return log.why.split('[')[1].split(']')[0].trim() === allCategories[cat];
+        });
+      }
+    }
+
+    if (allCategories.length > 0 && allLogs.length > 0) {
+      allCategories.unshift('All');
+      allCategorizedLogs['All'] = allLogs;
+    }
+
+    return [allLogs, allCategories, allCategorizedLogs];
+  }
+
   constructor(private activatedRoute: ActivatedRoute,
               private transferState: TransferState,
               private store: Store<CaseState | SettingsState | LogState>,
               private formBuilder: FormBuilder,
               private notificationsService: NotificationsService,
+              private webworkerService: WebworkerService,
               private changeDetectorRef: ChangeDetectorRef,
               @Inject(PLATFORM_ID) private platformId: Object) {
     this.case = store.select<CaseState>(getCaseState);
@@ -203,7 +237,7 @@ export class CaseComponent implements OnInit, AfterViewChecked {
 
         this.currentSettings = res.data[0];
 
-        if (isPlatformBrowser(this.platformId)) {
+        if (this.browser) {
           this.fillForm();
         }
       }
@@ -239,33 +273,19 @@ export class CaseComponent implements OnInit, AfterViewChecked {
           }
         }
 
-        this.allLogs = res.data.filter((log: LogItem) => {
-          return log.case === this.id;
-        });
+        if (this.browser) {
+          const handleLogPromise = this.webworkerService.run(CaseComponent.handleLog, [res, this.id]);
+          handleLogPromise.then((result: any) => {
+            this.allLogs = result[0];
+            this.allCategories = result[1];
+            this.allCategorizedLogs = result[2];
 
-        this.allCategories =
-          this.allLogs.map(
-            item =>
-              item.why.split('[')[1].split(']')[0].trim()).filter(
-                (value, index, self) =>
-                  self.indexOf(value) === index);
+            if (this.selectedCategory === '') {
+              this.selectedCategory = this.allCategories[0];
+            }
 
-        this.allCategorizedLogs = { }
-        for (const cat in this.allCategories) {
-          if (this.allCategories.hasOwnProperty(cat)) {
-            this.allCategorizedLogs[this.allCategories[cat]] = this.allLogs.filter((log: LogItem) => {
-              return log.why.split('[')[1].split(']')[0].trim() === this.allCategories[cat];
-            });
-          }
-        }
-
-        if (this.allCategories.length > 0 && this.allLogs.length > 0) {
-          this.allCategories.unshift('All');
-          this.allCategorizedLogs['All'] = this.allLogs;
-        }
-
-        if (this.selectedCategory === '') {
-          this.selectedCategory = this.allCategories[0];
+            this.changeDetectorRef.markForCheck();
+          });
         }
       }
     });

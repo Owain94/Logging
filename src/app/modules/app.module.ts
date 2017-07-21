@@ -43,6 +43,7 @@ import { NotificationsService } from '../services/notifications.service';
 import { CaseService } from '../services/case.service';
 import { SettingsService } from '../services/settings.service';
 import { LogService } from '../services/log.service';
+import { WebworkerService } from '../services/webworker.service';
 
 import * as Raven from 'raven-js';
 
@@ -127,7 +128,8 @@ const metaReducers: ActionReducer<any, any>[] = process.env.NODE_ENV === 'develo
     SettingsService,
     LogService,
 
-    NotificationsService
+    NotificationsService,
+    WebworkerService
   ],
   exports: [
     MainComponent
