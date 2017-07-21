@@ -27,7 +27,7 @@ run build:all:aot]]></param>
           <param name="yarn_commands" value="run codacy:test" />
         </parameters>
       </runner>
-      <runner id="RUNNER_12" name="" type="jonnyzzz.yarn">
+      <runner id="RUNNER_12" name="Run: yarn protractor" type="jonnyzzz.yarn">
         <parameters>
           <param name="teamcity.step.mode" value="default" />
           <param name="yarn_commands"><![CDATA[run preprotractor
