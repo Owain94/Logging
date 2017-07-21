@@ -37,7 +37,7 @@ run protractor]]></param>
       <runner id="RUNNER_10" name="Run: yarn build" type="jonnyzzz.yarn">
         <parameters>
           <param name="teamcity.step.mode" value="default" />
-          <param name="yarn_commands"><![CDATA[run build:all
+          <param name="yarn_commands"><![CDATA[run build:server
 run build:all:aot]]></param>
         </parameters>
       </runner>
