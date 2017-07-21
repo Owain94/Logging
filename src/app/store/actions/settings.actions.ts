@@ -1,57 +1,65 @@
-import { Injectable } from '@angular/core';
-
 import { Action } from '@ngrx/store'
 
 import { Settings } from '../models/settings.model';
 
-@Injectable()
-export class SettingsActions {
-  static REQUEST_SETTINGS = 'REQUEST_SETTINGS';
-  static LOAD_SETTINGS = 'LOAD_SETTINGS';
-  static LOAD_SETTINGS_SUCCESS = 'LOAD_SETTINGS_SUCCESS';
-  static ADD_SETTINGS = 'ADD_SETTINGS';
-  static ADD_SETTINGS_SUCCESS = 'ADD_SETTINGS_SUCCESS';
-  static ADD_SETTINGS_FAILURE = 'ADD_SETTINGS_FAILURE';
-  static EDIT_SETTINGS = 'EDIT_SETTINGS';
-  static EDIT_SETTINGS_SUCCESS = 'EDIT_SETTINGS_SUCCESS';
-  static EDIT_SETTINGS_FAILURE = 'EDIT_SETTINGS_FAILURE';
+export const REQUEST_SETTINGS = 'REQUEST_SETTINGS';
+export const LOAD_SETTINGS = 'LOAD_SETTINGS';
+export const LOAD_SETTINGS_SUCCESS = 'LOAD_SETTINGS_SUCCESS';
+export const ADD_SETTINGS = 'ADD_SETTINGS';
+export const ADD_SETTINGS_SUCCESS = 'ADD_SETTINGS_SUCCESS';
+export const ADD_SETTINGS_FAILURE = 'ADD_SETTINGS_FAILURE';
+export const EDIT_SETTINGS = 'EDIT_SETTINGS';
+export const EDIT_SETTINGS_SUCCESS = 'EDIT_SETTINGS_SUCCESS';
+export const EDIT_SETTINGS_FAILURE = 'EDIT_SETTINGS_FAILURE';
 
-  loadSettings(): Action {
-    return {
-      type: SettingsActions.REQUEST_SETTINGS
-    };
-  }
-
-  loadSettingsSuccess(settings: Settings): Action {
-    return {
-      type: SettingsActions.LOAD_SETTINGS_SUCCESS,
-      payload: settings
-    };
-  }
-
-  addSettingsSuccess(settings: Settings): Action {
-    return {
-      type: SettingsActions.ADD_SETTINGS_SUCCESS,
-      payload: settings
-    };
-  }
-
-  addSettingsFailure(): Action {
-    return {
-      type: SettingsActions.ADD_SETTINGS_FAILURE
-    };
-  }
-
-  editSettingsSuccess(settings: Settings): Action {
-    return {
-      type: SettingsActions.EDIT_SETTINGS_SUCCESS,
-      payload: settings
-    };
-  }
-
-  editSettingsFailure(): Action {
-    return {
-      type: SettingsActions.EDIT_SETTINGS_FAILURE
-    };
-  }
+export class LoadSettings implements Action {
+  readonly type = REQUEST_SETTINGS;
 }
+
+export class LoadSettingsSuccess implements Action {
+  readonly type = LOAD_SETTINGS_SUCCESS;
+
+  constructor(public payload: Settings) {}
+}
+
+export class AddSettings implements Action {
+  readonly type = ADD_SETTINGS;
+
+  constructor(public payload: Settings) {}
+}
+
+export class AddSettingsSuccess implements Action {
+  readonly type = ADD_SETTINGS_SUCCESS;
+
+  constructor(public payload: Settings) {}
+}
+
+export class AddSettingsFailure implements Action {
+  readonly type = ADD_SETTINGS_FAILURE;
+}
+
+export class EditSettings implements Action {
+  readonly type = EDIT_SETTINGS;
+
+  constructor(public payload: Settings) {}
+}
+
+export class EditSettingsSuccess implements Action {
+  readonly type = EDIT_SETTINGS_SUCCESS;
+
+  constructor(public payload: Settings) {}
+}
+
+export class EditSettingsFailure implements Action {
+  readonly type = EDIT_SETTINGS_FAILURE;
+}
+
+export type Actions =
+  | LoadSettings
+  | LoadSettingsSuccess
+  | AddSettings
+  | AddSettingsSuccess
+  | AddSettingsFailure
+  | EditSettings
+  | EditSettingsSuccess
+  | EditSettingsFailure;

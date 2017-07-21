@@ -5,7 +5,23 @@ import { Actions, Effect } from '@ngrx/effects';
 
 import { CaseService } from '../../services/case.service';
 
-import { CaseActions } from '../actions/case.actions';
+import {
+  REQUEST_CASES,
+  ADD_CASE,
+  EDIT_CASE,
+  DELETE_CASE,
+  LoadCases,
+  LoadCasesSuccess,
+  AddCase,
+  AddCaseSuccess,
+  AddCaseFailure,
+  EditCase,
+  EditCaseSuccess,
+  EditCaseFailure,
+  DeleteCase,
+  DeleteCaseSuccess,
+  DeleteCaseFailure
+} from '../actions/case.actions';
 
 import { Case } from '../models/case.model';
 
@@ -19,38 +35,37 @@ export class CaseEffects {
 
   @Effect()
   loadCases: Observable<Action> = this.actions
-    .ofType(CaseActions.REQUEST_CASES)
-    .switchMap((action: Action) => this.caseService.loadCases())
-    .map((cases: Array<Case>) => this.caseActions.loadCasesSuccess(cases));
+    .ofType(REQUEST_CASES)
+    .switchMap((action: LoadCases) => this.caseService.loadCases())
+    .map((cases: Array<Case>) => new LoadCasesSuccess(cases));
 
   @Effect()
   addCase = this.actions
-    .ofType(CaseActions.ADD_CASE)
-    .map((action: Action) => action.payload)
+    .ofType(ADD_CASE)
+    .map((action: AddCase) => action.payload)
     .switchMap((singleCase: Case) => this.caseService.addCase(singleCase))
     .map((singleCase: Case) =>
-      JSON.parse(singleCase.error) ? this.caseActions.addCaseFailure() : this.caseActions.addCaseSuccess(singleCase)
+      JSON.parse(singleCase.error) ? new AddCaseFailure() : new AddCaseSuccess(singleCase)
     );
 
   @Effect()
   editCase: Observable<Action> = this.actions
-    .ofType(CaseActions.EDIT_CASE)
-    .switchMap((action: Action) => this.caseService.editCase(action.payload))
+    .ofType(EDIT_CASE)
+    .switchMap((action: EditCase) => this.caseService.editCase(action.payload))
     .map((singleCase: Case) =>
-      JSON.parse(singleCase.error) ? this.caseActions.editCaseFailure() : this.caseActions.editCaseSuccess(singleCase)
+      JSON.parse(singleCase.error) ? new EditCaseFailure() : new EditCaseSuccess(singleCase)
     );
 
   @Effect()
   deleteCase = this.actions
-    .ofType(CaseActions.DELETE_CASE)
-    .map((action: Action) => action.payload)
+    .ofType(DELETE_CASE)
+    .map((action: DeleteCase) => action.payload)
     .switchMap((singleCase: Case) => this.caseService.deleteCase(singleCase))
     .map((singleCase: Case) =>
-      JSON.parse(singleCase.error) ? this.caseActions.deleteCaseFailure() : this.caseActions.deleteCaseSuccess(singleCase)
+      JSON.parse(singleCase.error) ? new DeleteCaseFailure() : new DeleteCaseSuccess(singleCase)
     );
 
   constructor(private actions: Actions,
-              private caseService: CaseService,
-              private caseActions: CaseActions
+              private caseService: CaseService
   ) { }
 }

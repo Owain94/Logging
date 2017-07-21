@@ -48,15 +48,9 @@ ROUTES.forEach((route: string) => {
 
 app.use('/api', new Routes().routes);
 
-app.get('*.png', (req: Request, res: Response) => {
-  const img = fs.readFileSync(process.cwd() + '/dist/assets/img/no_image.jpg');
-  res.writeHead(200, {'Content-Type': 'image/jpg' });
-  res.end(img, 'binary');
+app.get('*', (req: Request, res: Response) => {
+  res.redirect('/404');
 });
-
-// app.get('*', (req: Request, res: Response) => {
-//   res.redirect('/404');
-// });
 
 const server = http.createServer(app);
 

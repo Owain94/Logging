@@ -1,22 +1,30 @@
 import { Request, Response } from 'express';
 
 import IBaseController = require('./BaseController');
-import SettingsBusiness = require('../app/business/SettingsBusiness');
-import ISettingsModel = require('../app/model/interfaces/ISettingsModel');
+import LogBusiness = require('../app/business/LogBusiness');
+import ILogModel = require('../app/model/interfaces/ILogModel');
 
-class SettingsController implements IBaseController<SettingsBusiness> {
+class LogController implements IBaseController<LogBusiness> {
   create(req: Request, res: Response): void {
     try {
-      const settings: ISettingsModel = <ISettingsModel>req.body;
-      const settingsBusiness = new SettingsBusiness();
-      settingsBusiness.create(settings, (error, result) => {
+      const log: ILogModel = <ILogModel>req.body;
+      const logBusiness = new LogBusiness();
+      logBusiness.create(log, (error, result) => {
         if (error) {
-          console.log(error);
           res.send({'error': 'true'});
         } else {
           res.send({
             'error': 'false',
-            '_id': result._id
+            '_id': result._id,
+            'who': req.body.who,
+            'what': req.body.what,
+            'where': req.body.where,
+            'when': req.body.when,
+            'why': req.body.why,
+            'how': req.body.how,
+            'with': req.body.with,
+            'result': req.body.result,
+            'case': req.body.case
           });
         }
       });
@@ -28,20 +36,26 @@ class SettingsController implements IBaseController<SettingsBusiness> {
 
   update(req: Request, res: Response): void {
     try {
-      const settings: ISettingsModel = <ISettingsModel>req.body;
+      const log: ILogModel = <ILogModel>req.body;
       const _id: string = req.params._id;
-      const settingsBusiness = new SettingsBusiness();
+      const logBusiness = new LogBusiness();
 
-      settingsBusiness.update(_id, settings, (error, result) => {
+      logBusiness.update(_id, log, (error, result) => {
         if (error) {
           res.send({'error': 'true'});
         } else {
           res.send({
             'error': 'false',
-            'name': req.body.name,
-            'case': req.body.case,
-            'invpre': req.body.invpre,
-            'location': req.body.location
+            '_id': result.body._id,
+            'who': req.body.who,
+            'what': req.body.what,
+            'where': req.body.where,
+            'when': req.body.when,
+            'why': req.body.why,
+            'how': req.body.how,
+            'with': req.body.with,
+            'result': req.body.result,
+            'case': req.body.case
           });
         }
       });
@@ -54,8 +68,8 @@ class SettingsController implements IBaseController<SettingsBusiness> {
   delete(req: Request, res: Response): void {
     try {
       const _id: string = req.params._id;
-      const settingsBusiness = new SettingsBusiness();
-      settingsBusiness.delete(_id, (error, result) => {
+      const logBusiness = new LogBusiness();
+      logBusiness.delete(_id, (error, result) => {
         if (error) {
           res.send({'error': 'true'});
         } else {
@@ -73,8 +87,8 @@ class SettingsController implements IBaseController<SettingsBusiness> {
 
   retrieve(req: Request, res: Response): void {
     try {
-      const settingsBusiness = new SettingsBusiness();
-      settingsBusiness.retrieve((error, result) => {
+      const logBusiness = new LogBusiness();
+      logBusiness.retrieve((error, result) => {
         if (error) {
           res.send({'error': 'true'});
         } else {
@@ -90,8 +104,8 @@ class SettingsController implements IBaseController<SettingsBusiness> {
   findById(req: Request, res: Response): void {
     try {
       const _id: string = req.params._id;
-      const settingsBusiness = new SettingsBusiness();
-      settingsBusiness.findById(_id, (error, result) => {
+      const logBusiness = new LogBusiness();
+      logBusiness.findById(_id, (error, result) => {
         if (error) {
           res.send({'error': 'true'});
         } else {
@@ -105,4 +119,4 @@ class SettingsController implements IBaseController<SettingsBusiness> {
   }
 }
 
-export = SettingsController;
+export = LogController;

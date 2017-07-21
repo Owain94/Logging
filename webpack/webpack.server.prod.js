@@ -1,7 +1,5 @@
-const webpack = require("webpack");
-
 /**
- * This is a dev config to be merged with the Client config
+ * This is a server prod config which should be merged on top of common config
  */
 module.exports = {
   "module": {
@@ -19,10 +17,5 @@ module.exports = {
         "loader": "@ngtools/webpack"
       },
     ]
-  },
-  "plugins": [
-    new webpack.DefinePlugin({
-      "process.env.NODE_ENV": JSON.stringify("development")
-    })
-  ]
+  }
 };

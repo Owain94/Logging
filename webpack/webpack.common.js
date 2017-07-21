@@ -28,14 +28,6 @@ module.exports = {
   "module": {
     "rules": [
       {
-        "enforce": "pre",
-        "test": /\.js$/,
-        "loader": "source-map-loader",
-        "exclude": [
-          /\/node_modules\//
-        ]
-      },
-      {
         "test": /\.json$/,
         "loader": "json-loader"
       },
@@ -57,10 +49,6 @@ module.exports = {
       {
         "test": /\.(jpg|png|gif|otf|ttf|woff|woff2|cur|ani)$/,
         "loader": "url-loader?name=[name].[ext]&limit=10000"
-      },
-      {
-        "test": /\.ts$/,
-        "loader": "@ngtools/webpack"
       },
       {
         "exclude": [
@@ -153,7 +141,7 @@ module.exports = {
     }),
     new ProgressBarPlugin(),
     new ExtractTextPlugin({
-      "filename": "[name].bundle.css",
+      "filename": "[name].[contenthash:5].bundle.css",
       "allChunks": true
     })
   ],

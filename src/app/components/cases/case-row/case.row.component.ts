@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/take';
 
 @Component({
-  selector: 'app-case',
+  selector: 'app-case-row',
   templateUrl: './case.row.component.pug',
   styleUrls: ['./case.row.component.styl'],
   changeDetection: ChangeDetectionStrategy.OnPush

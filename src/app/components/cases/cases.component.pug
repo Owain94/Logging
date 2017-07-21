@@ -28,7 +28,7 @@ app-header([headerHeading]="['Cases', '']")
     .large-12.columns
       div(*ngIf="(cases | async) != null; else loading_cases")
         div(*ngIf="(cases | async)?.data?.length !== 0; else no_cases")
-          app-case(*ngFor="let case of (cases | async)?.data; let i = index; trackBy: trackByFn", [singleCase]="case", (onEdit)="editCase($event)", (onDelete)="deleteCase($event)")
+          app-case-row(*ngFor="let case of (cases | async)?.data; let i = index; trackBy: trackByFn", [singleCase]="case", (onEdit)="editCase($event)", (onDelete)="deleteCase($event)")
 
         ng-template(#no_cases="") No cases found
 

@@ -7,11 +7,22 @@ import { Store } from '@ngrx/store';
 
 import { TransferState } from '../../modules/transfer-state/transfer-state';
 
-import { CaseActions } from '../../store/actions/case.actions';
+import {
+  LOAD_CASES,
+  ADD_CASE,
+  EDIT_CASE,
+  DELETE_CASE,
+  LoadCases,
+  AddCase,
+  EditCase,
+  DeleteCase
+} from '../../store/actions/case.actions';
+
+import { getCaseState, CaseState } from './../../store/reducers/case.reducer';
 
 import { Case } from '../../store/models/case.model';
 
-import { ConfirmDialogComponent } from '../confirm-dialog/confirm.dialog.component';
+import { CaseDeleteDialogComponent } from '../cases/case-delete-dialog/case.delete.dialog.component';
 
 import { Log } from '../../decorators/log.decorator';
 import { logObservable } from '../../decorators/log.observable.decorator';
@@ -43,14 +54,13 @@ export class CasesComponent implements OnInit, AfterViewChecked {
 
   constructor(public dialog: MdDialog,
               private transferState: TransferState,
-              private store: Store<Case>,
-              private caseActions: CaseActions,
+              private store: Store<CaseState>,
               private formBuilder: FormBuilder,
               private notificationsService: NotificationsService,
               private changeDetectorRef: ChangeDetectorRef,
               @Inject(PLATFORM_ID) private platformId: Object
   ) {
-    this.cases = store.select('cases');
+    this.cases = store.select<any>(getCaseState);
   }
 
   ngOnInit(): void {
@@ -60,7 +70,7 @@ export class CasesComponent implements OnInit, AfterViewChecked {
 
   ngAfterViewChecked(): void {
     if (!isPlatformBrowser(this.platformId)) {
-      this.storeSubscription = this.store.take(1).subscribe(state => {
+      this.storeSubscription = this.store.take(2).subscribe(state => {
         this.transferState.set('state', state);
       });
     }
@@ -76,21 +86,21 @@ export class CasesComponent implements OnInit, AfterViewChecked {
   private loadCasesAndHandleStates() {
     this.casesSubscription = this.cases.subscribe((res) => {
       if (typeof(res.data) === 'undefined') {
-        this.store.dispatch(this.caseActions.loadCases());
+        this.store.dispatch(new LoadCases());
       } else {
         switch (res.type) {
 
-          case CaseActions.LOAD_CASES: {
+          case LOAD_CASES: {
             if (res.error) {
-              this.notification(false, 'Couldn\'t load cases, try again later.');
+              this.notification(true, 'Couldn\'t load cases, try again later.');
             }
 
             break;
           }
 
-          case CaseActions.ADD_CASE: {
+          case ADD_CASE: {
             if (res.error) {
-              this.notification(false, 'Couldn\'t add case, try again later.');
+              this.notification(true, 'Couldn\'t add case, try again later.');
             } else {
               this.initForm();
               this.notification(false, 'Case successfully added.');
@@ -99,9 +109,9 @@ export class CasesComponent implements OnInit, AfterViewChecked {
             break;
           }
 
-          case CaseActions.EDIT_CASE: {
+          case EDIT_CASE: {
             if (res.error) {
-              this.notification(false, 'Couldn\'t edit case, try again later.');
+              this.notification(true, 'Couldn\'t edit case, try again later.');
             } else {
               this.notification(false, 'Case successfully edited.');
             }
@@ -109,9 +119,9 @@ export class CasesComponent implements OnInit, AfterViewChecked {
             break;
           }
 
-          case CaseActions.DELETE_CASE: {
+          case DELETE_CASE: {
             if (res.error) {
-              this.notification(false, 'Couldn\'t delete case, try again later.');
+              this.notification(true, 'Couldn\'t delete case, try again later.');
             } else {
               this.notification(false, 'Case successfully deleted.');
             }
@@ -140,20 +150,20 @@ export class CasesComponent implements OnInit, AfterViewChecked {
   }
 
   public submitForm(singleCase: Case): void {
-    this.store.dispatch({ type: CaseActions.ADD_CASE, payload: singleCase });
+    this.store.dispatch(new AddCase(singleCase));
   }
 
   public editCase(singleCase: Case) {
-    this.store.dispatch({ type: CaseActions.EDIT_CASE, payload: singleCase });
+    this.store.dispatch(new EditCase(singleCase));
   }
 
   public deleteCase(singleCase: Case) {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data: singleCase.name,
+    const dialogRef = this.dialog.open(CaseDeleteDialogComponent, {
+      data: `${singleCase.name} - ${singleCase.description}`,
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.store.dispatch({ type: CaseActions.DELETE_CASE, payload: singleCase });
+        this.store.dispatch(new DeleteCase(singleCase));
       }
     });
   }

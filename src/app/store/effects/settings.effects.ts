@@ -5,7 +5,19 @@ import { Actions, Effect } from '@ngrx/effects';
 
 import { SettingsService } from '../../services/settings.service';
 
-import { SettingsActions } from '../actions/settings.actions';
+import {
+  REQUEST_SETTINGS,
+  ADD_SETTINGS,
+  EDIT_SETTINGS,
+  LoadSettings,
+  LoadSettingsSuccess,
+  AddSettings,
+  AddSettingsSuccess,
+  AddSettingsFailure,
+  EditSettings,
+  EditSettingsSuccess,
+  EditSettingsFailure
+} from './../actions/settings.actions';
 
 import { Settings } from '../models/settings.model';
 
@@ -19,29 +31,28 @@ export class SettingsEffects {
 
   @Effect()
   loadSettings: Observable<Action> = this.actions
-    .ofType(SettingsActions.REQUEST_SETTINGS)
-    .switchMap((action: Action) => this.settingsService.loadSettings())
-    .map((settings: Settings) => this.settingsActions.loadSettingsSuccess(settings));
+    .ofType(REQUEST_SETTINGS)
+    .switchMap((action: LoadSettings) => this.settingsService.loadSettings())
+    .map((settings: Settings) => new LoadSettingsSuccess(settings));
 
   @Effect()
   addSettings = this.actions
-    .ofType(SettingsActions.ADD_SETTINGS)
-    .map((action: Action) => action.payload)
+    .ofType(ADD_SETTINGS)
+    .map((action: AddSettings) => action.payload)
     .switchMap((settings: Settings) => this.settingsService.addSettings(settings))
     .map((settings: Settings) =>
-      JSON.parse(settings.error) ? this.settingsActions.addSettingsFailure() : this.settingsActions.addSettingsSuccess(settings)
+      JSON.parse(settings.error) ? new AddSettingsFailure() : new AddSettingsSuccess(settings)
     );
 
   @Effect()
   editSettings: Observable<Action> = this.actions
-    .ofType(SettingsActions.EDIT_SETTINGS)
-    .switchMap((action: Action) => this.settingsService.editSettings(action.payload))
+    .ofType(EDIT_SETTINGS)
+    .switchMap((action: EditSettings) => this.settingsService.editSettings(action.payload))
     .map((settings: Settings) =>
-      JSON.parse(settings.error) ? this.settingsActions.editSettingsFailure() : this.settingsActions.editSettingsSuccess(settings)
+      JSON.parse(settings.error) ? new EditSettingsFailure() : new EditSettingsSuccess(settings)
     );
 
   constructor(private actions: Actions,
-              private settingsService: SettingsService,
-              private settingsActions: SettingsActions
+              private settingsService: SettingsService
   ) { }
 }
