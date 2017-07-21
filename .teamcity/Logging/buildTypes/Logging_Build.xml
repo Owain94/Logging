@@ -34,6 +34,12 @@ run build:all:aot]]></param>
 run protractor]]></param>
         </parameters>
       </runner>
+      <runner id="RUNNER_13" name="Run: yarn lint" type="jonnyzzz.yarn">
+        <parameters>
+          <param name="teamcity.step.mode" value="default" />
+          <param name="yarn_commands" value="run lint" />
+        </parameters>
+      </runner>
     </build-runners>
     <vcs-settings>
       <vcs-entry-ref root-id="Logging_HttpsGithubComOwain94LoggingRefsHeadsMaster" />
