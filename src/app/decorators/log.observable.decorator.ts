@@ -21,7 +21,7 @@ export function logObservable(target: any, propertyKey: string ) {
           if (Array.isArray(res.data)) {
             console.groupCollapsed(`Data: ${propertyKey}`);
             console.table(res.data)
-          console.groupEnd();
+            console.groupEnd();
           }
 
           console.groupEnd();

@@ -4,6 +4,7 @@ app-header([headerHeading]="[header[0] | capitalize, header[1] | capitalize]")
   .row
     .large-12.columns.end
       button.button.button-margin((click)="addLog = !addLog", [innerText]="addLog ? 'Hide' : 'Add Log'")
+      button.button.button-margin(*ngIf="allCategories.length > 0", (click)="exportAsExcelFile()") Export logs
   .row([hidden]="!addLog")
     form([formGroup]="addLogForm", (ngSubmit)="submitForm(addLogForm.value)")
       .large-6.columns
@@ -54,18 +55,41 @@ app-header([headerHeading]="[header[0] | capitalize, header[1] | capitalize]")
       .large-12.columns.end
         button.button.button-margin(type="submit", [disabled]="!addLogForm.valid") Add
 
-  hr.full-width
+  hr
 
-  .row.full-width
-    .large-2.columns What
-    .large-1.columns Where
-    .large-1.columns When
-    // large
-    .large-2.columns Why
-    // large
-    .large-2.columns How
-    .large-1.columns With
-    // large
-    .large-2.columns Results
+  .row
+    .large-12.columns
+      div(*ngIf="allCategories.length > 0; else no_categories")
+        h4 Categories
+        button.button.button-margin(*ngFor="let category of allCategories; let i = index; trackBy: trackByFn", [innerText]="category | capitalize", (click)="selectedCategory = category")
+
+      ng-template(#no_categories="") No categories found, add your first log item by clicking the 'Add Log' button.
+
+  hr
+
+  .row(*ngIf="browser")
+    .large-12.columns
+
+      h4([innerText]="selectedCategory | capitalize")
+      span New lines will not be shown in the datatable, they will be present in an exported CSV or PDF file.
+
+  hr
+
+  .row.full-width(*ngIf="browser")
+    .large-12.columns
+
+      ngx-datatable.material.full-width(
+        [columnMode]="'force'",
+        [rows]="allCategorizedLogs[selectedCategory]",
+        [reorderable]="false",
+        [rowHeight]="'auto'"
+      )
+        ngx-datatable-column([sortable]="false", [draggable]="false", name="Where", [minWidth]="100", [maxWidth]="150")
+        ngx-datatable-column([sortable]="true",  [draggable]="false", name="When", [minWidth]="170", [maxWidth]="175")
+        ngx-datatable-column([sortable]="false", [draggable]="false", name="What", [minWidth]="150")
+        ngx-datatable-column([sortable]="false", [draggable]="false", name="Why", [minWidth]="150")
+        ngx-datatable-column([sortable]="false", [draggable]="false", name="How", [minWidth]="150")
+        ngx-datatable-column([sortable]="false", [draggable]="false", name="With", [minWidth]="175", [maxWidth]="200")
+        ngx-datatable-column([sortable]="false", [draggable]="false", name="Result")
 
 app-notifications

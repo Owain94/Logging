@@ -29,7 +29,11 @@ import { Subscription } from 'rxjs/Subscription';
 import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
 import { Observable } from 'rxjs/Observable';
 
+import * as FileSaver from 'file-saver';
+import * as XLSX from 'xlsx';
+
 import 'rxjs/add/operator/take';
+
 
 @Component({
   selector: 'app-case',
@@ -61,9 +65,13 @@ export class CaseComponent implements OnInit, AfterViewChecked {
   public addLog: boolean = false;
   public allLogs: Array<LogItem> = [];
   public allCategories: Array<string> = [];
+  // tslint:disable-next-line:no-inferrable-types
+  public selectedCategory: string = '';
   public allCategorizedLogs: Object = {};
 
   public addLogForm: FormGroup;
+  // tslint:disable-next-line:no-inferrable-types
+  public browser: boolean = false;
 
   constructor(private activatedRoute: ActivatedRoute,
               private transferState: TransferState,
@@ -79,6 +87,7 @@ export class CaseComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit(): void {
+    this.browser = isPlatformBrowser(this.platformId);
     this.activatedRouteParamSubscription = this.activatedRoute.params.subscribe(params => {
       this.id = params['id'];
 
@@ -92,7 +101,7 @@ export class CaseComponent implements OnInit, AfterViewChecked {
   }
 
   ngAfterViewChecked(): void {
-    if (!isPlatformBrowser(this.platformId)) {
+    if (!this.browser) {
       this.storeSubscription = this.store.take(2).subscribe(state => {
         this.transferState.set('state', state);
       });
@@ -145,8 +154,7 @@ export class CaseComponent implements OnInit, AfterViewChecked {
     log.when = new Date().toLocaleString();
     log.case = this.id;
     log.why = `${this.prefix} ${log.why}`;
-
-    console.log(log.result);
+    log.result = log.result.replace(/(?:\r\n|\r|\n)/g, '\n');
 
     this.store.dispatch(new AddLog(log));
   }
@@ -224,6 +232,7 @@ export class CaseComponent implements OnInit, AfterViewChecked {
               this.notification(false, 'Log added!');
               this.initForm();
               this.fillForm();
+              this.addLog = !this.addLog;
             }
 
             break;
@@ -250,11 +259,14 @@ export class CaseComponent implements OnInit, AfterViewChecked {
           }
         }
 
-        console.log(this.allLogs);
-        console.log(this.allCategories);
-        console.log(this.allCategorizedLogs);
+        if (this.allCategories.length > 0 && this.allLogs.length > 0) {
+          this.allCategories.unshift('All');
+          this.allCategorizedLogs['All'] = this.allLogs;
+        }
 
-        console.log(this.allCategorizedLogs['Internetonderzoek']);
+        if (this.selectedCategory === '') {
+          this.selectedCategory = this.allCategories[0];
+        }
       }
     });
   }
@@ -273,5 +285,46 @@ export class CaseComponent implements OnInit, AfterViewChecked {
     }
 
     this.changeDetectorRef.markForCheck();
+  }
+
+  public trackByFn(index: number, item: Case): number {
+    return index;
+  }
+
+  public exportAsExcelFile(): void {
+    const allLogs = this.allCategorizedLogs;
+
+    const allLogsJson = {};
+
+    for (const cat in this.allCategories) {
+      if (this.allCategories.hasOwnProperty(cat)) {
+
+        for (const obj in allLogs[this.allCategories[cat]]) {
+          if (allLogs[this.allCategories[cat]].hasOwnProperty(obj)) {
+            delete allLogs[this.allCategories[cat]][obj]['__v'];
+            delete allLogs[this.allCategories[cat]][obj]['_id'];
+            delete allLogs[this.allCategories[cat]][obj]['$$index'];
+            delete allLogs[this.allCategories[cat]][obj]['case'];
+          }
+        }
+
+        allLogsJson[this.allCategories[cat]] = XLSX.utils.json_to_sheet(allLogs[this.allCategories[cat]]);
+      }
+    }
+
+    console.log(allLogs);
+
+    const workbook: XLSX.WorkBook = { Sheets: allLogsJson, SheetNames: this.allCategories };
+    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' });
+    this.saveAsExcelFile(excelBuffer, 'test');
+  }
+
+  private saveAsExcelFile(buffer: any, fileName: string): void {
+    const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+
+    const data: Blob = new Blob([buffer], {
+      type: EXCEL_TYPE
+    });
+    FileSaver.saveAs(data, `${fileName}_export_${new Date().toLocaleString().replace(', ', '-')}.xlsx`);
   }
 }

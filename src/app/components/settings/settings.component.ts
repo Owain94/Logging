@@ -119,7 +119,6 @@ export class SettingsComponent implements OnInit, AfterContentInit, AfterViewChe
 
   private loadCasesAndHandleStates() {
     this.caseSubscription = this.cases.subscribe((res) => {
-      console.log(res);
 
       if (typeof(res.data) === 'undefined') {
         this.store.dispatch(new LoadCases());

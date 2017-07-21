@@ -12,6 +12,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { RoutingModule } from './routing/routing.module';
 import { TransferHttpModule } from './transfer-http/transfer-http.module';
 
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+
 import { logger } from '../store/reducers/logging.reducer';
 import { caseReducer } from '../store/reducers/case.reducer';
 import { settingsReducer } from '../store/reducers/settings.reducer';
@@ -94,6 +96,8 @@ const metaReducers: ActionReducer<any, any>[] = process.env.NODE_ENV === 'develo
   imports: [
     MdButtonModule,
     MdDialogModule,
+
+    NgxDatatableModule,
 
     CommonModule,
     HttpModule,
