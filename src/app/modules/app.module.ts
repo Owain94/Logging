@@ -4,9 +4,8 @@ import { HttpModule } from '@angular/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MdButtonModule, MdDialogModule } from '@angular/material';
 
-import { compose } from '@ngrx/core';
-import { StoreModule, combineReducers } from '@ngrx/store';
-import { routerReducer, RouterStoreModule } from '@ngrx/router-store';
+import { StoreModule, ActionReducerMap, ActionReducer } from '@ngrx/store';
+// import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
@@ -17,10 +16,6 @@ import { logger } from '../store/reducers/logging.reducer';
 import { caseReducer } from '../store/reducers/case.reducer';
 import { settingsReducer } from '../store/reducers/settings.reducer';
 import { logReducer } from '../store/reducers/log.reducer';
-
-import { CaseActions } from '../store/actions/case.actions';
-import { SettingsActions } from '../store/actions/settings.actions';
-import { LogActions } from './../store/actions/log.actions';
 
 import { CaseEffects } from '../store/effects/case.effects';
 import { SettingsEffects } from '../store/effects/settings.effects';
@@ -67,50 +62,14 @@ export function provideErrorHandler() {
   // }
 }
 
-const reducers = {
-  router: routerReducer,
+const reducers: ActionReducerMap<any> = {
   cases: caseReducer,
   settings: settingsReducer,
   log: logReducer
 };
 
-const developmentReducer = compose(logger, combineReducers)(reducers);
-const productionReducer = combineReducers(reducers);
-
-export function reducer(state: any, action: any) {
-  if (process.env.NODE_ENV === 'production') {
-    return productionReducer(state, action);
-  } else {
-    return developmentReducer(state, action);
-  }
-}
-
-const modules = [
-  MdButtonModule,
-  MdDialogModule,
-
-  CommonModule,
-  HttpModule,
-  TransferHttpModule,
-  ReactiveFormsModule,
-  RoutingModule,
-
-  StoreModule.provideStore(
-    reducer
-  ),
-  RouterStoreModule.connectRouter(),
-  EffectsModule.run(CaseEffects),
-  EffectsModule.run(SettingsEffects),
-  EffectsModule.run(LogEffects)
-];
-
-if (process.env.NODE_ENV === 'development') {
-  modules.push(
-    StoreDevtoolsModule.instrumentOnlyWithExtension({
-      maxAge: 5
-    })
-  );
-}
+const metaReducers: ActionReducer<any, any>[] = process.env.NODE_ENV === 'development' ?
+  [logger] : [];
 
 @NgModule({
   declarations: [
@@ -133,16 +92,33 @@ if (process.env.NODE_ENV === 'development') {
     CaseDeleteDialogComponent
   ],
   imports: [
-    ...modules
+    MdButtonModule,
+    MdDialogModule,
+
+    CommonModule,
+    HttpModule,
+    TransferHttpModule,
+    ReactiveFormsModule,
+    RoutingModule,
+
+    StoreModule.forRoot(
+      reducers, { metaReducers }
+    ),
+    // StoreRouterConnectingModule,
+    EffectsModule.forRoot([
+      CaseEffects,
+      SettingsEffects,
+      LogEffects
+    ]),
+    process.env.NODE_ENV === 'development' ?
+      StoreDevtoolsModule.instrument({ maxAge: 50 }) :
+      []
   ],
   providers: [
     {
       provide: ErrorHandler,
       useFactory: provideErrorHandler
     },
-    CaseActions,
-    SettingsActions,
-    LogActions,
     CaseService,
     SettingsService,
     LogService,

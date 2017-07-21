@@ -1,8 +1,26 @@
-import { Action } from '@ngrx/store';
+import { createFeatureSelector } from '@ngrx/store';
 
-import { SettingsActions } from '../actions/settings.actions';
+import {
+  Actions,
+  LOAD_SETTINGS,
+  LOAD_SETTINGS_SUCCESS,
+  ADD_SETTINGS,
+  ADD_SETTINGS_SUCCESS,
+  ADD_SETTINGS_FAILURE,
+  EDIT_SETTINGS,
+  EDIT_SETTINGS_SUCCESS,
+  EDIT_SETTINGS_FAILURE
+} from '../actions/settings.actions';
 
-export function initialState(): any {
+import { Settings } from '../models/settings.model';
+
+export interface SettingsState {
+  data: Array<Settings>,
+  type?: Actions,
+  error?: boolean
+}
+
+export function initialState(): SettingsState {
   /* istanbul ignore if */
   if (typeof(window) !== 'undefined' &&
       typeof(window['TRANSFER_STATE']) !== 'undefined' &&
@@ -10,60 +28,62 @@ export function initialState(): any {
       typeof(window['TRANSFER_STATE'].state.settings) !== 'undefined') {
     return window['TRANSFER_STATE'].state.settings;
   } else {
-    return [];
+    return {
+      data: undefined
+    };
   }
 }
 
-export function settingsReducer(state: any = initialState(), action: Action) {
+export function settingsReducer(state: SettingsState = initialState(), action: Actions) {
 
   switch (action.type) {
 
-    case SettingsActions.LOAD_SETTINGS_SUCCESS: {
+    case LOAD_SETTINGS_SUCCESS: {
       return {
         ...state.data,
         data: action.payload,
-        type: SettingsActions.LOAD_SETTINGS,
+        type: LOAD_SETTINGS,
         error: false
       }
     }
 
-    case SettingsActions.ADD_SETTINGS_SUCCESS: {
+    case ADD_SETTINGS_SUCCESS: {
       return {
         data: [
           ...state.data,
           action.payload
         ],
-        type: SettingsActions.ADD_SETTINGS,
+        type: ADD_SETTINGS,
         error: false
       }
     }
 
-    case SettingsActions.ADD_SETTINGS_FAILURE: {
+    case ADD_SETTINGS_FAILURE: {
       return {
         data: [
           ...state.data
         ],
-        type: SettingsActions.ADD_SETTINGS,
+        type: ADD_SETTINGS,
         error: true
       }
     }
 
-    case SettingsActions.EDIT_SETTINGS_SUCCESS: {
+    case EDIT_SETTINGS_SUCCESS: {
       return {
         data: [
           action.payload
         ],
-        type: SettingsActions.EDIT_SETTINGS,
+        type: EDIT_SETTINGS,
         error: false
       }
     }
 
-    case SettingsActions.EDIT_SETTINGS_FAILURE: {
+    case EDIT_SETTINGS_FAILURE: {
       return {
         data: [
           ...state.data
         ],
-        type: SettingsActions.EDIT_SETTINGS,
+        type: EDIT_SETTINGS,
         error: true
       }
     }
@@ -73,3 +93,5 @@ export function settingsReducer(state: any = initialState(), action: Action) {
     }
   }
 };
+
+export const getSettingsState = createFeatureSelector<SettingsState>('settings');

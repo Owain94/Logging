@@ -7,9 +7,13 @@ import { Store } from '@ngrx/store';
 
 import { TransferState } from '../../../modules/transfer-state/transfer-state';
 
-import { CaseActions } from '../../../store/actions/case.actions';
-import { SettingsActions } from '../../../store/actions/settings.actions';
-import { LogActions } from '../../../store/actions/log.actions';
+import { LOAD_CASES, LoadCases } from '../../../store/actions/case.actions';
+import { LOAD_SETTINGS, LoadSettings } from '../../../store/actions/settings.actions';
+import { LOAD_LOG, ADD_LOG, LoadLog, AddLog } from '../../../store/actions/log.actions';
+
+import { getLogState, LogState } from './../../../store/reducers/log.reducer';
+import { getSettingsState, SettingsState } from './../../../store/reducers/settings.reducer';
+import { getCaseState, CaseState } from './../../../store/reducers/case.reducer';
 
 import { Case } from '../../../store/models/case.model';
 import { Settings } from './../../../store/models/settings.model';
@@ -63,17 +67,14 @@ export class CaseComponent implements OnInit, AfterViewChecked {
 
   constructor(private activatedRoute: ActivatedRoute,
               private transferState: TransferState,
-              private store: Store<Case>,
-              private caseActions: CaseActions,
-              private settingsActions: SettingsActions,
-              private logActions: LogActions,
+              private store: Store<CaseState | SettingsState | LogState>,
               private formBuilder: FormBuilder,
               private notificationsService: NotificationsService,
               private changeDetectorRef: ChangeDetectorRef,
               @Inject(PLATFORM_ID) private platformId: Object) {
-    this.case = store.select('cases');
-    this.settings = store.select('settings');
-    this.log = store.select('log');
+    this.case = store.select<CaseState>(getCaseState);
+    this.settings = store.select<SettingsState>(getSettingsState);
+    this.log = store.select<LogState>(getLogState);
     this.datetime = IntervalObservable.create();
   }
 
@@ -147,17 +148,17 @@ export class CaseComponent implements OnInit, AfterViewChecked {
 
     console.log(log.result);
 
-    this.store.dispatch({ type: LogActions.ADD_LOG, payload: log });
+    this.store.dispatch(new AddLog(log));
   }
 
   private loadCasesAndHandleStates(id: string) {
     this.casesSubscription = this.case.subscribe((res) => {
       if (typeof(res.data) === 'undefined') {
-        this.store.dispatch(this.caseActions.loadCases());
+        this.store.dispatch(new LoadCases());
       } else {
         switch (res.type) {
 
-          case CaseActions.LOAD_CASES: {
+          case LOAD_CASES: {
             if (res.error) {
               this.notification(false, 'Couldn\'t load case, try again later.');
             }
@@ -179,11 +180,11 @@ export class CaseComponent implements OnInit, AfterViewChecked {
   private loadSettingsAndHandleStates() {
     this.settingsSubscription = this.settings.subscribe((res) => {
       if (typeof(res.data) === 'undefined') {
-        this.store.dispatch(this.settingsActions.loadSettings());
+        this.store.dispatch(new LoadSettings());
       } else {
         switch (res.type) {
 
-          case SettingsActions.LOAD_SETTINGS: {
+          case LOAD_SETTINGS: {
             if (res.error) {
               this.notification(false, 'Couldn\'t load settings, try again later.');
             }
@@ -204,11 +205,11 @@ export class CaseComponent implements OnInit, AfterViewChecked {
   private loadLogAndHandleStates() {
     this.logSubscription = this.log.subscribe((res) => {
       if (typeof(res.data) === 'undefined') {
-        this.store.dispatch(this.logActions.loadlog());
+        this.store.dispatch(new LoadLog());
       } else {
         switch (res.type) {
 
-          case LogActions.LOAD_LOG: {
+          case LOAD_LOG: {
             if (res.error) {
               this.notification(true, 'Couldn\'t load log, try again later.');
             }
@@ -216,7 +217,7 @@ export class CaseComponent implements OnInit, AfterViewChecked {
             break;
           }
 
-          case LogActions.ADD_LOG: {
+          case ADD_LOG: {
             if (res.error) {
               this.notification(true, 'Couldn\'t load log, try again later.');
             } else {

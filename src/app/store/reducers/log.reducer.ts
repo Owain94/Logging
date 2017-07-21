@@ -1,10 +1,29 @@
-import { Action } from '@ngrx/store';
+import { createFeatureSelector } from '@ngrx/store';
 
-import { LogActions } from '../actions/log.actions';
+import {
+  Actions,
+  LOAD_LOG,
+  LOAD_LOG_SUCCESS,
+  ADD_LOG,
+  ADD_LOG_SUCCESS,
+  ADD_LOG_FAILURE,
+  EDIT_LOG,
+  EDIT_LOG_SUCCESS,
+  EDIT_LOG_FAILURE,
+  DELETE_LOG,
+  DELETE_LOG_SUCCESS,
+  DELETE_LOG_FAILURE
+} from '../actions/log.actions';
 
 import { Log } from '../models/log.model';
 
-export function initialState(): any {
+export interface LogState {
+  data: Array<Log>,
+  type?: Actions,
+  error?: boolean
+}
+
+export function initialState(): LogState {
   /* istanbul ignore if */
   if (typeof(window) !== 'undefined' &&
       typeof(window['TRANSFER_STATE']) !== 'undefined' &&
@@ -12,45 +31,47 @@ export function initialState(): any {
       typeof(window['TRANSFER_STATE'].state.log) !== 'undefined') {
     return window['TRANSFER_STATE'].state.log;
   } else {
-    return [];
+    return {
+      data: undefined
+    };
   }
 }
 
-export function logReducer(state: any = initialState(), action: Action) {
+export function logReducer(state: LogState = initialState(), action: Actions) {
 
   switch (action.type) {
 
-    case LogActions.LOAD_LOG_SUCCESS: {
+    case LOAD_LOG_SUCCESS: {
       return {
         ...state.data,
         data: action.payload,
-        type: LogActions.LOAD_LOG,
+        type: LOAD_LOG,
         error: false
       }
     }
 
-    case LogActions.ADD_LOG_SUCCESS: {
+    case ADD_LOG_SUCCESS: {
       return {
         data: [
           ...state.data,
           action.payload
         ],
-        type: LogActions.ADD_LOG,
+        type: ADD_LOG,
         error: false
       }
     }
 
-    case LogActions.ADD_LOG_FAILURE: {
+    case ADD_LOG_FAILURE: {
       return {
         data: [
           ...state.data
         ],
-        type: LogActions.ADD_LOG,
+        type: ADD_LOG,
         error: true
       }
     }
 
-    case LogActions.EDIT_LOG_SUCCESS: {
+    case EDIT_LOG_SUCCESS: {
       const logIndex = state.data.findIndex((singleLog: Log) => singleLog._id === action.payload._id);
 
       return {
@@ -59,37 +80,37 @@ export function logReducer(state: any = initialState(), action: Action) {
           action.payload,
           ...state.data.slice(logIndex + 1)
         ],
-        type: LogActions.EDIT_LOG,
+        type: EDIT_LOG,
         error: false
       }
     }
 
-    case LogActions.EDIT_LOG_FAILURE: {
+    case EDIT_LOG_FAILURE: {
       return {
         data: [
           ...state.data
         ],
-        type: LogActions.EDIT_LOG,
+        type: EDIT_LOG,
         error: true
       }
     }
 
-    case LogActions.DELETE_LOG_SUCCESS: {
+    case DELETE_LOG_SUCCESS: {
       return {
         data: state.data.filter((singleLog: Log) => {
           return singleLog._id !== action.payload._id;
         }),
-        type: LogActions.DELETE_LOG,
+        type: DELETE_LOG,
         error: false
       };
     }
 
-    case LogActions.DELETE_LOG_FAILURE: {
+    case DELETE_LOG_FAILURE: {
       return {
         data: [
           ...state.data
         ],
-        type: LogActions.DELETE_LOG,
+        type: DELETE_LOG,
         error: true
       }
     }
@@ -99,3 +120,5 @@ export function logReducer(state: any = initialState(), action: Action) {
     }
   }
 };
+
+export const getLogState = createFeatureSelector<LogState>('log');

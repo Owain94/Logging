@@ -1,7 +1,14 @@
 import { Case } from './../../store/models/case.model';
 import { isPlatformBrowser } from '@angular/common';
 import {
-  Component, ChangeDetectionStrategy, AfterContentInit, AfterViewChecked, PLATFORM_ID, Inject, OnInit, ChangeDetectorRef
+  Component,
+  ChangeDetectionStrategy,
+  OnInit,
+  AfterContentInit,
+  AfterViewChecked,
+  PLATFORM_ID,
+  Inject,
+  ChangeDetectorRef
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -9,8 +16,21 @@ import { Store } from '@ngrx/store';
 
 import { TransferState } from '../../modules/transfer-state/transfer-state';
 
-import { CaseActions } from '../../store/actions/case.actions';
-import { SettingsActions } from '../../store/actions/settings.actions';
+import {
+  LoadCases,
+  LOAD_CASES
+} from '../../store/actions/case.actions';
+import {
+  LOAD_SETTINGS,
+  ADD_SETTINGS,
+  EDIT_SETTINGS,
+  LoadSettings,
+  AddSettings,
+  EditSettings
+} from '../../store/actions/settings.actions';
+
+import { getCaseState, CaseState } from './../../store/reducers/case.reducer';
+import { getSettingsState, SettingsState } from './../../store/reducers/settings.reducer';
 
 import { Settings } from '../../store/models/settings.model';
 
@@ -49,16 +69,14 @@ export class SettingsComponent implements OnInit, AfterContentInit, AfterViewChe
   private storeSubscription: Subscription;
 
   constructor(private transferState: TransferState,
-              private store: Store<any>,
-              private caseActions: CaseActions,
-              private settingsActions: SettingsActions,
+              private store: Store<SettingsState | CaseState>,
               private formBuilder: FormBuilder,
               private notificationsService: NotificationsService,
               private changeDetectorRef: ChangeDetectorRef,
               @Inject(PLATFORM_ID) private platformId: Object
   ) {
-    this.settings = store.select('settings');
-    this.cases = store.select('cases');
+    this.settings = store.select<SettingsState>(getSettingsState);
+    this.cases = store.select<CaseState>(getCaseState);
   }
 
   ngOnInit(): void {
@@ -101,12 +119,14 @@ export class SettingsComponent implements OnInit, AfterContentInit, AfterViewChe
 
   private loadCasesAndHandleStates() {
     this.caseSubscription = this.cases.subscribe((res) => {
+      console.log(res);
+
       if (typeof(res.data) === 'undefined') {
-        this.store.dispatch(this.caseActions.loadCases());
+        this.store.dispatch(new LoadCases());
       } else {
         switch (res.type) {
 
-          case CaseActions.LOAD_CASES: {
+          case LOAD_CASES: {
             if (res.error) {
               this.notification(true, 'Couldn\'t load cases, try again later.');
             } else {
@@ -122,7 +142,7 @@ export class SettingsComponent implements OnInit, AfterContentInit, AfterViewChe
   }
 
   private loadSettingsAndHandleStates() {
-    this.store.dispatch(this.settingsActions.loadSettings());
+    this.store.dispatch(new LoadSettings());
     this.settingsSubscription = this.settings.subscribe((res) => {
       if (typeof(res.data) !== 'undefined') {
         if (res.data.length > 0) {
@@ -133,8 +153,8 @@ export class SettingsComponent implements OnInit, AfterContentInit, AfterViewChe
 
         switch (res.type) {
 
-          case SettingsActions.ADD_SETTINGS:
-          case SettingsActions.EDIT_SETTINGS: {
+          case ADD_SETTINGS:
+          case EDIT_SETTINGS: {
             if (res.error) {
               this.notification(false, 'Couldn\'t edit settings, try again later.');
             } else {
@@ -144,7 +164,7 @@ export class SettingsComponent implements OnInit, AfterContentInit, AfterViewChe
             break;
           }
 
-          case SettingsActions.LOAD_SETTINGS: {
+          case LOAD_SETTINGS: {
             if (res.error) {
               this.notification(false, 'Couldn\'t load settings, try again later.');
             } else if (res.data.length > 0) {
@@ -185,9 +205,9 @@ export class SettingsComponent implements OnInit, AfterContentInit, AfterViewChe
 
     if (this.initialSettings) {
       settings._id = this.settingsId;
-      this.store.dispatch({ type: SettingsActions.EDIT_SETTINGS, payload: settings });
+      this.store.dispatch(new EditSettings(settings));
     } else {
-      this.store.dispatch({ type: SettingsActions.ADD_SETTINGS, payload: settings });
+      this.store.dispatch(new AddSettings(settings));
     }
   }
 

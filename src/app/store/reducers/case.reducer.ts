@@ -1,10 +1,29 @@
-import { Action } from '@ngrx/store';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
 
-import { CaseActions } from '../actions/case.actions';
+import {
+  Actions,
+  LOAD_CASES,
+  LOAD_CASES_SUCCESS,
+  ADD_CASE,
+  ADD_CASE_SUCCESS,
+  ADD_CASE_FAILURE,
+  EDIT_CASE,
+  EDIT_CASE_SUCCESS,
+  EDIT_CASE_FAILURE,
+  DELETE_CASE,
+  DELETE_CASE_SUCCESS,
+  DELETE_CASE_FAILURE
+} from '../actions/case.actions';
 
 import { Case } from '../models/case.model';
 
-export function initialState(): any {
+export interface CaseState {
+  data: Array<Case>,
+  type?: Actions,
+  error?: boolean
+}
+
+export function initialState(): CaseState {
   /* istanbul ignore if */
   if (typeof(window) !== 'undefined' &&
       typeof(window['TRANSFER_STATE']) !== 'undefined' &&
@@ -12,45 +31,48 @@ export function initialState(): any {
       typeof(window['TRANSFER_STATE'].state.cases) !== 'undefined') {
     return window['TRANSFER_STATE'].state.cases;
   } else {
-    return [];
+    return {
+      data: undefined
+    };
   }
 }
 
-export function caseReducer(state: any = initialState(), action: Action) {
+export function caseReducer(state: CaseState = initialState(), action: Actions) {
 
   switch (action.type) {
 
-    case CaseActions.LOAD_CASES_SUCCESS: {
+
+    case LOAD_CASES_SUCCESS: {
       return {
         ...state.data,
         data: action.payload,
-        type: CaseActions.LOAD_CASES,
+        type: LOAD_CASES,
         error: false
       }
     }
 
-    case CaseActions.ADD_CASE_SUCCESS: {
+    case ADD_CASE_SUCCESS: {
       return {
         data: [
           ...state.data,
           action.payload
         ],
-        type: CaseActions.ADD_CASE,
+        type: ADD_CASE,
         error: false
       }
     }
 
-    case CaseActions.ADD_CASE_FAILURE: {
+    case ADD_CASE_FAILURE: {
       return {
         data: [
           ...state.data
         ],
-        type: CaseActions.ADD_CASE,
+        type: ADD_CASE,
         error: true
       }
     }
 
-    case CaseActions.EDIT_CASE_SUCCESS: {
+    case EDIT_CASE_SUCCESS: {
       const caseIndex = state.data.findIndex((singleCase: Case) => singleCase._id === action.payload._id);
 
       return {
@@ -59,37 +81,37 @@ export function caseReducer(state: any = initialState(), action: Action) {
           action.payload,
           ...state.data.slice(caseIndex + 1)
         ],
-        type: CaseActions.EDIT_CASE,
+        type: EDIT_CASE,
         error: false
       }
     }
 
-    case CaseActions.EDIT_CASE_FAILURE: {
+    case EDIT_CASE_FAILURE: {
       return {
         data: [
           ...state.data
         ],
-        type: CaseActions.EDIT_CASE,
+        type: EDIT_CASE,
         error: true
       }
     }
 
-    case CaseActions.DELETE_CASE_SUCCESS: {
+    case DELETE_CASE_SUCCESS: {
       return {
         data: state.data.filter((singleCase: Case) => {
           return singleCase._id !== action.payload._id;
         }),
-        type: CaseActions.DELETE_CASE,
+        type: DELETE_CASE,
         error: false
       };
     }
 
-    case CaseActions.DELETE_CASE_FAILURE: {
+    case DELETE_CASE_FAILURE: {
       return {
         data: [
           ...state.data
         ],
-        type: CaseActions.DELETE_CASE,
+        type: DELETE_CASE,
         error: true
       }
     }
@@ -99,3 +121,5 @@ export function caseReducer(state: any = initialState(), action: Action) {
     }
   }
 };
+
+export const getCaseState = createFeatureSelector<CaseState>('cases');

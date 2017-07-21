@@ -5,8 +5,11 @@ import { Store } from '@ngrx/store';
 
 import { TransferState } from '../../modules/transfer-state/transfer-state';
 
-import { CaseActions } from '../../store/actions/case.actions';
-import { SettingsActions } from '../../store/actions/settings.actions';
+import { LoadCases } from '../../store/actions/case.actions';
+import { LoadSettings } from '../../store/actions/settings.actions';
+
+import { getCaseState, CaseState } from './../../store/reducers/case.reducer';
+import { getSettingsState, SettingsState } from './../../store/reducers/settings.reducer';
 
 import { Log } from '../../decorators/log.decorator';
 import { logObservable } from '../../decorators/log.observable.decorator';
@@ -35,13 +38,11 @@ export class HomeComponent implements OnInit, AfterViewChecked {
   public storeSubscription: Subscription;
 
   constructor(private transferState: TransferState,
-              private store: Store<any>,
-              private caseActions: CaseActions,
-              private settingsActions: SettingsActions,
+              private store: Store<CaseState | SettingsState>,
               @Inject(PLATFORM_ID) private platformId: Object
   ) {
-    this.settings = store.select('settings');
-    this.cases = store.select('cases');
+    this.cases = store.select<CaseState>(getCaseState);
+    this.settings = store.select<SettingsState>(getSettingsState);
   }
 
   ngOnInit(): void {
@@ -52,6 +53,9 @@ export class HomeComponent implements OnInit, AfterViewChecked {
   ngAfterViewChecked(): void {
     if (!isPlatformBrowser(this.platformId)) {
       this.storeSubscription = this.store.take(1).subscribe(state => {
+        console.log('SERVERSTATE');
+        console.log(state);
+
         this.transferState.set('state', state);
       });
     }
@@ -59,16 +63,20 @@ export class HomeComponent implements OnInit, AfterViewChecked {
 
   private loadCasesAndHandleStates() {
     this.caseSubscription = this.cases.subscribe((res) => {
-      if (typeof(res.data) === 'undefined') {
-        this.store.dispatch(this.caseActions.loadCases());
+      if (typeof(res) !== 'undefined') {
+        if (typeof(res.data) === 'undefined') {
+          this.store.dispatch(new LoadCases());
+        }
       }
     });
   }
 
   private loadSettingsAndHandleStates() {
     this.settingsSubscription = this.settings.subscribe((res) => {
-      if (typeof(res.data) === 'undefined') {
-        this.store.dispatch(this.settingsActions.loadSettings());
+      if (typeof(res) !== 'undefined') {
+        if (typeof(res.data) === 'undefined') {
+          this.store.dispatch(new LoadSettings());
+        }
       }
     });
   }
