@@ -17,7 +17,7 @@ import {
   EditSettings,
   EditSettingsSuccess,
   EditSettingsFailure
-} from './../actions/settings.actions';
+} from '../actions/settings.actions';
 
 import { Settings } from '../models/settings.model';
 

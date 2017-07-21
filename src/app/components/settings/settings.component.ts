@@ -1,4 +1,3 @@
-import { Case } from './../../store/models/case.model';
 import { isPlatformBrowser } from '@angular/common';
 import {
   Component,
@@ -29,9 +28,10 @@ import {
   EditSettings
 } from '../../store/actions/settings.actions';
 
-import { getCaseState, CaseState } from './../../store/reducers/case.reducer';
-import { getSettingsState, SettingsState } from './../../store/reducers/settings.reducer';
+import { getCaseState, CaseState } from '../../store/reducers/case.reducer';
+import { getSettingsState, SettingsState } from '../../store/reducers/settings.reducer';
 
+import { Case } from '../../store/models/case.model';
 import { Settings } from '../../store/models/settings.model';
 
 import { Log } from '../../decorators/log.decorator';

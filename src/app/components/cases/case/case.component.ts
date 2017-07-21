@@ -11,12 +11,12 @@ import { LOAD_CASES, LoadCases } from '../../../store/actions/case.actions';
 import { LOAD_SETTINGS, LoadSettings } from '../../../store/actions/settings.actions';
 import { LOAD_LOG, ADD_LOG, LoadLog, AddLog } from '../../../store/actions/log.actions';
 
-import { getLogState, LogState } from './../../../store/reducers/log.reducer';
-import { getSettingsState, SettingsState } from './../../../store/reducers/settings.reducer';
-import { getCaseState, CaseState } from './../../../store/reducers/case.reducer';
+import { getLogState, LogState } from '../../../store/reducers/log.reducer';
+import { getSettingsState, SettingsState } from '../../../store/reducers/settings.reducer';
+import { getCaseState, CaseState } from '../../../store/reducers/case.reducer';
 
 import { Case } from '../../../store/models/case.model';
-import { Settings } from './../../../store/models/settings.model';
+import { Settings } from '../../../store/models/settings.model';
 import { Log as LogItem } from '../../../store/models/log.model';
 
 import { Log } from '../../../decorators/log.decorator';
