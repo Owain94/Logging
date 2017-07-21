@@ -93,7 +93,7 @@ export class CaseComponent implements OnInit, AfterViewChecked {
 
   ngAfterViewChecked(): void {
     if (!isPlatformBrowser(this.platformId)) {
-      this.storeSubscription = this.store.take(4).subscribe(state => {
+      this.storeSubscription = this.store.take(2).subscribe(state => {
         this.transferState.set('state', state);
       });
     }
