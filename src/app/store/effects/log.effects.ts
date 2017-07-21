@@ -21,7 +21,7 @@ import {
   DeleteLog,
   DeleteLogSuccess,
   DeleteLogFailure
-} from './../actions/log.actions';
+} from '../actions/log.actions';
 
 import { Log } from '../models/log.model';
 

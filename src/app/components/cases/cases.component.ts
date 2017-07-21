@@ -18,7 +18,7 @@ import {
   DeleteCase
 } from '../../store/actions/case.actions';
 
-import { getCaseState, CaseState } from './../../store/reducers/case.reducer';
+import { getCaseState, CaseState } from '../../store/reducers/case.reducer';
 
 import { Case } from '../../store/models/case.model';
 

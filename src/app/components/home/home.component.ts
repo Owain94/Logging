@@ -8,8 +8,8 @@ import { TransferState } from '../../modules/transfer-state/transfer-state';
 import { LoadCases } from '../../store/actions/case.actions';
 import { LoadSettings } from '../../store/actions/settings.actions';
 
-import { getCaseState, CaseState } from './../../store/reducers/case.reducer';
-import { getSettingsState, SettingsState } from './../../store/reducers/settings.reducer';
+import { getCaseState, CaseState } from '../../store/reducers/case.reducer';
+import { getSettingsState, SettingsState } from '../../store/reducers/settings.reducer';
 
 import { Log } from '../../decorators/log.decorator';
 import { logObservable } from '../../decorators/log.observable.decorator';

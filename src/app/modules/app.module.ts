@@ -21,7 +21,7 @@ import { logReducer } from '../store/reducers/log.reducer';
 
 import { CaseEffects } from '../store/effects/case.effects';
 import { SettingsEffects } from '../store/effects/settings.effects';
-import { LogEffects } from './../store/effects/log.effects';
+import { LogEffects } from '../store/effects/log.effects';
 
 import { CaseComponent } from '../components/cases/case/case.component';
 import { MainComponent } from '../components/main/main.component';
@@ -42,7 +42,7 @@ import { CapitalizePipe } from '../pipes/capitalize.pipe';
 import { NotificationsService } from '../services/notifications.service';
 import { CaseService } from '../services/case.service';
 import { SettingsService } from '../services/settings.service';
-import { LogService } from './../services/log.service';
+import { LogService } from '../services/log.service';
 
 import * as Raven from 'raven-js';
 
