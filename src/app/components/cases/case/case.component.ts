@@ -308,11 +308,24 @@ export class CaseComponent implements OnInit, AfterViewChecked {
           }
         }
 
-        allLogsJson[this.allCategories[cat]] = XLSX.utils.json_to_sheet(allLogs[this.allCategories[cat]]);
+        allLogs[this.allCategories[cat]].unshift(
+          {
+            who: '',
+            where: '',
+            when: '',
+            what: '',
+            why: '',
+            how: '',
+            with: '',
+            result: ''
+          }
+        );
+
+        allLogsJson[this.allCategories[cat]] = XLSX.utils.json_to_sheet(
+          allLogs[this.allCategories[cat]]
+        );
       }
     }
-
-    console.log(allLogs);
 
     const workbook: XLSX.WorkBook = { Sheets: allLogsJson, SheetNames: this.allCategories };
     const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' });
