@@ -159,7 +159,7 @@ export class CasesComponent implements OnInit, AfterViewChecked {
 
   public deleteCase(singleCase: Case) {
     const dialogRef = this.dialog.open(CaseDeleteDialogComponent, {
-      data: `${singleCase.name} - ${singleCase.description}`,
+      data: `${singleCase.name} - ${singleCase.description}`
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
