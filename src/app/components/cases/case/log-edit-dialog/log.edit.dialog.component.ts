@@ -39,14 +39,11 @@ export class LogEditDialogComponent implements OnInit {
       'why': [null, Validators.required],
       'how': [null, Validators.required],
       'with': [null, Validators.required],
-      'result': [null, Validators.required]
+      'result': [null]
     });
   }
 
   private fillForm(): void {
-    console.log(this.logItem);
-    console.log(this.logItem['who']);
-
     const reason = this.logItem.why.split('[')[1].split(']');
 
     this.prefix = `[ ${reason[0].trim()} ]`;
@@ -88,7 +85,7 @@ export class LogEditDialogComponent implements OnInit {
       withField.setValue(this.logItem.with);
     }
 
-    if (resultField) {
+    if (resultField && this.logItem.result) {
       resultField.setValue(this.logItem.result);
     }
 
@@ -101,7 +98,9 @@ export class LogEditDialogComponent implements OnInit {
     log.when = this.logItem.when;
     log.case = this.logItem.case;
     log.why = `${this.prefix} ${log.why}`;
-    log.result = log.result.replace(/(?:\r\n|\r|\n)/g, '\n');
+    if (log.result) {
+      log.result = log.result.replace(/(?:\r\n|\r|\n)/g, '\n');
+    }
     this.dialogRef.close(log)
   }
 }
