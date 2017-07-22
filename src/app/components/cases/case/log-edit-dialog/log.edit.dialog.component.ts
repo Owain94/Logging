@@ -44,7 +44,7 @@ export class LogEditDialogComponent implements OnInit {
   }
 
   private fillForm(): void {
-    const reason = this.logItem.why.split('[')[1].split(']');
+    const reason = this.logItem.why.split(/\[(.+)/)[1].split(/\](.+)/);
 
     this.prefix = `[ ${reason[0].trim()} ]`;
 
