@@ -36,6 +36,8 @@ import { NotFoundComponent } from '../components/notfound/notfound.component';
 import { NotificationsComponent } from '../components/notifications/notifications.component';
 import { NotificationComponent } from '../components/notifications/notification/notification.component';
 import { CaseDeleteDialogComponent } from '../components/cases/case-delete-dialog/case.delete.dialog.component';
+import { LogDeleteDialogComponent } from '../components/cases/case/log-delete-dialog/log.delete.dialog.component';
+import { LogEditDialogComponent } from '../components/cases/case/log-edit-dialog/log.edit.dialog.component';
 
 import { CapitalizePipe } from '../pipes/capitalize.pipe';
 
@@ -87,12 +89,16 @@ const metaReducers: ActionReducer<any, any>[] = process.env.NODE_ENV === 'develo
     SettingsComponent,
     NotFoundComponent,
     CaseDeleteDialogComponent,
+    LogDeleteDialogComponent,
+    LogEditDialogComponent,
     NotificationComponent,
     NotificationsComponent,
     CapitalizePipe
   ],
   entryComponents: [
-    CaseDeleteDialogComponent
+    CaseDeleteDialogComponent,
+    LogDeleteDialogComponent,
+    LogEditDialogComponent
   ],
   imports: [
     MdButtonModule,

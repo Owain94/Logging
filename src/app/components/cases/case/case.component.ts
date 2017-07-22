@@ -2,6 +2,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { Component, ChangeDetectionStrategy, OnInit, AfterViewChecked, ChangeDetectorRef, PLATFORM_ID, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { MdDialog } from '@angular/material';
 
 import { Store } from '@ngrx/store';
 
@@ -9,7 +10,7 @@ import { TransferState } from '../../../modules/transfer-state/transfer-state';
 
 import { LOAD_CASES, LoadCases } from '../../../store/actions/case.actions';
 import { LOAD_SETTINGS, LoadSettings } from '../../../store/actions/settings.actions';
-import { LOAD_LOG, ADD_LOG, LoadLog, AddLog } from '../../../store/actions/log.actions';
+import { LOAD_LOG, ADD_LOG, EDIT_LOG, DELETE_LOG, LoadLog, AddLog, EditLog, DeleteLog } from '../../../store/actions/log.actions';
 
 import { getLogState, LogState } from '../../../store/reducers/log.reducer';
 import { getSettingsState, SettingsState } from '../../../store/reducers/settings.reducer';
@@ -18,6 +19,9 @@ import { getCaseState, CaseState } from '../../../store/reducers/case.reducer';
 import { Case } from '../../../store/models/case.model';
 import { Settings } from '../../../store/models/settings.model';
 import { Log as LogItem } from '../../../store/models/log.model';
+
+import { LogDeleteDialogComponent } from './log-delete-dialog/log.delete.dialog.component';
+import { LogEditDialogComponent } from './log-edit-dialog/log.edit.dialog.component';
 
 import { Log } from '../../../decorators/log.decorator';
 import { logObservable } from '../../../decorators/log.observable.decorator';
@@ -34,7 +38,6 @@ import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
 
 import 'rxjs/add/operator/take';
-
 
 @Component({
   selector: 'app-case',
@@ -106,7 +109,8 @@ export class CaseComponent implements OnInit, AfterViewChecked {
     return [allLogs, allCategories, allCategorizedLogs];
   }
 
-  constructor(private activatedRoute: ActivatedRoute,
+  constructor(public dialog: MdDialog,
+              private activatedRoute: ActivatedRoute,
               private transferState: TransferState,
               private store: Store<CaseState | SettingsState | LogState>,
               private formBuilder: FormBuilder,
@@ -193,6 +197,28 @@ export class CaseComponent implements OnInit, AfterViewChecked {
     this.store.dispatch(new AddLog(log));
   }
 
+  public editLog(id: string) {
+    const dialogRef = this.dialog.open(LogEditDialogComponent, {
+      data: this.allLogs.filter((log: LogItem) => {
+        return log._id === id;
+      })[0]
+    });
+    dialogRef.afterClosed().subscribe((result: LogItem | null) => {
+      if (result !== null) {
+        this.store.dispatch(new EditLog(result));
+      }
+    });
+  }
+
+  public deleteLog(id: string) {
+    const dialogRef = this.dialog.open(LogDeleteDialogComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.store.dispatch(new DeleteLog({'_id': id}));
+      }
+    });
+  }
+
   private loadCasesAndHandleStates(id: string) {
     this.casesSubscription = this.case.subscribe((res) => {
       if (typeof(res.data) === 'undefined') {
@@ -261,12 +287,32 @@ export class CaseComponent implements OnInit, AfterViewChecked {
 
           case ADD_LOG: {
             if (res.error) {
-              this.notification(true, 'Couldn\'t load log, try again later.');
+              this.notification(true, 'Couldn\'t add log, try again later.');
             } else {
               this.notification(false, 'Log added!');
               this.initForm();
               this.fillForm();
               this.addLog = !this.addLog;
+            }
+
+            break;
+          }
+
+          case EDIT_LOG: {
+            if (res.error) {
+              this.notification(true, 'Couldn\'t edit log, try again later.');
+            } else {
+              this.notification(false, 'Log edited!');
+            }
+
+            break;
+          }
+
+          case DELETE_LOG: {
+            if (res.error) {
+              this.notification(true, 'Couldn\'t delete log, try again later.');
+            } else {
+              this.notification(false, 'Log deleted!');
             }
 
             break;

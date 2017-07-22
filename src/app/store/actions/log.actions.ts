@@ -66,7 +66,7 @@ export class DeleteLogSuccess implements Action {
 export class DeleteLog implements Action {
   readonly type = DELETE_LOG;
 
-  constructor(public payload: Log) {}
+  constructor(public payload: Object) {}
 }
 
 export class DeleteLogFailure implements Action {

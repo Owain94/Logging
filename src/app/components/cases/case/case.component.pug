@@ -82,7 +82,8 @@ app-header([headerHeading]="[header[0] | capitalize, header[1] | capitalize]")
         [columnMode]="'force'",
         [rows]="allCategorizedLogs[selectedCategory]",
         [reorderable]="false",
-        [rowHeight]="'auto'"
+        [rowHeight]="'auto'",
+        [sorts]="[{prop: 'when', dir: 'asc'}]"
       )
         ngx-datatable-column([sortable]="false", [draggable]="false", name="Where", [minWidth]="100", [maxWidth]="150")
         ngx-datatable-column([sortable]="true",  [draggable]="false", name="When", [minWidth]="175", [maxWidth]="180")
@@ -91,5 +92,15 @@ app-header([headerHeading]="[header[0] | capitalize, header[1] | capitalize]")
         ngx-datatable-column([sortable]="false", [draggable]="false", name="How", [minWidth]="150")
         ngx-datatable-column([sortable]="false", [draggable]="false", name="With", [minWidth]="175", [maxWidth]="200")
         ngx-datatable-column([sortable]="false", [draggable]="false", name="Result")
+        ngx-datatable-column([sortable]="false", [draggable]="false", name="Edit", [minWidth]="30", [maxWidth]="30", prop="_id")
+          ng-template(let-column="column", let-sort="sortFn", ngx-datatable-header-template)
+          ng-template(let-row="row", let-value="value", ngx-datatable-cell-template)
+            a((click)="editLog(value)")
+              span.icon.icon-pencil
+        ngx-datatable-column([sortable]="false", [draggable]="false", name="Delete", [minWidth]="30", [maxWidth]="30", prop="_id")
+          ng-template(let-column="column", let-sort="sortFn", ngx-datatable-header-template)
+          ng-template(let-row="row", let-value="value", ngx-datatable-cell-template)
+            a((click)="deleteLog(value)")
+              span.icon.icon-trash
 
 app-notifications

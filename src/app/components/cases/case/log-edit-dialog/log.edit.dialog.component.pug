@@ -1,0 +1,51 @@
+.section
+  .row
+    form([formGroup]="editLogForm", (ngSubmit)="submitForm(editLogForm.value)")
+      .large-6.columns
+        label([ngClass]="{ 'error': !editLogForm.controls['who'].valid && editLogForm.controls['who'].touched }") Name
+          input(type="text", [formControl]="editLogForm.controls['who']", [ngClass]="{ 'error': !editLogForm.controls['who'].valid && editLogForm.controls['who'].touched }")
+        small.error(*ngIf="!editLogForm.controls['who'].valid && editLogForm.controls['who'].touched") Name is mandatory
+
+      .large-6.columns
+        label([ngClass]="{ 'error': !editLogForm.controls['what'].valid && editLogForm.controls['what'].touched }") What (example found x file)
+          input(type="text", [formControl]="editLogForm.controls['what']", [ngClass]="{ 'error': !editLogForm.controls['what'].valid && editLogForm.controls['what'].touched }")
+        small.error(*ngIf="!editLogForm.controls['what'].valid && editLogForm.controls['what'].touched") What is mandatory
+
+      .large-6.columns
+        label([ngClass]="{ 'error': !editLogForm.controls['where'].valid && editLogForm.controls['where'].touched }") Location
+          input(type="text", [formControl]="editLogForm.controls['where']", [ngClass]="{ 'error': !editLogForm.controls['where'].valid && editLogForm.controls['where'].touched }")
+        small.error(*ngIf="!editLogForm.controls['where'].valid && editLogForm.controls['where'].touched") Location is mandatory
+
+      .large-6.columns
+        label([ngClass]="{ 'error': !editLogForm.controls['when'].valid && editLogForm.controls['when'].touched }") Date time
+          input(type="text", [formControl]="editLogForm.controls['when']", [ngClass]="{ 'error': !editLogForm.controls['when'].valid && editLogForm.controls['when'].touched }")
+        small.error(*ngIf="!editLogForm.controls['when'].valid && editLogForm.controls['when'].touched") Date time is mandatory
+
+      .row
+        .large-12.columns
+          label([ngClass]="{ 'error': !editLogForm.controls['why'].valid && editLogForm.controls['why'].touched }", for="why") Why
+          .row.collapse
+            .large-3.small-4.columns
+              span.prefix([innerText]="prefix")
+            .large-9.small-8.columns
+              input(type="text", [formControl]="editLogForm.controls['why']", [ngClass]="{ 'error': !editLogForm.controls['why'].valid && editLogForm.controls['why'].touched }", id="why")
+            small.error.why-error(*ngIf="!editLogForm.controls['why'].valid && editLogForm.controls['why'].touched") Why is mandatory
+
+      .large-6.columns
+        label([ngClass]="{ 'error': !editLogForm.controls['how'].valid && editLogForm.controls['how'].touched }") How (example: cat file)
+          input(type="text", [formControl]="editLogForm.controls['how']", [ngClass]="{ 'error': !editLogForm.controls['how'].valid && editLogForm.controls['how'].touched }")
+        small.error(*ngIf="!editLogForm.controls['how'].valid && editLogForm.controls['how'].touched") How is mandatory
+
+      .large-6.columns
+        label([ngClass]="{ 'error': !editLogForm.controls['with'].valid && editLogForm.controls['with'].touched }") With (example: Terminal)
+          input(type="text", [formControl]="editLogForm.controls['with']", [ngClass]="{ 'error': !editLogForm.controls['with'].valid && editLogForm.controls['with'].touched }")
+        small.error(*ngIf="!editLogForm.controls['with'].valid && editLogForm.controls['with'].touched") With is mandatory
+
+      .large-12.columns
+        label([ngClass]="{ 'error': !editLogForm.controls['result'].valid && editLogForm.controls['result'].touched }") Results
+          textarea(type="text", [formControl]="editLogForm.controls['result']", [ngClass]="{ 'error': !editLogForm.controls['result'].valid && editLogForm.controls['result'].touched }")
+        small.error(*ngIf="!editLogForm.controls['result'].valid && editLogForm.controls['result'].touched") Results is mandatory
+
+      .large-12.columns.end
+        button.button(md-raised-button, type="submit", [disabled]="!editLogForm.valid") Save
+        a.btn-text(md-button, (click)='dialogRef.close(null)') Cancel

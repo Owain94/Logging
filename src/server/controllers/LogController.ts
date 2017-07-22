@@ -46,7 +46,7 @@ class LogController implements IBaseController<LogBusiness> {
         } else {
           res.send({
             'error': 'false',
-            '_id': result.body._id,
+            '_id': req.body._id,
             'who': req.body.who,
             'what': req.body.what,
             'where': req.body.where,
