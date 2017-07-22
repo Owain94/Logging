@@ -88,7 +88,7 @@ export class CaseComponent implements OnInit, AfterViewChecked {
     const allCategories =
       allLogs.map(
         (item: any) =>
-          item.why.split('[')[1].split(']')[0].trim()).filter(
+          item.why.split(/\[(.+)/)[1].split(/\](.+)/)[0].trim()).filter(
             (value: any, index: any, self: any) =>
               self.indexOf(value) === index);
 
@@ -96,7 +96,7 @@ export class CaseComponent implements OnInit, AfterViewChecked {
     for (const cat in allCategories) {
       if (allCategories.hasOwnProperty(cat)) {
         allCategorizedLogs[allCategories[cat]] = allLogs.filter((log: LogItem) => {
-          return log.why.split('[')[1].split(']')[0].trim() === allCategories[cat];
+          return log.why.split(/\[(.+)/)[1].split(/\](.+)/)[0].trim() === allCategories[cat];
         });
       }
     }
