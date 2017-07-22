@@ -155,7 +155,7 @@ export class CaseComponent implements OnInit, AfterViewChecked {
       'why': [null, Validators.required],
       'how': [null, Validators.required],
       'with': [null, Validators.required],
-      'result': [null, Validators.required]
+      'result': [null]
     });
   }
 
@@ -192,7 +192,9 @@ export class CaseComponent implements OnInit, AfterViewChecked {
     log.when = new Date().toLocaleString();
     log.case = this.id;
     log.why = `${this.prefix} ${log.why}`;
-    log.result = log.result.replace(/(?:\r\n|\r|\n)/g, '\n');
+    if (log.result) {
+      log.result = log.result.replace(/(?:\r\n|\r|\n)/g, '\n');
+    }
 
     this.store.dispatch(new AddLog(log));
   }

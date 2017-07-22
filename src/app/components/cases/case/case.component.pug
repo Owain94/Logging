@@ -48,9 +48,8 @@ app-header([headerHeading]="[header[0] | capitalize, header[1] | capitalize]")
         small.error(*ngIf="!addLogForm.controls['with'].valid && addLogForm.controls['with'].touched") With is mandatory
 
       .large-12.columns
-        label([ngClass]="{ 'error': !addLogForm.controls['result'].valid && addLogForm.controls['result'].touched }") Results
-          textarea(type="text", [formControl]="addLogForm.controls['result']", [ngClass]="{ 'error': !addLogForm.controls['result'].valid && addLogForm.controls['result'].touched }")
-        small.error(*ngIf="!addLogForm.controls['result'].valid && addLogForm.controls['result'].touched") Results is mandatory
+        label Results
+          textarea(type="text", [formControl]="addLogForm.controls['result']")
 
       .large-12.columns.end
         button.button.button-margin(type="submit", [disabled]="!addLogForm.valid") Add

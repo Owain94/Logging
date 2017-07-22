@@ -42,9 +42,8 @@
         small.error(*ngIf="!editLogForm.controls['with'].valid && editLogForm.controls['with'].touched") With is mandatory
 
       .large-12.columns
-        label([ngClass]="{ 'error': !editLogForm.controls['result'].valid && editLogForm.controls['result'].touched }") Results
-          textarea(type="text", [formControl]="editLogForm.controls['result']", [ngClass]="{ 'error': !editLogForm.controls['result'].valid && editLogForm.controls['result'].touched }")
-        small.error(*ngIf="!editLogForm.controls['result'].valid && editLogForm.controls['result'].touched") Results is mandatory
+        label Results
+          textarea(type="text", [formControl]="editLogForm.controls['result']")
 
       .large-12.columns.end
         button.button(md-raised-button, type="submit", [disabled]="!editLogForm.valid") Save

@@ -23,7 +23,7 @@ class LogController implements IBaseController<LogBusiness> {
             'why': req.body.why,
             'how': req.body.how,
             'with': req.body.with,
-            'result': req.body.result,
+            'result': req.body.result ? req.body.result : '',
             'case': req.body.case
           });
         }
@@ -54,7 +54,7 @@ class LogController implements IBaseController<LogBusiness> {
             'why': req.body.why,
             'how': req.body.how,
             'with': req.body.with,
-            'result': req.body.result,
+            'result': req.body.result ? req.body.result : '',
             'case': req.body.case
           });
         }
