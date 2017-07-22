@@ -45,7 +45,21 @@ module.exports = {
       ),
       "minimize": true,
       "purifyOptions": {
-        "whitelist": []
+        "whitelist": [
+          "cdk-focused",
+          "cdk-mouse-focused",
+          "cdk-global-scrollblock",
+          "cdk-global-overlay-wrapper",
+          "cdk-overlay-pane",
+          "cdk-overlay-backdrop",
+          "cdk-overlay-container",
+          "cdk-overlay-dark-backdrop",
+          "cdk-overlay-backdrop-showing",
+          "cdk-visually-hidden",
+          "cdk-focus-trap-anchor",
+          "mat-dialog-container",
+          "mat-ripple-element"
+        ]
       }
     }),
     new CompressionPlugin({

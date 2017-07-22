@@ -13,7 +13,7 @@ class LogSchema {
       },
       what: {
         type: String,
-        required: true
+        required: false
       },
       where: {
         type: String,
