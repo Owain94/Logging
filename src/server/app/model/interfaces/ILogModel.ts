@@ -2,7 +2,7 @@ import mongoose = require('mongoose');
 
 interface ILogModel extends mongoose.Document {
   who: string;
-  what: string;
+  what?: string;
   where: string;
   when: string;
   why: string;
