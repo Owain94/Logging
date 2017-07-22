@@ -319,12 +319,50 @@ export class CaseComponent implements OnInit, AfterViewChecked {
     for (const cat in this.allCategories) {
       if (this.allCategories.hasOwnProperty(cat)) {
 
+        const charCount = {
+          'who': 4,
+          'where': 6,
+          'when': 21,
+          'what': 5,
+          'why': 4,
+          'how': 4,
+          'with': 5
+        };
+
         for (const obj in allLogs[this.allCategories[cat]]) {
           if (allLogs[this.allCategories[cat]].hasOwnProperty(obj)) {
             delete allLogs[this.allCategories[cat]][obj]['__v'];
             delete allLogs[this.allCategories[cat]][obj]['_id'];
             delete allLogs[this.allCategories[cat]][obj]['$$index'];
             delete allLogs[this.allCategories[cat]][obj]['case'];
+            delete allLogs[this.allCategories[cat]][obj]['error'];
+
+            charCount.who = allLogs[this.allCategories[cat]][obj]['who'].length;
+
+            const whereLength = allLogs[this.allCategories[cat]][obj]['where'].length
+            if (whereLength > charCount.where) {
+              charCount.where = allLogs[this.allCategories[cat]][obj]['where'].length;
+            }
+
+            const whatLength = allLogs[this.allCategories[cat]][obj]['what'].length
+            if (whatLength > charCount.what) {
+              charCount.what = allLogs[this.allCategories[cat]][obj]['what'].length;
+            }
+
+            const whyLength = allLogs[this.allCategories[cat]][obj]['why'].length
+            if (whyLength > charCount.why) {
+              charCount.why = allLogs[this.allCategories[cat]][obj]['why'].length;
+            }
+
+            const howLength = allLogs[this.allCategories[cat]][obj]['how'].length
+            if (howLength > charCount.how) {
+              charCount.how = allLogs[this.allCategories[cat]][obj]['how'].length;
+            }
+
+            const withLength = allLogs[this.allCategories[cat]][obj]['with'].length
+            if (withLength > charCount.with) {
+              charCount.with = allLogs[this.allCategories[cat]][obj]['with'].length;
+            }
           }
         }
 
@@ -344,11 +382,21 @@ export class CaseComponent implements OnInit, AfterViewChecked {
         allLogsJson[this.allCategories[cat]] = XLSX.utils.json_to_sheet(
           allLogs[this.allCategories[cat]]
         );
+        allLogsJson[this.allCategories[cat]]['!cols'] = [
+          {wch: charCount.who},
+          {wch: charCount.where},
+          {wch: charCount.when},
+          {wch: charCount.what},
+          {wch: charCount.why},
+          {wch: charCount.how},
+          {wch: charCount.with},
+          {wch: 75}
+        ];
       }
     }
 
     const workbook: XLSX.WorkBook = { Sheets: allLogsJson, SheetNames: this.allCategories };
-    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' });
+    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', bookSST: true, type: 'buffer' });
     this.saveAsExcelFile(excelBuffer, 'test');
   }
 
