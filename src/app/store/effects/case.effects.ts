@@ -29,6 +29,7 @@ import { Observable } from 'rxjs/Observable'
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/startWith';
 
 @Injectable()
 export class CaseEffects {
@@ -36,6 +37,7 @@ export class CaseEffects {
   @Effect()
   loadCases: Observable<Action> = this.actions
     .ofType(REQUEST_CASES)
+    .startWith(new LoadCases())
     .switchMap((action: LoadCases) => this.caseService.loadCases())
     .map((cases: Array<Case>) => new LoadCasesSuccess(cases));
 

@@ -1,29 +1,12 @@
-import { isPlatformBrowser } from '@angular/common';
-import {
-  Component,
-  ChangeDetectionStrategy,
-  OnInit,
-  AfterContentInit,
-  AfterViewChecked,
-  PLATFORM_ID,
-  Inject,
-  ChangeDetectorRef
-} from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit, AfterContentInit, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Store } from '@ngrx/store';
 
-import { TransferState } from '../../modules/transfer-state/transfer-state';
-
-import {
-  LoadCases,
-  LOAD_CASES
-} from '../../store/actions/case.actions';
 import {
   LOAD_SETTINGS,
   ADD_SETTINGS,
   EDIT_SETTINGS,
-  LoadSettings,
   AddSettings,
   EditSettings
 } from '../../store/actions/settings.actions';
@@ -53,34 +36,28 @@ import 'rxjs/add/operator/take';
 })
 @Log()
 @AutoUnsubscribe()
-export class SettingsComponent implements OnInit, AfterContentInit, AfterViewChecked {
+export class SettingsComponent implements OnInit, AfterContentInit {
 
   @logObservable public settings: Observable<any> = null;
   @logObservable public cases: Observable<any> = null;
 
-  private allCases: Array<Case>;
   public settingsForm: FormGroup;
   // tslint:disable-next-line:no-inferrable-types
   private initialSettings: boolean = false;
   private settingsId: string;
 
   private settingsSubscription: Subscription;
-  private caseSubscription: Subscription;
-  private storeSubscription: Subscription;
 
-  constructor(private transferState: TransferState,
-              private store: Store<SettingsState | CaseState>,
+  constructor(private store: Store<SettingsState | CaseState>,
               private formBuilder: FormBuilder,
               private notificationsService: NotificationsService,
-              private changeDetectorRef: ChangeDetectorRef,
-              @Inject(PLATFORM_ID) private platformId: Object
+              private changeDetectorRef: ChangeDetectorRef
   ) {
     this.settings = store.select<SettingsState>(getSettingsState);
     this.cases = store.select<CaseState>(getCaseState);
   }
 
   ngOnInit(): void {
-    this.loadCasesAndHandleStates();
     this.initForm();
   }
 
@@ -88,16 +65,7 @@ export class SettingsComponent implements OnInit, AfterContentInit, AfterViewChe
     this.loadSettingsAndHandleStates();
   }
 
-  ngAfterViewChecked(): void {
-    if (!isPlatformBrowser(this.platformId)) {
-      this.storeSubscription = this.store.take(3).subscribe(state => {
-        this.transferState.set('state', state);
-      });
-    }
-  }
-
   private initForm(caseId: string = '', name: string = '', invpre: string = '', location: string = ''): void {
-
     if (caseId !== '' && name !== '' && invpre !== '' && location !== '') {
       this.settingsForm = this.formBuilder.group({
         'name': [name, Validators.required],
@@ -117,31 +85,7 @@ export class SettingsComponent implements OnInit, AfterContentInit, AfterViewChe
     this.changeDetectorRef.markForCheck();
   }
 
-  private loadCasesAndHandleStates() {
-    this.caseSubscription = this.cases.subscribe((res) => {
-
-      if (typeof(res.data) === 'undefined') {
-        this.store.dispatch(new LoadCases());
-      } else {
-        switch (res.type) {
-
-          case LOAD_CASES: {
-            if (res.error) {
-              this.notification(true, 'Couldn\'t load cases, try again later.');
-            } else {
-              this.allCases = res.data;
-            }
-
-            break;
-          }
-
-        }
-      }
-    });
-  }
-
   private loadSettingsAndHandleStates() {
-    this.store.dispatch(new LoadSettings());
     this.settingsSubscription = this.settings.subscribe((res) => {
       if (typeof(res.data) !== 'undefined') {
         if (res.data.length > 0) {

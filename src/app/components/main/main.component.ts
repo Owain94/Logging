@@ -2,8 +2,6 @@ import { Component, OnInit, Inject, PLATFORM_ID, OnDestroy, ChangeDetectionStrat
 import { isPlatformBrowser } from '@angular/common';
 import { Router, NavigationEnd } from '@angular/router';
 
-import { TransferState } from '../../modules/transfer-state/transfer-state';
-
 import { Log } from '../../decorators/log.decorator';
 import { AutoUnsubscribe } from '../../decorators/auto.unsubscribe.decorator';
 
@@ -21,8 +19,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
   private routerEventsSubscription: Subscription;
 
-  constructor(private transferState: TransferState,
-              private router: Router,
+  constructor(private router: Router,
               @Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngOnInit(): void {
@@ -33,8 +30,6 @@ export class MainComponent implements OnInit, OnDestroy {
         }
       }
     });
-
-    this.transferState.set('cached', true);
   }
 
   ngOnDestroy(): void {

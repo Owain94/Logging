@@ -1,0 +1,90 @@
+
+import { Component, ChangeDetectionStrategy, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
+import { Store } from '@ngrx/store';
+
+import { SettingsState, getSettings } from '../../../../store/reducers/settings.reducer';
+
+import { Settings } from '../../../../store/models/settings.model';
+import { Log as LogItem } from '../../../../store/models/log.model';
+
+import { Log } from '../../../../decorators/log.decorator';
+import { logObservable } from '../../../../decorators/log.observable.decorator';
+
+import { Observable } from 'rxjs/Observable';
+import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
+import { Subscription } from 'rxjs/Subscription';
+import { Subject } from 'rxjs/Subject';
+
+@Component({
+  selector: 'app-log-add',
+  templateUrl: './log.add.component.pug',
+  styleUrls: ['./log.add.component.styl'],
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+@Log()
+export class LogAddComponent implements OnInit {
+
+  @Input() id: string;
+
+  @Output() addLog: EventEmitter<LogItem> = new EventEmitter<LogItem>();
+  @Output() notification: EventEmitter<[boolean, string]> = new EventEmitter<[boolean, string]>();
+
+  @logObservable public settings: Observable<any> = null;
+  private datetime: Observable<number> = null;
+
+  public addLogForm: FormGroup;
+
+  private datetimeSubscription: Subscription;
+
+  // tslint:disable-next-line:no-inferrable-types
+  public prefix: string = '';
+  // tslint:disable-next-line:no-inferrable-types
+  public datetimeValue: Subject<string> = new Subject<string>();
+
+  constructor(private formBuilder: FormBuilder,
+              private store: Store<SettingsState>) {
+    this.settings = this.store.select<Settings>(getSettings);
+    this.datetime = IntervalObservable.create();
+  }
+
+  ngOnInit(): void {
+    this.initForm();
+
+    this.datetime = IntervalObservable.create(1000);
+
+    this.datetimeSubscription = this.datetime.subscribe(() =>
+      this.datetimeValue.next(
+        `${new Date().toLocaleDateString()}, ${new Date().toLocaleString([], {hour: '2-digit', minute: '2-digit', hour12: false})}`
+      )
+    );
+  }
+
+  private initForm(): void {
+    this.addLogForm = this.formBuilder.group({
+      'what': [null, Validators.required],
+      'why': [null, Validators.required],
+      'how': [null, Validators.required],
+      'with': [null, Validators.required],
+      'result': [null]
+    });
+  }
+
+  public submitForm(log: LogItem): void {
+    this.settings.take(1).subscribe((settings: Settings) => {
+      log.who = settings.name;
+      log.where = settings.location;
+      log.when =
+        `${new Date().toLocaleDateString()}, ${new Date().toLocaleString([], {hour: '2-digit', minute: '2-digit', hour12: false})}`;
+      log.case = this.id;
+      log.why = `[ ${settings.invpre} ] ${log.why}`;
+      if (log.result) {
+        log.result = log.result.replace(/(?:\r\n|\r|\n)/g, '\n');
+      }
+
+      this.addLog.emit(log);
+    });
+  }
+
+}

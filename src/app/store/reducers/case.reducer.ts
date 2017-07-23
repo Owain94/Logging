@@ -1,4 +1,4 @@
-import { createFeatureSelector } from '@ngrx/store';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 import {
   Actions,
@@ -23,28 +23,16 @@ export interface CaseState {
   error?: boolean
 }
 
-export function initialState(): CaseState {
-  /* istanbul ignore if */
-  if (typeof(window) !== 'undefined' &&
-      typeof(window['TRANSFER_STATE']) !== 'undefined' &&
-      typeof(window['TRANSFER_STATE'].state) !== 'undefined' &&
-      typeof(window['TRANSFER_STATE'].state.cases) !== 'undefined') {
-    return window['TRANSFER_STATE'].state.cases;
-  } else {
-    return {
-      data: undefined
-    };
-  }
-}
+const initialState: CaseState = {
+  data: [],
+};
 
-export function caseReducer(state: CaseState = initialState(), action: Actions) {
+export function caseReducer(state: CaseState = initialState, action: Actions) {
 
   switch (action.type) {
 
-
     case LOAD_CASES_SUCCESS: {
       return {
-        ...state.data,
         data: action.payload,
         type: LOAD_CASES,
         error: false
@@ -123,3 +111,12 @@ export function caseReducer(state: CaseState = initialState(), action: Actions) 
 };
 
 export const getCaseState = createFeatureSelector<CaseState>('cases');
+
+export const getSingleCase = (id: string) => createSelector(
+  getCaseState,
+  (cases) => {
+    return cases.data.filter((singleCase) => {
+      return singleCase._id === id;
+    })[0];
+  }
+);

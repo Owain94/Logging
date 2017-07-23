@@ -1,4 +1,4 @@
-import { createFeatureSelector } from '@ngrx/store';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 import {
   Actions,
@@ -23,27 +23,16 @@ export interface LogState {
   error?: boolean
 }
 
-export function initialState(): LogState {
-  /* istanbul ignore if */
-  if (typeof(window) !== 'undefined' &&
-      typeof(window['TRANSFER_STATE']) !== 'undefined' &&
-      typeof(window['TRANSFER_STATE'].state) !== 'undefined' &&
-      typeof(window['TRANSFER_STATE'].state.log) !== 'undefined') {
-    return window['TRANSFER_STATE'].state.log;
-  } else {
-    return {
-      data: undefined
-    };
-  }
-}
+const initialState: LogState = {
+  data: []
+};
 
-export function logReducer(state: LogState = initialState(), action: Actions) {
+export function logReducer(state: LogState = initialState, action: Actions) {
 
   switch (action.type) {
 
     case LOAD_LOG_SUCCESS: {
       return {
-        ...state.data,
         data: action.payload,
         type: LOAD_LOG,
         error: false
@@ -122,3 +111,12 @@ export function logReducer(state: LogState = initialState(), action: Actions) {
 };
 
 export const getLogState = createFeatureSelector<LogState>('log');
+
+export const getLogsForCase = (id: string) => createSelector(
+  getLogState,
+  (allLogs) => {
+    return allLogs.data.filter((log) => {
+      return log.case === id;
+    });
+  }
+);

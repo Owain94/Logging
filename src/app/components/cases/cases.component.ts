@@ -1,21 +1,20 @@
-import { isPlatformBrowser } from '@angular/common';
-import { Component, ChangeDetectionStrategy, OnInit, AfterViewChecked, Inject, PLATFORM_ID, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { MdDialog } from '@angular/material';
 
 import { Store } from '@ngrx/store';
 
-import { TransferState } from '../../modules/transfer-state/transfer-state';
-
+import { AppActions } from '../../store/app.actions';
 import {
-  LOAD_CASES,
-  ADD_CASE,
-  EDIT_CASE,
-  DELETE_CASE,
-  LoadCases,
   AddCase,
   EditCase,
-  DeleteCase
+  DeleteCase,
+  ADD_CASE_SUCCESS,
+  ADD_CASE_FAILURE,
+  EDIT_CASE_FAILURE,
+  EDIT_CASE_SUCCESS,
+  DELETE_CASE_SUCCESS,
+  DELETE_CASE_FAILURE
 } from '../../store/actions/case.actions';
 
 import { getCaseState, CaseState } from '../../store/reducers/case.reducer';
@@ -43,37 +42,31 @@ import 'rxjs/add/operator/take';
 })
 @Log()
 @AutoUnsubscribe()
-export class CasesComponent implements OnInit, AfterViewChecked {
+export class CasesComponent implements OnInit {
 
   @logObservable public cases: Observable<any> = null;
 
-  private casesSubscription: Subscription;
-  private storeSubscription: Subscription;
+  private addCaseSuccessSubscription: Subscription;
+  private addCaseFailureSubscription: Subscription;
+  private editCaseSuccessSubscription: Subscription;
+  private editCaseFailureSubscription: Subscription;
+  private deleteCaseSuccessSubscription: Subscription;
+  private deleteCaseFailureSubscription: Subscription;
 
   public addCaseForm: FormGroup;
 
   constructor(public dialog: MdDialog,
-              private transferState: TransferState,
               private store: Store<CaseState>,
+              private actions: AppActions,
               private formBuilder: FormBuilder,
-              private notificationsService: NotificationsService,
-              private changeDetectorRef: ChangeDetectorRef,
-              @Inject(PLATFORM_ID) private platformId: Object
+              private notificationsService: NotificationsService
   ) {
-    this.cases = store.select<any>(getCaseState);
+    this.cases = store.select<CaseState>(getCaseState);
   }
 
   ngOnInit(): void {
-    this.loadCasesAndHandleStates();
+    this.HandleStates();
     this.initForm();
-  }
-
-  ngAfterViewChecked(): void {
-    if (!isPlatformBrowser(this.platformId)) {
-      this.storeSubscription = this.store.take(2).subscribe(state => {
-        this.transferState.set('state', state);
-      });
-    }
   }
 
   private initForm(): void {
@@ -83,53 +76,30 @@ export class CasesComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  private loadCasesAndHandleStates() {
-    this.casesSubscription = this.cases.subscribe((res) => {
-      if (typeof(res.data) === 'undefined') {
-        this.store.dispatch(new LoadCases());
-      } else {
-        switch (res.type) {
+  private HandleStates() {
+    this.addCaseSuccessSubscription = this.actions.ofType(ADD_CASE_SUCCESS).subscribe(() => {
+      this.initForm();
+      this.notification(false, 'Case successfully added.')
+    });
 
-          case LOAD_CASES: {
-            if (res.error) {
-              this.notification(true, 'Couldn\'t load cases, try again later.');
-            }
+    this.addCaseFailureSubscription = this.actions.ofType(ADD_CASE_FAILURE).subscribe(() => {
+      this.notification(true, 'Couldn\'t add case, try again later.');
+    });
 
-            break;
-          }
+    this.editCaseSuccessSubscription = this.actions.ofType(EDIT_CASE_SUCCESS).subscribe(() => {
+      this.notification(false, 'Case successfully edited.');
+    });
 
-          case ADD_CASE: {
-            if (res.error) {
-              this.notification(true, 'Couldn\'t add case, try again later.');
-            } else {
-              this.initForm();
-              this.notification(false, 'Case successfully added.');
-            }
+    this.editCaseFailureSubscription = this.actions.ofType(EDIT_CASE_FAILURE).subscribe(() => {
+      this.notification(true, 'Couldn\'t edit case, try again later.');
+    });
 
-            break;
-          }
+    this.deleteCaseSuccessSubscription = this.actions.ofType(DELETE_CASE_SUCCESS).subscribe(() => {
+      this.notification(false, 'Case successfully deleted.');
+    });
 
-          case EDIT_CASE: {
-            if (res.error) {
-              this.notification(true, 'Couldn\'t edit case, try again later.');
-            } else {
-              this.notification(false, 'Case successfully edited.');
-            }
-
-            break;
-          }
-
-          case DELETE_CASE: {
-            if (res.error) {
-              this.notification(true, 'Couldn\'t delete case, try again later.');
-            } else {
-              this.notification(false, 'Case successfully deleted.');
-            }
-
-            break;
-          }
-        }
-      }
+    this.deleteCaseFailureSubscription = this.actions.ofType(DELETE_CASE_FAILURE).subscribe(() => {
+      this.notification(true, 'Couldn\'t delete case, try again later.');
     });
   }
 
@@ -145,8 +115,6 @@ export class CasesComponent implements OnInit, AfterViewChecked {
         description
       );
     }
-
-    this.changeDetectorRef.markForCheck();
   }
 
   public submitForm(singleCase: Case): void {

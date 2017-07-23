@@ -1,106 +1,16 @@
-app-header([headerHeading]="[header[0] | capitalize, header[1] | capitalize]")
+app-header([headerHeading]="[(case | async)?.name | capitalize, (case | async)?.description | capitalize]")
 
 .section
   .row
     .large-12.columns.end
-      button.button.button-margin((click)="addLog = !addLog", [innerText]="addLog ? 'Hide' : 'Add Log'")
-      button.button.button-margin(*ngIf="allCategories.length > 0", (click)="exportAsExcelFile()") Export logs
-  .row(*ngIf="addLog")
-    form([formGroup]="addLogForm", (ngSubmit)="submitForm(addLogForm.value)")
-      .large-6.columns
-        label([ngClass]="{ 'error': !addLogForm.controls['who'].valid && addLogForm.controls['who'].touched }") Name
-          input(type="text", [formControl]="addLogForm.controls['who']", [ngClass]="{ 'error': !addLogForm.controls['who'].valid && addLogForm.controls['who'].touched }")
-        small.error(*ngIf="!addLogForm.controls['who'].valid && addLogForm.controls['who'].touched") Name is mandatory
+      button.button.button-margin((click)="addLogToggle = !addLogToggle", [innerText]="addLogToggle ? 'Hide' : 'Add Log'")
+      app-log-export(*ngIf="allCategories.length > 0", [categorizedLogs]="allCategorizedLogs", [categories]="allCategories")
 
-      .large-6.columns
-        label([ngClass]="{ 'error': !addLogForm.controls['what'].valid && addLogForm.controls['what'].touched }") What (example found x file)
-          input(type="text", [formControl]="addLogForm.controls['what']", [ngClass]="{ 'error': !addLogForm.controls['what'].valid && addLogForm.controls['what'].touched }")
-        small.error(*ngIf="!addLogForm.controls['what'].valid && addLogForm.controls['what'].touched") What is mandatory
-
-      .large-6.columns
-        label([ngClass]="{ 'error': !addLogForm.controls['where'].valid && addLogForm.controls['where'].touched }") Location
-          input(type="text", [formControl]="addLogForm.controls['where']", [ngClass]="{ 'error': !addLogForm.controls['where'].valid && addLogForm.controls['where'].touched }")
-        small.error(*ngIf="!addLogForm.controls['where'].valid && addLogForm.controls['where'].touched") Location is mandatory
-
-      .large-6.columns
-        label([ngClass]="{ 'error': !addLogForm.controls['when'].valid && addLogForm.controls['when'].touched }") Date time
-          input(type="text", [formControl]="addLogForm.controls['when']", [ngClass]="{ 'error': !addLogForm.controls['when'].valid && addLogForm.controls['when'].touched }")
-        small.error(*ngIf="!addLogForm.controls['when'].valid && addLogForm.controls['when'].touched") Date time is mandatory
-
-      .row
-        .large-12.columns
-          label([ngClass]="{ 'error': !addLogForm.controls['why'].valid && addLogForm.controls['why'].touched }", for="why") Why
-          .row.collapse
-            .large-3.small-4.columns
-              span.prefix([innerText]="prefix")
-            .large-9.small-8.columns
-              input(type="text", [formControl]="addLogForm.controls['why']", [ngClass]="{ 'error': !addLogForm.controls['why'].valid && addLogForm.controls['why'].touched }", id="why")
-            small.error.why-error(*ngIf="!addLogForm.controls['why'].valid && addLogForm.controls['why'].touched") Why is mandatory
-
-      .large-6.columns
-        label([ngClass]="{ 'error': !addLogForm.controls['how'].valid && addLogForm.controls['how'].touched }") How (example: cat file)
-          input(type="text", [formControl]="addLogForm.controls['how']", [ngClass]="{ 'error': !addLogForm.controls['how'].valid && addLogForm.controls['how'].touched }")
-        small.error(*ngIf="!addLogForm.controls['how'].valid && addLogForm.controls['how'].touched") How is mandatory
-
-      .large-6.columns
-        label([ngClass]="{ 'error': !addLogForm.controls['with'].valid && addLogForm.controls['with'].touched }") With (example: Terminal)
-          input(type="text", [formControl]="addLogForm.controls['with']", [ngClass]="{ 'error': !addLogForm.controls['with'].valid && addLogForm.controls['with'].touched }")
-        small.error(*ngIf="!addLogForm.controls['with'].valid && addLogForm.controls['with'].touched") With is mandatory
-
-      .large-12.columns
-        label Results
-          textarea(type="text", [formControl]="addLogForm.controls['result']")
-
-      .large-12.columns.end
-        button.button.button-margin(type="submit", [disabled]="!addLogForm.valid") Add
+  app-log-add(*ngIf="addLogToggle", [id]="id", (notification)="notificationEvent($event)", (addLog)="addLog($event)")
 
   hr
 
-  .row
-    .large-12.columns
-      div(*ngIf="allCategories.length > 0; else no_categories")
-        h4 Categories
-        button.button.button-margin(*ngFor="let category of allCategories; let i = index; trackBy: trackByFn", [innerText]="category | capitalize", (click)="selectedCategory = category")
-
-      ng-template(#no_categories="") No categories found, add your first log item by clicking the 'Add Log' button.
-
-  hr
-
-  .row(*ngIf="browser && allCategories.length > 0")
-    .large-12.columns
-
-      h4([innerText]="selectedCategory | capitalize")
-      span New lines will not be shown in the datatable, they will be present in an exported CSV or PDF file.
-
-  hr(*ngIf="browser && allCategories.length > 0")
-
-  .row.full-width(*ngIf="browser")
-    .large-12.columns
-
-      ngx-datatable.material.full-width(
-        [columnMode]="'force'",
-        [rows]="allCategorizedLogs[selectedCategory]",
-        [reorderable]="false",
-        [rowHeight]="'auto'",
-        [sorts]="[{prop: 'when', dir: 'asc'}]",
-        [scrollbarH]="true"
-      )
-        ngx-datatable-column([sortable]="false", name="Where", [minWidth]="100", [maxWidth]="150")
-        ngx-datatable-column([sortable]="true",  name="When", [minWidth]="175", [maxWidth]="180")
-        ngx-datatable-column([sortable]="false", name="What", [minWidth]="150")
-        ngx-datatable-column([sortable]="false", name="Why", [minWidth]="150")
-        ngx-datatable-column([sortable]="false", name="How", [minWidth]="150")
-        ngx-datatable-column([sortable]="false", name="With", [minWidth]="175", [maxWidth]="200")
-        ngx-datatable-column([sortable]="false", name="Result")
-        ngx-datatable-column([sortable]="false", name="Edit", [minWidth]="30", [maxWidth]="30", prop="_id")
-          ng-template(let-column="column", let-sort="sortFn", ngx-datatable-header-template)
-          ng-template(let-row="row", let-value="value", ngx-datatable-cell-template)
-            a((click)="editLog(value)")
-              span.icon.icon-pencil
-        ngx-datatable-column([sortable]="false", name="Delete", [minWidth]="30", [maxWidth]="30", prop="_id")
-          ng-template(let-column="column", let-sort="sortFn", ngx-datatable-header-template)
-          ng-template(let-row="row", let-value="value", ngx-datatable-cell-template)
-            a((click)="deleteLog(value)")
-              span.icon.icon-trash
+  app-log-categories([allCategories]="allCategories", (changeCategoryEvent)="selectedCategory = $event")
+  app-log-data([log]="log", [selectedCategory]="selectedCategory", (editLogEvent)="editLog($event)", (deleteLogEvent)="deleteLog($event)", (allCategoriesEvent)="allCategories = $event", (allCategorizedLogsEvent)="allCategorizedLogs = $event")
 
 app-notifications

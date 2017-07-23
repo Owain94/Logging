@@ -3,7 +3,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 
 import { AppModule } from './app.module';
-import { BrowserTransferStateModule } from './transfer-state/browser-transfer-state.module';
 
 import { MainComponent } from '../components/main/main.component';
 
@@ -13,7 +12,6 @@ import { MainComponent } from '../components/main/main.component';
     BrowserModule.withServerTransition({
         appId: 'logging'
     }),
-    BrowserTransferStateModule,
     AppModule
   ],
   bootstrap: [
