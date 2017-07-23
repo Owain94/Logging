@@ -29,6 +29,7 @@ import { Observable } from 'rxjs/Observable'
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/startWith';
 
 @Injectable()
 export class LogEffects {
@@ -36,6 +37,7 @@ export class LogEffects {
   @Effect()
   loadLog: Observable<Action> = this.actions
     .ofType(REQUEST_LOG)
+    .startWith(new LoadLog())
     .switchMap((action: LoadLog) => this.logService.loadLogs())
     .map((log: Array<Log>) => new LoadLogSuccess(log));
 

@@ -1,4 +1,4 @@
-import { createFeatureSelector } from '@ngrx/store';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 import {
   Actions,
@@ -20,27 +20,16 @@ export interface SettingsState {
   error?: boolean
 }
 
-export function initialState(): SettingsState {
-  /* istanbul ignore if */
-  if (typeof(window) !== 'undefined' &&
-      typeof(window['TRANSFER_STATE']) !== 'undefined' &&
-      typeof(window['TRANSFER_STATE'].state) !== 'undefined' &&
-      typeof(window['TRANSFER_STATE'].state.settings) !== 'undefined') {
-    return window['TRANSFER_STATE'].state.settings;
-  } else {
-    return {
-      data: undefined
-    };
-  }
-}
+const initialState: SettingsState = {
+  data: [],
+};
 
-export function settingsReducer(state: SettingsState = initialState(), action: Actions) {
+export function settingsReducer(state: SettingsState = initialState, action: Actions) {
 
   switch (action.type) {
 
     case LOAD_SETTINGS_SUCCESS: {
       return {
-        ...state.data,
         data: action.payload,
         type: LOAD_SETTINGS,
         error: false
@@ -95,3 +84,10 @@ export function settingsReducer(state: SettingsState = initialState(), action: A
 };
 
 export const getSettingsState = createFeatureSelector<SettingsState>('settings');
+
+export const getSettings = createSelector(
+  getSettingsState,
+  (settings) => {
+    return settings.data[0];
+  }
+);

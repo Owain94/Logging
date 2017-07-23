@@ -1,3 +1,4 @@
+import { enableProdMode } from '@angular/core';
 import '../polyfills/polyfills.server';
 import { AppServerModule } from '../app/modules/app.server.module';
 import { ngExpressEngine } from '../app/modules/ng-express-engine/express-engine';
@@ -7,11 +8,14 @@ import { Request, Response } from 'express';
 import { ROUTES } from '../helpers/routes';
 import { Routes } from '../server/config/routes/Routes';
 
-const fs = require('fs');
 const http = require('http');
 const expressStaticGzip = require('express-static-gzip');
 const compression = require('compression');
 const bodyParser = require('body-parser');
+
+if (process.env.NODE_ENV === 'production') {
+  enableProdMode();
+}
 
 const app = express();
 
@@ -47,10 +51,6 @@ ROUTES.forEach((route: string) => {
 });
 
 app.use('/api', new Routes().routes);
-
-app.get('*', (req: Request, res: Response) => {
-  res.redirect('/404');
-});
 
 const server = http.createServer(app);
 

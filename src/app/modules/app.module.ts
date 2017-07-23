@@ -4,15 +4,17 @@ import { HttpModule } from '@angular/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MdButtonModule, MdDialogModule } from '@angular/material';
 
-import { StoreModule, ActionReducerMap, ActionReducer } from '@ngrx/store';
+import { StoreModule, ActionReducerMap, ActionReducer, ActionsSubject } from '@ngrx/store';
 // import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { RoutingModule } from './routing/routing.module';
-import { TransferHttpModule } from './transfer-http/transfer-http.module';
 
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+
+import { AppActionsSubject } from '../store/app.action.subject';
+import { AppActions } from '../store/app.actions';
 
 import { logger } from '../store/reducers/logging.reducer';
 import { caseReducer } from '../store/reducers/case.reducer';
@@ -38,6 +40,10 @@ import { NotificationComponent } from '../components/notifications/notification/
 import { CaseDeleteDialogComponent } from '../components/cases/case-delete-dialog/case.delete.dialog.component';
 import { LogDeleteDialogComponent } from '../components/cases/case/log-delete-dialog/log.delete.dialog.component';
 import { LogEditDialogComponent } from '../components/cases/case/log-edit-dialog/log.edit.dialog.component';
+import { LogExportComponent } from '../components/cases/case/log-export/log.export.component';
+import { LogAddComponent } from '../components/cases/case/log-add/log.add.component';
+import { LogDataComponent } from '../components/cases/case/log-data/log.data.component';
+import { LogCategoriesComponent } from '../components/cases/case/log-categories/log.categories.component';
 
 import { CapitalizePipe } from '../pipes/capitalize.pipe';
 
@@ -91,6 +97,10 @@ const metaReducers: ActionReducer<any, any>[] = process.env.NODE_ENV === 'develo
     CaseDeleteDialogComponent,
     LogDeleteDialogComponent,
     LogEditDialogComponent,
+    LogExportComponent,
+    LogAddComponent,
+    LogDataComponent,
+    LogCategoriesComponent,
     NotificationComponent,
     NotificationsComponent,
     CapitalizePipe
@@ -108,7 +118,6 @@ const metaReducers: ActionReducer<any, any>[] = process.env.NODE_ENV === 'develo
 
     CommonModule,
     HttpModule,
-    TransferHttpModule,
     ReactiveFormsModule,
     RoutingModule,
 
@@ -130,6 +139,11 @@ const metaReducers: ActionReducer<any, any>[] = process.env.NODE_ENV === 'develo
       provide: ErrorHandler,
       useFactory: provideErrorHandler
     },
+    {
+      provide: ActionsSubject,
+      useClass: AppActionsSubject
+    },
+    AppActions,
     CaseService,
     SettingsService,
     LogService,

@@ -1,0 +1,45 @@
+.row()
+  form([formGroup]="addLogForm", (ngSubmit)="submitForm(addLogForm.value)")
+    .large-6.columns
+      label() Name
+        input(type="text", [value]="(settings | async)?.name", disabled)
+
+    .large-6.columns
+      label([ngClass]="{ 'error': !addLogForm.controls['what'].valid && addLogForm.controls['what'].touched }") What (example found x file)
+        input(type="text", [formControl]="addLogForm.controls['what']", [ngClass]="{ 'error': !addLogForm.controls['what'].valid && addLogForm.controls['what'].touched }")
+      small.error(*ngIf="!addLogForm.controls['what'].valid && addLogForm.controls['what'].touched") What is mandatory
+
+    .large-6.columns
+      label() Location
+        input(type="text", [value]="(settings | async)?.location", disabled)
+
+    .large-6.columns
+      label() Date time
+        input(type="text", [value]="datetimeValue | async", disabled)
+
+    .row
+      .large-12.columns
+        label([ngClass]="{ 'error': !addLogForm.controls['why'].valid && addLogForm.controls['why'].touched }", for="why") Why
+        .row.collapse
+          .large-3.small-4.columns
+            span.prefix([innerText]="'[ ' + (settings | async)?.invpre + ' ]'")
+          .large-9.small-8.columns
+            input(type="text", [formControl]="addLogForm.controls['why']", [ngClass]="{ 'error': !addLogForm.controls['why'].valid && addLogForm.controls['why'].touched }", id="why")
+          small.error.why-error(*ngIf="!addLogForm.controls['why'].valid && addLogForm.controls['why'].touched") Why is mandatory
+
+    .large-6.columns
+      label([ngClass]="{ 'error': !addLogForm.controls['how'].valid && addLogForm.controls['how'].touched }") How (example: cat file)
+        input(type="text", [formControl]="addLogForm.controls['how']", [ngClass]="{ 'error': !addLogForm.controls['how'].valid && addLogForm.controls['how'].touched }")
+      small.error(*ngIf="!addLogForm.controls['how'].valid && addLogForm.controls['how'].touched") How is mandatory
+
+    .large-6.columns
+      label([ngClass]="{ 'error': !addLogForm.controls['with'].valid && addLogForm.controls['with'].touched }") With (example: Terminal)
+        input(type="text", [formControl]="addLogForm.controls['with']", [ngClass]="{ 'error': !addLogForm.controls['with'].valid && addLogForm.controls['with'].touched }")
+      small.error(*ngIf="!addLogForm.controls['with'].valid && addLogForm.controls['with'].touched") With is mandatory
+
+    .large-12.columns
+      label Results
+        textarea(type="text", [formControl]="addLogForm.controls['result']")
+
+    .large-12.columns.end
+      button.button.button-margin(type="submit", [disabled]="!addLogForm.valid") Add

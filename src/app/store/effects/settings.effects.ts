@@ -25,6 +25,7 @@ import { Observable } from 'rxjs/Observable'
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/startWith';
 
 @Injectable()
 export class SettingsEffects {
@@ -32,6 +33,7 @@ export class SettingsEffects {
   @Effect()
   loadSettings: Observable<Action> = this.actions
     .ofType(REQUEST_SETTINGS)
+    .startWith(new LoadSettings())
     .switchMap((action: LoadSettings) => this.settingsService.loadSettings())
     .map((settings: Settings) => new LoadSettingsSuccess(settings));
 

@@ -2,9 +2,8 @@
   .row
     form([formGroup]="editLogForm", (ngSubmit)="submitForm(editLogForm.value)")
       .large-6.columns
-        label([ngClass]="{ 'error': !editLogForm.controls['who'].valid && editLogForm.controls['who'].touched }") Name
-          input(type="text", [formControl]="editLogForm.controls['who']", [ngClass]="{ 'error': !editLogForm.controls['who'].valid && editLogForm.controls['who'].touched }")
-        small.error(*ngIf="!editLogForm.controls['who'].valid && editLogForm.controls['who'].touched") Name is mandatory
+        label Name
+          input(type="text", [value]="logItem.who", disabled)
 
       .large-6.columns
         label([ngClass]="{ 'error': !editLogForm.controls['what'].valid && editLogForm.controls['what'].touched }") What (example found x file)
@@ -17,9 +16,8 @@
         small.error(*ngIf="!editLogForm.controls['where'].valid && editLogForm.controls['where'].touched") Location is mandatory
 
       .large-6.columns
-        label([ngClass]="{ 'error': !editLogForm.controls['when'].valid && editLogForm.controls['when'].touched }") Date time
-          input(type="text", [formControl]="editLogForm.controls['when']", [ngClass]="{ 'error': !editLogForm.controls['when'].valid && editLogForm.controls['when'].touched }")
-        small.error(*ngIf="!editLogForm.controls['when'].valid && editLogForm.controls['when'].touched") Date time is mandatory
+        label() Date time
+          input(type="text", [value]="logItem.when", disabled)
 
       .row
         .large-12.columns
