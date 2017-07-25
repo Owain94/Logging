@@ -24,7 +24,7 @@ module.exports = {
     options: {
         cache: {
           maxEntries: 75,
-          name: 'logging-cache'
+          name: "logging-cache"
         }
     }
   }]
