@@ -13,7 +13,7 @@ module.exports = {
   "module": {
     "rules": [
       {
-        "test": /\.js$/,
+        "test": /(\\|\/)@angular(\\|\/).*\.js$/,
         "use": [
           {
             "loader": "ngo/webpack-loader",
@@ -34,7 +34,7 @@ module.exports = {
           },
           "@ngtools/webpack"
         ]
-      },
+      }
     ]
   },
   "plugins": [
