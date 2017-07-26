@@ -20,6 +20,12 @@ module.exports = {
   ],
   runtimeCaching: [{
     urlPattern: /http/,
-    handler: "networkFirst"
+    handler: "fastest",
+    options: {
+        cache: {
+          maxEntries: 75,
+          name: "logging-cache"
+        }
+    }
   }]
 };

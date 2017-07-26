@@ -1,5 +1,6 @@
 const path = require("path");
 const glob = require("glob");
+const FaviconsWebpackPlugin = require("favicons-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
 const BrotliPlugin = require("brotli-webpack-plugin");
 const PurifyCSSPlugin = require("purifycss-webpack");
@@ -60,6 +61,38 @@ module.exports = {
           "mat-dialog-container",
           "mat-ripple-element"
         ]
+      }
+    }),
+    new FaviconsWebpackPlugin({
+      "appName": "Inkie's",
+      "appDescription": "Logging",
+      "developerName": "Owain van Brakel",
+      "developerURL": "https://www.owain.nl",
+      "background": "#c00502",
+      "theme_color": "#990000",
+      "display": "standalone",
+      "version": "1.0",
+      "logging": false,
+      "online": false,
+      "preferOnline": false,
+      "start_url": "/",
+      "logo": "src/assets/img/icon.png",
+      "prefix": "assets/icons/",
+      "emitStats": false,
+      "persistentCache": true,
+      "inject": true,
+      "title": "Logging",
+      "icons": {
+        "android": true,
+        "appleIcon": true,
+        "appleStartup": false,
+        "coast": false,
+        "favicons": true,
+        "firefox": true,
+        "opengraph": true,
+        "twitter": true,
+        "yandex": true,
+        "windows": true
       }
     }),
     new CompressionPlugin({
