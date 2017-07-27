@@ -1,8 +1,8 @@
-import { LogDeleteDialogComponent } from './../log-delete-dialog/log.delete.dialog.component';
-import { LogEditDialogComponent } from './../log-edit-dialog/log.edit.dialog.component';
+import { LogDeleteDialogComponent } from '../log-delete-dialog/log.delete.dialog.component';
+import { LogEditDialogComponent } from '../log-edit-dialog/log.edit.dialog.component';
 import { MdDialog } from '@angular/material';
 import { isPlatformBrowser } from '@angular/common';
-import { WebworkerService } from './../../../../services/webworker.service';
+import { WebworkerService } from '../../../../services/webworker.service';
 
 import {
   Component, ChangeDetectionStrategy, OnInit, Input, Output, EventEmitter, PLATFORM_ID, Inject

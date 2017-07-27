@@ -4,8 +4,8 @@ import { HttpModule } from '@angular/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-import { HeaderModule } from './../main/header/header.module';
-import { NotificationModule } from './../notifications/notifications.module';
+import { HeaderModule } from '../main/header/header.module';
+import { NotificationModule } from '../notifications/notifications.module';
 
 import { StoreModule, ActionsSubject, ActionReducer } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';

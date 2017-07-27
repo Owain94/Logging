@@ -14,8 +14,8 @@ import { AppActions } from '../../../store/app.actions';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable/release';
 
 import { HeaderModule } from '../../main/header/header.module';
-import { NotificationModule } from './../../notifications/notifications.module';
-import { CapitalizePipeModule } from './../../../pipes/capitalize.pipe.module';
+import { NotificationModule } from '../../notifications/notifications.module';
+import { CapitalizePipeModule } from '../../../pipes/capitalize.pipe.module';
 
 import { logger } from '../../../store/reducers/logging.reducer';
 import { caseReducer } from '../../../store/reducers/case.reducer';
@@ -23,8 +23,8 @@ import { settingsReducer } from '../../../store/reducers/settings.reducer';
 import { logReducer } from '../../../store/reducers/log.reducer';
 
 import { CaseEffects } from '../../../store/effects/case.effects';
-import { SettingsEffects } from './../../../store/effects/settings.effects';
-import { LogEffects } from './../../../store/effects/log.effects';
+import { SettingsEffects } from '../../../store/effects/settings.effects';
+import { LogEffects } from '../../../store/effects/log.effects';
 
 import { CaseComponent } from './case.component';
 import { LogDeleteDialogComponent } from './log-delete-dialog/log.delete.dialog.component';

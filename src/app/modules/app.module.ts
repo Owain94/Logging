@@ -6,7 +6,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
-import { MainModule } from './../components/main/main.module';
+import { MainModule } from '../components/main/main.module';
 
 import * as Raven from 'raven-js';
 

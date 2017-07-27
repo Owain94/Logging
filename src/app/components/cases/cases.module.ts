@@ -11,9 +11,9 @@ import { EffectsModule } from '@ngrx/effects';
 import { AppActionsSubject } from '../../store/app.action.subject';
 import { AppActions } from '../../store/app.actions';
 
-import { HeaderModule } from './../main/header/header.module';
-import { NotificationModule } from './../notifications/notifications.module';
-import { CapitalizePipeModule } from './../../pipes/capitalize.pipe.module';
+import { HeaderModule } from '../main/header/header.module';
+import { NotificationModule } from '../notifications/notifications.module';
+import { CapitalizePipeModule } from '../../pipes/capitalize.pipe.module';
 
 import { logger } from '../../store/reducers/logging.reducer';
 import { caseReducer } from '../../store/reducers/case.reducer';

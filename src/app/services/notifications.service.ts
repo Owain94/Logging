@@ -1,8 +1,8 @@
-import {Injectable, EventEmitter} from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 
-import {NotificationEvent} from '../interfaces/notifications/notification-event.type';
-import {Notification} from '../interfaces/notifications/notification.type';
-import {Icons, defaultIcons} from '../interfaces/notifications/icons';
+import { NotificationEvent } from '../interfaces/notifications/notification-event.type';
+import { Notification } from '../interfaces/notifications/notification.type';
+import { Icons, defaultIcons } from '../interfaces/notifications/icons';
 
 import { Subject } from 'rxjs/Subject';
 
