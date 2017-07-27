@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { StoreModule, ActionsSubject, ActionReducer } from '@ngrx/store';
@@ -38,7 +38,7 @@ const metaReducers: ActionReducer<any, any>[] = process.env.NODE_ENV === 'develo
         }
       ]
     ),
-    HttpModule,
+    HttpClientModule,
 
     StoreModule.forFeature('logging',
       {
