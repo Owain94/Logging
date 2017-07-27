@@ -20,12 +20,12 @@ export class WebworkerService implements WebworkerInterface {
   }
 
   //noinspection FunctionNamingConventionJS
-  run<T>(workerFunction: (any: any) => T, data?: any): Promise<T> {
+  public run<T>(workerFunction: (any: any) => T, data?: any): Promise<T> {
     const url: string = this.getOrCreateWorkerUrl(workerFunction);
     return this.runUrl(url, data);
   }
 
-  runUrl(url: string, data?: any): Promise<any> {
+  public runUrl(url: string, data?: any): Promise<any> {
     const worker: Worker = new Worker(url);
     const promise: Promise<Object> = this.createPromiseForWorker(worker, data);
     const promiseCleaner: (T: any) => Object = this.createPromiseCleaner(promise);
@@ -39,7 +39,7 @@ export class WebworkerService implements WebworkerInterface {
     return promise;
   }
 
-  terminate<T>(promise: Promise<T>): Promise<T> {
+  public terminate<T>(promise: Promise<T>): Promise<T> {
     return this.removePromise(promise);
   }
 

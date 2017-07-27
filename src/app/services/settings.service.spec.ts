@@ -1,183 +1,160 @@
-import { TestBed, inject } from '@angular/core/testing';
-import {
-  HttpModule,
-  ResponseType,
-  Response,
-  ResponseOptions,
-  XHRBackend
-} from '@angular/http';
-import { MockBackend } from '@angular/http/testing';
+import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+
+import { url } from '../../helpers/constants';
 
 import { SettingsService } from './settings.service';
+
 import { Settings } from '../store/models/settings.model';
 
 describe('The settings service', () => {
+  let settingsService: SettingsService;
+  let httpMock: HttpTestingController;
 
   beforeEach(() => {
-
     TestBed.configureTestingModule({
-      imports: [HttpModule],
+      imports: [
+        HttpClientTestingModule
+      ],
       providers: [
-        SettingsService,
-        { provide: XHRBackend, useClass: MockBackend },
+        SettingsService
       ]
     });
+
+    settingsService = TestBed.get(SettingsService);
+    httpMock = TestBed.get(HttpTestingController);
+  });
+
+  afterEach(() => {
+    httpMock.verify();
   });
 
   describe('loadSettings()', () => {
-    it('should return an Observable<Settings>',
-        inject([SettingsService, XHRBackend], (settingsService: SettingsService, mockBackend: MockBackend) => {
+    it('should return an Observable<Settings>', (done: any) => {
+      const mockResponse = {
+        '_id': '1',
+        'name': 'test',
+        'case': 'test',
+        'invpre': 'test',
+        'location': 'test',
+      };
 
-        const mockResponse = {
-          '_id': '1',
-          'name': 'test',
-          'case': 'test',
-          'invpre': 'test',
-          'location': 'test',
-        };
+      settingsService.loadSettings().subscribe((settings) => {
+        expect(settings._id).toEqual('1');
+        expect(settings.name).toEqual('test');
+        expect(settings.case).toEqual('test');
+        expect(settings.invpre).toEqual('test');
+        expect(settings.location).toEqual('test');
+        done();
+      });
 
-        mockBackend.connections.subscribe((connection: any) => {
-          connection.mockRespond(new Response(new ResponseOptions({
-            body: JSON.stringify(mockResponse)
-          })));
-        });
+      const settingsRequest = httpMock.expectOne(`${url}/api/settings`);
+      settingsRequest.flush(mockResponse);
+    });
 
-        settingsService.loadSettings().subscribe((settings) => {
-          expect(settings._id).toEqual('1');
-          expect(settings.name).toEqual('test');
-          expect(settings.case).toEqual('test');
-          expect(settings.invpre).toEqual('test');
-          expect(settings.location).toEqual('test');
-        });
+    it('should throw an Observable<error>', (done: any) => {
+      settingsService.loadSettings().subscribe((settings) => {
+        // pass
+      },
+      (error: any) => {
+        expect(error.error).toBeTruthy();
+        done();
+      });
 
-    }));
-
-    it('should throw an Observable<error>',
-        inject([SettingsService, XHRBackend], (settingsService: SettingsService, mockBackend: MockBackend) => {
-
-        mockBackend.connections.subscribe((connection: any) => {
-          connection.mockError(new ResponseOptions({
-            type: ResponseType.Error,
-            status: 500
-          }));
-        });
-
-        settingsService.loadSettings().subscribe((settings) => {
-          // pass
-        },
-        (error: any) => {
-          expect(error.error).toBeTruthy();
-        });
-    }));
+      const settingsRequest = httpMock.expectOne(`${url}/api/settings`);
+      settingsRequest.error(new ErrorEvent('error'));
+    });
   });
 
   describe('addSettings()', () => {
-    it('should return an Observable<Settings>',
-        inject([SettingsService, XHRBackend], (settingsService: SettingsService, mockBackend: MockBackend) => {
+    it('should return an Observable<Settings>', (done: any) => {
+      const payload: Settings = {
+        'name': 'test',
+        'case': 'test',
+        'invpre': 'test',
+        'location': 'test',
+      };
 
-        const setting: Settings = {
-          'name': 'test',
-          'case': 'test',
-          'invpre': 'test',
-          'location': 'test',
-        };
+      const mockResponse = {
+        '_id': '1',
+        'error': 'false',
+      };
 
-        const mockResponse = {
-          '_id': '1',
-          'error': 'false',
-        };
+      settingsService.addSettings(payload).subscribe((settings) => {
+        expect(settings._id).toEqual('1');
+        expect(JSON.parse(settings.error)).toBeFalsy();
+        done();
+      });
 
-        mockBackend.connections.subscribe((connection: any) => {
-          connection.mockRespond(new Response(new ResponseOptions({
-            body: JSON.stringify(mockResponse)
-          })));
-        });
+      const settingsRequest = httpMock.expectOne(`${url}/api/settings`);
+      settingsRequest.flush(mockResponse);
+    });
 
-        settingsService.addSettings(setting).subscribe((settings: Settings) => {
-          expect(settings._id).toEqual('1');
-          expect(JSON.parse(settings.error)).toBeFalsy();
-        });
+    it('should throw an Observable<error>', (done: any) => {
+      const payload: Settings = {
+        'name': 'test',
+        'case': 'test',
+        'invpre': 'test',
+        'location': 'test',
+      };
 
-    }));
+      settingsService.addSettings(payload).subscribe((settings) => {
+        // pass
+      },
+      (error: any) => {
+        expect(error.error).toBeTruthy();
+        done();
+      });
 
-    it('should throw an Observable<error>',
-        inject([SettingsService, XHRBackend], (settingsService: SettingsService, mockBackend: MockBackend) => {
-
-        const setting: Settings = {
-          'name': 'test',
-          'case': 'test',
-          'invpre': 'test',
-          'location': 'test',
-        };
-
-        mockBackend.connections.subscribe((connection: any) => {
-          connection.mockError(new ResponseOptions({
-            type: ResponseType.Error,
-            status: 500
-          }));
-        });
-
-        settingsService.addSettings(setting).subscribe((settings) => {
-          // pass
-        },
-        (error: any) => {
-          expect(error.error).toBeTruthy();
-        });
-    }));
+      const settingsRequest = httpMock.expectOne(`${url}/api/settings`);
+      settingsRequest.error(new ErrorEvent('error'));
+    });
   });
 
   describe('editSettings()', () => {
-    it('should return an Observable<Settings>',
-        inject([SettingsService, XHRBackend], (settingsService: SettingsService, mockBackend: MockBackend) => {
+    it('should return an Observable<Settings>', (done: any) => {
+      const payload: Settings = {
+        '_id': '1',
+        'name': 'test',
+        'case': 'test',
+        'invpre': 'test',
+        'location': 'test',
+      };
 
-        const setting: Settings = {
-          'name': 'test',
-          'case': 'test',
-          'invpre': 'test',
-          'location': 'test',
-        };
+      const mockResponse = {
+        '_id': '1',
+        'error': 'false',
+      };
 
-        const mockResponse = {
-          '_id': '1',
-          'error': 'false',
-        };
+      settingsService.editSettings(payload).subscribe((settings) => {
+        expect(settings._id).toEqual('1');
+        expect(JSON.parse(settings.error)).toBeFalsy();
+        done();
+      });
 
-        mockBackend.connections.subscribe((connection: any) => {
-          connection.mockRespond(new Response(new ResponseOptions({
-            body: JSON.stringify(mockResponse)
-          })));
-        });
+      const settingsRequest = httpMock.expectOne(`${url}/api/settings/1`);
+      settingsRequest.flush(mockResponse);
+    });
 
-        settingsService.editSettings(setting).subscribe((settings: Settings) => {
-          expect(settings._id).toEqual('1');
-          expect(JSON.parse(settings.error)).toBeFalsy();
-        });
+    it('should throw an Observable<error>', (done: any) => {
+      const payload: Settings = {
+        '_id': '1',
+        'name': 'test',
+        'case': 'test',
+        'invpre': 'test',
+        'location': 'test',
+      };
 
-    }));
+      settingsService.editSettings(payload).subscribe((settings) => {
+        // pass
+      },
+      (error: any) => {
+        expect(error.error).toBeTruthy();
+        done();
+      });
 
-    it('should throw an Observable<error>',
-        inject([SettingsService, XHRBackend], (settingsService: SettingsService, mockBackend: MockBackend) => {
-
-        const setting: Settings = {
-          'name': 'test',
-          'case': 'test',
-          'invpre': 'test',
-          'location': 'test',
-        };
-
-        mockBackend.connections.subscribe((connection: any) => {
-          connection.mockError(new ResponseOptions({
-            type: ResponseType.Error,
-            status: 500
-          }));
-        });
-
-        settingsService.editSettings(setting).subscribe((settings) => {
-          // pass
-        },
-        (error: any) => {
-          expect(error.error).toBeTruthy();
-        });
-    }));
+      const settingsRequest = httpMock.expectOne(`${url}/api/settings/1`);
+      settingsRequest.error(new ErrorEvent('error'));
+    });
   });
 });

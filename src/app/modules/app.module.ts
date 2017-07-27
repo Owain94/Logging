@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, ErrorHandler } from '@angular/core';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MdButtonModule, MdDialogModule } from '@angular/material';
 
@@ -119,7 +119,7 @@ const metaReducers: ActionReducer<any, any>[] = process.env.NODE_ENV === 'develo
     NgxDatatableModule,
 
     CommonModule,
-    HttpModule,
+    HttpClientModule,
     ReactiveFormsModule,
     RoutingModule,
 
