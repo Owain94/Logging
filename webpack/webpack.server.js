@@ -31,5 +31,6 @@ module.exports = {
     "filename": "[name].server.bundle.js",
     "chunkFilename": "[id].server.chunk.js",
     "libraryTarget": "commonjs"
-  }
+  },
+  "target": "node"
 };
