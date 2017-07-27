@@ -23,6 +23,10 @@ export interface CaseState {
   error?: boolean
 }
 
+export interface State {
+  cases: CaseState;
+}
+
 const initialState: CaseState = {
   data: [],
 };
@@ -110,7 +114,12 @@ export function caseReducer(state: CaseState = initialState, action: Actions) {
   }
 };
 
-export const getCaseState = createFeatureSelector<CaseState>('cases');
+const getLoggingState = createFeatureSelector<any>('logging');
+
+export const getCaseState = createSelector(
+  getLoggingState,
+  (state: State) => state.cases
+);
 
 export const getSingleCase = (id: string) => createSelector(
   getCaseState,
