@@ -24,7 +24,7 @@ export class LogCategoriesComponent implements OnChanges {
     }
   }
 
-  public selectCategory(category: string) {
+  public selectCategory(category: string): void {
     this.selectedCategory = category;
     this.changeCategoryEvent.emit(category);
   }

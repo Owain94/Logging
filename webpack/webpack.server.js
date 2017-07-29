@@ -32,5 +32,10 @@ module.exports = {
     "chunkFilename": "[id].server.chunk.js",
     "libraryTarget": "commonjs"
   },
-  "target": "node"
+  "target": "node",
+  "plugins": [
+    new webpack.DefinePlugin({
+      "process.env.NODE_PLATFORM": JSON.stringify("server")
+    })
+  ]
 };
