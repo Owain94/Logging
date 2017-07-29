@@ -3,11 +3,48 @@ const ProgressBarPlugin = require("progress-bar-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const autoprefixer = require("autoprefixer");
 const postcss = require("postcss");
+const postcssNext = require("postcss-cssnext");
+const postcssReduceIdents = require("postcss-reduce-idents");
+const postcssBrowserReporter = require("postcss-browser-reporter");
+const postcssReporter = require("postcss-reporter");
+const cssnano = require("cssnano");
 const url = require("postcss-url");
 const webpack = require("webpack");
 
 const { LoaderOptionsPlugin } = require("webpack");
 const { AotPlugin } = require("@ngtools/webpack");
+
+
+const postcssPlugins = () => {
+  return [
+    postcss().use(
+      url(
+        [
+          {
+            filter: "*", url: (URL) => {
+              if (!URL.startsWith("/") || URL.startsWith("//")) {
+                return URL;
+              }
+              return `${URL}`.replace(/\/\/+/g, "/");
+            }
+          }
+        ]
+      )
+    ),
+    postcssNext(),
+    postcssReduceIdents(),
+    cssnano({
+      "preset": [
+        "default",
+        { "autoprefixer": false },
+        { "safe": true},
+        {"discardComments": { "removeAll": true }}
+      ]
+    }),
+    postcssBrowserReporter(),
+    postcssReporter()
+  ];
+};
 
 module.exports = {
   "devtool": "inline-source-map",
@@ -52,30 +89,61 @@ module.exports = {
       },
       {
         "test": /\.(eot|svg)$/,
-        "loader": "file-loader?name=[name].[ext]"
+        "loader": "file-loader?name=[name].[hash:5].[ext]"
       },
       {
-        "test": /\.(jpg|png|gif|otf|ttf|woff|woff2|cur|ani)$/,
-        "loader": "url-loader?name=[name].[ext]&limit=10000"
+        "test": /\.(jpg|png|webp|gif|otf|ttf|woff|woff2|cur|ani)$/,
+        "loader": "url-loader?name=[name].[hash:5].[ext]&limit=10000"
       },
       {
         "exclude": [
           path.join(process.cwd(), "src/assets/css/foundation.css")
         ],
         "test": /\.css$/,
-        "loaders": [
+        "use": [
           "exports-loader?module.exports.toString()",
-          "css-loader?{\"sourceMap\":false,\"minimize\":true,\"importLoaders\":1}",
-          "postcss-loader?{\"postcss\": {}}"
+          {
+            "loader": "css-loader",
+            "options": {
+              "sourceMap": false,
+              "importLoaders": 1
+            }
+          },
+          {
+            "loader": "postcss-loader",
+            "options": {
+              "ident": "postcss",
+              "plugins": postcssPlugins
+            }
+          }
         ]
       },
       {
         "test": /\.scss$|\.sass$/,
-        "loaders": [
+        "use": [
           "exports-loader?module.exports.toString()",
-          "css-loader?{\"sourceMap\":false,\"importLoaders\":1}",
-          "postcss-loader?{\"postcss\": {}}",
-          "sass-loader"
+          {
+            "loader": "css-loader",
+            "options": {
+              "sourceMap": false,
+              "importLoaders": 1
+            }
+          },
+          {
+            "loader": "postcss-loader",
+            "options": {
+              "ident": "postcss",
+              "plugins": postcssPlugins
+            }
+          },
+          {
+            "loader": "sass-loader",
+            "options": {
+              "sourceMap": false,
+              "precision": 8,
+              "includePaths": []
+            }
+          }
         ]
       },
       {
@@ -83,11 +151,29 @@ module.exports = {
           path.join(process.cwd(), "src/assets/css/styles.styl")
         ],
         "test": /\.styl$/,
-        "loaders": [
+        "use": [
           "exports-loader?module.exports.toString()",
-          "css-loader?{\"sourceMap\":false,\"minimize\":true,\"importLoaders\":1}",
-          "postcss-loader?{\"postcss\": {}}",
-          "stylus-loader?{\"sourceMap\":false,\"paths\":[]}"
+          {
+            "loader": "css-loader",
+            "options": {
+              "sourceMap": false,
+              "importLoaders": 1
+            }
+          },
+          {
+            "loader": "postcss-loader",
+            "options": {
+              "ident": "postcss",
+              "plugins": postcssPlugins
+            }
+          },
+          {
+            "loader": "stylus-loader",
+            "options": {
+              "sourceMap": false,
+              "paths": []
+            }
+          }
         ]
       },
       {
@@ -97,8 +183,20 @@ module.exports = {
         "test": /\.css$/,
         "loaders": ExtractTextPlugin.extract({
           "use": [
-            "css-loader?{\"sourceMap\":false,\"minimize\":true,\"importLoaders\":1}",
-            "postcss-loader?{\"postcss\": {}}"
+            {
+              "loader": "css-loader",
+              "options": {
+                "sourceMap": false,
+                "importLoaders": 1
+              }
+            },
+            {
+              "loader": "postcss-loader",
+              "options": {
+                "ident": "postcss",
+                "plugins": postcssPlugins
+              }
+            }
           ],
           "fallback": "style-loader",
           "publicPath": ""
@@ -111,9 +209,27 @@ module.exports = {
         "test": /\.styl$/,
         "loaders": ExtractTextPlugin.extract({
           "use": [
-            "css-loader?{\"sourceMap\":false,\"minimize\":true,\"importLoaders\":1}",
-            "postcss-loader?{\"postcss\": {}}",
-            "stylus-loader?{\"sourceMap\":false,\"paths\":[]}"
+            {
+              "loader": "css-loader",
+              "options": {
+                "sourceMap": false,
+                "importLoaders": 1
+              }
+            },
+            {
+              "loader": "postcss-loader",
+              "options": {
+                "ident": "postcss",
+                "plugins": postcssPlugins
+              }
+            },
+            {
+              "loader": "stylus-loader",
+              "options": {
+                "sourceMap": false,
+                "paths": []
+              }
+            }
           ],
           "fallback": "style-loader",
           "publicPath": ""
@@ -123,30 +239,6 @@ module.exports = {
   },
   "plugins": [
     new webpack.IgnorePlugin(/vertx/),
-    new LoaderOptionsPlugin({
-      "sourceMap": false,
-      "options": {
-        "postcss": [
-          autoprefixer(),
-          postcss()
-            .use(
-                url(
-                  [
-                    {
-                      filter: "*", url: (URL) => {
-                        if (!URL.startsWith("/")) {
-                          return URL;
-                        }
-                        return `${URL}`.replace(/\/\/+/g, "/");
-                      }
-                    }
-                  ]
-                )
-            )
-        ],
-        "context": ""
-      }
-    }),
     new ProgressBarPlugin(),
     new ExtractTextPlugin({
       "filename": "[name].[contenthash:5].bundle.css",

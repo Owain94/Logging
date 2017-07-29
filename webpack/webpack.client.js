@@ -72,6 +72,9 @@ module.exports = {
       "chunks": [
         "main"
       ]
+    }),
+    new webpack.DefinePlugin({
+      "process.env.NODE_PLATFORM": JSON.stringify("client")
     })
   ],
   "target": "web"

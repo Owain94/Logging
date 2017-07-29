@@ -16,22 +16,22 @@ import 'rxjs/add/operator/catch';
 export class LogService {
   constructor(private http: HttpClient) {}
 
-  loadLogs(): Observable<Array<Log>> {
+  public loadLogs(): Observable<Array<Log>> {
     return this.http.get(`${url}/api/log`)
       .catch((error: any) => Observable.throw({ error: 'true' }));
   }
 
-  addLog(singleLog: Log): Observable<Object> {
+  public addLog(singleLog: Log): Observable<Object> {
     return this.http.post(`${url}/api/log`, singleLog)
       .catch((error: any) => Observable.throw({ error: 'true' }));
   }
 
-  editLog(singleLog: Log): Observable<Object> {
+  public editLog(singleLog: Log): Observable<Object> {
     return this.http.put(`${url}/api/log/${singleLog._id}`, singleLog)
       .catch((error: any) => Observable.throw({ error: 'true' }));
   }
 
-  deleteLog(singleLog: Log): Observable<Object> {
+  public deleteLog(singleLog: Log): Observable<Object> {
     return this.http.delete(`${url}/api/log/${singleLog._id}`)
       .catch((error: any) => Observable.throw({ error: 'true' }));
   }

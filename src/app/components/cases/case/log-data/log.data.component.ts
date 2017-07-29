@@ -40,7 +40,7 @@ export class LogDataComponent implements OnInit {
   // tslint:disable-next-line:no-inferrable-types
   public browser: boolean = false;
 
-  private static handleLog(allLogs: any) {
+  private static handleLog(allLogs: any): [Array<string>, Object] {
     const allCategories =
       allLogs.map(
         (item: any) =>
@@ -75,7 +75,7 @@ export class LogDataComponent implements OnInit {
     this.handleStates();
   }
 
-  private handleStates() {
+  private handleStates(): void {
     this.logSubscription = this.log.subscribe((res) => {
       if (this.browser) {
         const handleLogPromise = this.webworkerService.run(LogDataComponent.handleLog, this.allLogs = res);
@@ -85,12 +85,13 @@ export class LogDataComponent implements OnInit {
 
           this.allCategoriesEvent.emit(this.allCategories);
           this.allCategorizedLogsEvent.emit(this.allCategorizedLogs);
+          this.webworkerService.terminate(handleLogPromise);
         });
       }
     });
   }
 
-  public editLog(id: string) {
+  public editLog(id: string): void {
     const dialogRef = this.dialog.open(LogEditDialogComponent, {
       data: this.allLogs.filter((log: LogItem) => {
         return log._id === id;
@@ -103,7 +104,7 @@ export class LogDataComponent implements OnInit {
     });
   }
 
-  public deleteLog(id: string) {
+  public deleteLog(id: string): void {
     const dialogRef = this.dialog.open(LogDeleteDialogComponent);
     dialogRef.afterClosed().subscribe(result => {
       if (result) {

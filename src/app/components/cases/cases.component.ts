@@ -44,7 +44,7 @@ import 'rxjs/add/operator/take';
 @AutoUnsubscribe()
 export class CasesComponent implements OnInit {
 
-  @logObservable public cases: Observable<any> = null;
+  @logObservable public cases: Observable<CaseState> = null;
 
   private addCaseSuccessSubscription: Subscription;
   private addCaseFailureSubscription: Subscription;
@@ -76,7 +76,7 @@ export class CasesComponent implements OnInit {
     });
   }
 
-  private HandleStates() {
+  private HandleStates(): void {
     this.addCaseSuccessSubscription = this.actions.ofType(ADD_CASE_SUCCESS).subscribe(() => {
       this.initForm();
       this.notification(false, 'Case successfully added.')
@@ -103,7 +103,7 @@ export class CasesComponent implements OnInit {
     });
   }
 
-  private notification(error: boolean, description: string) {
+  private notification(error: boolean, description: string): void {
     if (error) {
       this.notificationsService.error(
         'Error',
@@ -121,11 +121,11 @@ export class CasesComponent implements OnInit {
     this.store.dispatch(new AddCase(singleCase));
   }
 
-  public editCase(singleCase: Case) {
+  public editCase(singleCase: Case): void {
     this.store.dispatch(new EditCase(singleCase));
   }
 
-  public deleteCase(singleCase: Case) {
+  public deleteCase(singleCase: Case): void {
     const dialogRef = this.dialog.open(CaseDeleteDialogComponent, {
       data: `${singleCase.name} - ${singleCase.description}`
     });

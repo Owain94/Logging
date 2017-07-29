@@ -5,8 +5,6 @@ import { Case } from '../../../store/models/case.model';
 
 import { Log } from '../../../decorators/log.decorator';
 
-import { Observable } from 'rxjs/Observable';
-
 import 'rxjs/add/operator/take';
 
 @Component({
@@ -23,7 +21,6 @@ export class CaseRowComponent implements OnInit {
   @Output() public onEdit = new EventEmitter<Case>();
   @Output() public onDelete = new EventEmitter<Case>();
 
-  public cases: Observable<any> = null;
   public editCaseForm: FormGroup;
   // tslint:disable-next-line:no-inferrable-types
   public editing: boolean = false;
@@ -53,11 +50,11 @@ export class CaseRowComponent implements OnInit {
     this.editing = false;
   }
 
-  public editCase() {
+  public editCase(): void {
     this.editing = true;
   }
 
-  public deleteCase() {
+  public deleteCase(): void {
     this.onDelete.emit(this.singleCase);
   }
 }

@@ -17,22 +17,22 @@ export class CaseService {
 
   constructor(private http: HttpClient) {}
 
-  loadCases(): Observable<Array<Case>> {
+  public loadCases(): Observable<Array<Case>> {
     return this.http.get(`${url}/api/cases`)
       .catch((error: any) => Observable.throw({ error: 'true' }));
   }
 
-  addCase(singleCase: Case): Observable<Object> {
+  public addCase(singleCase: Case): Observable<Object> {
     return this.http.post(`${url}/api/cases`, singleCase)
       .catch((error: any) => Observable.throw({ error: 'true' }));
   }
 
-  editCase(singleCase: Case): Observable<Object> {
+  public editCase(singleCase: Case): Observable<Object> {
     return this.http.put(`${url}/api/cases/${singleCase._id}`, singleCase)
       .catch((error: any) => Observable.throw({ error: 'true' }));
   }
 
-  deleteCase(singleCase: Case): Observable<Object> {
+  public deleteCase(singleCase: Case): Observable<Object> {
     return this.http.delete(`${url}/api/cases/${singleCase._id}`)
       .catch((error: any) => Observable.throw({ error: 'true' }));
   }

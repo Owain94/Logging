@@ -16,17 +16,17 @@ import 'rxjs/add/operator/catch';
 export class SettingsService {
   constructor(private http: HttpClient) {}
 
-  loadSettings(): Observable<Settings> {
+  public loadSettings(): Observable<Settings> {
     return this.http.get(`${url}/api/settings`)
       .catch((error: any) => Observable.throw({ error: 'true' }));
   }
 
-  addSettings(settings: Settings): Observable<Object> {
+  public addSettings(settings: Settings): Observable<Object> {
     return this.http.post(`${url}/api/settings`, settings)
       .catch((error: any) => Observable.throw({ error: 'true' }));
   }
 
-  editSettings(settings: Settings): Observable<Object> {
+  public editSettings(settings: Settings): Observable<Object> {
     return this.http.put(`${url}/api/settings/${settings._id}`, settings)
       .catch((error: any) => Observable.throw({ error: 'true' }));
   }

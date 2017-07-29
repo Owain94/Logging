@@ -24,8 +24,8 @@ import 'rxjs/add/operator/take';
 @AutoUnsubscribe()
 export class HomeComponent {
 
-  @logObservable public settings: Observable<any> = null;
-  @logObservable public cases: Observable<any> = null;
+  @logObservable public settings: Observable<SettingsState> = null;
+  @logObservable public cases: Observable<CaseState> = null;
 
   public settingsSubscription: Subscription;
   public caseSubscription: Subscription;

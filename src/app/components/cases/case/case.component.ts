@@ -42,8 +42,8 @@ import 'rxjs/add/operator/take';
 @Log()
 @AutoUnsubscribe()
 export class CaseComponent implements OnInit {
-  @logObservable public case: Observable<any> = null;
-  public log: Observable<any> = null;
+  @logObservable public case: Observable<Case> = null;
+  public log: Observable<Array<LogItem>> = null;
 
   private addLogSuccessSubscription: Subscription;
   private addLogFailureSubscription: Subscription;
@@ -79,19 +79,19 @@ export class CaseComponent implements OnInit {
     });
   }
 
-  public addLog(log: LogItem) {
+  public addLog(log: LogItem): void {
     this.store.dispatch(new AddLog(log));
   }
 
-  public editLog(log: LogItem) {
+  public editLog(log: LogItem): void {
     this.store.dispatch(new EditLog(log));
   }
 
-  public deleteLog(id: string) {
+  public deleteLog(id: string): void {
     this.store.dispatch(new DeleteLog({'_id': id}));
   }
 
-  private handleStates() {
+  private handleStates(): void {
     this.addLogSuccessSubscription = this.actions.ofType(ADD_LOG_SUCCESS).subscribe(() => {
       this.addLogToggle = !this.addLogToggle;
       this.notification(false, 'Log successfully added.')
@@ -118,11 +118,11 @@ export class CaseComponent implements OnInit {
     });
   }
 
-  public notificationEvent(input: [boolean, string]) {
+  public notificationEvent(input: [boolean, string]): void {
     this.notification(input[0], input[1]);
   }
 
-  private notification(error: boolean, description: string) {
+  private notification(error: boolean, description: string): void {
     if (error) {
       this.notificationsService.error(
         'Error',
