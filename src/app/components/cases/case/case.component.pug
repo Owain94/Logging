@@ -4,7 +4,7 @@ app-header([headerHeading]="[(case | async)?.name | capitalize, (case | async)?.
   .row
     .large-12.columns.end
       button.button.button-margin((click)="addLogToggle = !addLogToggle", [innerText]="addLogToggle ? 'Hide' : 'Add Log'")
-      app-log-export(*ngIf="allCategories.length > 0", [categorizedLogs]="allCategorizedLogs", [categories]="allCategories")
+      app-log-export(*ngIf="allCategories.length > 0", [caseName]="(case | async)?.name" ,[categorizedLogs]="allCategorizedLogs", [categories]="allCategories")
 
   app-log-add(*ngIf="addLogToggle", [id]="id", (notification)="notificationEvent($event)", (addLog)="addLog($event)")
 

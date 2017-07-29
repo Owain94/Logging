@@ -76,12 +76,16 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         });
   }
 
-  defaultBehavior(value: any): void {
+  ngOnDestroy(): void {
+    // pass
+  }
+
+  private defaultBehavior(value: any): void {
     this.notifications.splice(this.notifications.indexOf(value.notification), 1);
     this.onDestroy.emit(this.buildEmit(value.notification, false));
   }
 
-  add(item: Notification): void {
+  private add(item: Notification): void {
     item.createdOn = new Date();
 
     const toBlock: boolean = this.preventLastDuplicates || this.preventDuplicates ? this.block(item) : false;
@@ -105,7 +109,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     }
   }
 
-  block(item: Notification): boolean {
+  private block(item: Notification): boolean {
     const toCheck = item.html ? this.checkHtml : this.checkStandard;
 
     if (this.preventDuplicates && this.notifications.length > 0) {
@@ -135,16 +139,16 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     return false;
   }
 
-  checkStandard(checker: Notification, item: Notification): boolean {
+  private checkStandard(checker: Notification, item: Notification): boolean {
     return checker.type === item.type && checker.title === item.title && checker.content === item.content;
   }
 
-  checkHtml(checker: Notification, item: Notification): boolean {
+  private checkHtml(checker: Notification, item: Notification): boolean {
     // tslint:disable-next-line:max-line-length
     return checker.html ? checker.type === item.type && checker.title === item.title && checker.content === item.content && checker.html === item.html : false;
   }
 
-  attachChanges(options: any): void {
+  private attachChanges(options: any): void {
     Object.keys(options).forEach(a => {
       if (this.hasOwnProperty(a)) {
         (<any>this)[a] = options[a];
@@ -152,7 +156,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     });
   }
 
-  buildEmit(notification: Notification, to: boolean) {
+  private buildEmit(notification: Notification, to: boolean) {
     const toEmit: Notification = {
       createdOn: notification.createdOn,
       type: notification.type,
@@ -174,7 +178,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     return toEmit;
   }
 
-  cleanSingle(id: string): void {
+  private cleanSingle(id: string): void {
     let indexOfDelete = 0;
     let doDelete = false;
 
@@ -188,9 +192,5 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     if (doDelete) {
       this.notifications.splice(indexOfDelete, 1);
     }
-  }
-
-  ngOnDestroy(): void {
-    // pass
   }
 }

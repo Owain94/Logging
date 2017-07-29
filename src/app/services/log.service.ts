@@ -22,25 +22,25 @@ export class LogService {
     this.options = new RequestOptions({ headers: headers });
   }
 
-  loadLogs(): Observable<Array<Log>> {
+  public loadLogs(): Observable<Array<Log>> {
     return this.http.get(`${url}/api/log`)
       .map(res => res.json())
       .catch((error: any) => Observable.throw({ error: 'true' }));
   }
 
-  addLog(singleLog: Log): Observable<Object> {
+  public addLog(singleLog: Log): Observable<Log> {
     return this.http.post(`${url}/api/log`, singleLog, this.options)
       .map((res) => res.json())
       .catch((error: any) => Observable.throw({ error: 'true' }));
   }
 
-  editLog(singleLog: Log): Observable<Object> {
+  public editLog(singleLog: Log): Observable<Log> {
     return this.http.put(`${url}/api/log/${singleLog._id}`, singleLog, this.options)
       .map((res) => res.json())
       .catch((error: any) => Observable.throw({ error: 'true' }));
   }
 
-  deleteLog(singleLog: Log): Observable<Object> {
+  public deleteLog(singleLog: Log): Observable<Log> {
     return this.http.delete(`${url}/api/log/${singleLog._id}`, this.options)
       .map((res) => res.json())
       .catch((error: any) => Observable.throw({ error: 'true' }));

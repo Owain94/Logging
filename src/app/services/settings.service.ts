@@ -22,19 +22,19 @@ export class SettingsService {
     this.options = new RequestOptions({ headers: headers });
   }
 
-  loadSettings(): Observable<Settings> {
+  public loadSettings(): Observable<Settings> {
     return this.http.get(`${url}/api/settings`)
       .map(res => res.json())
       .catch((error: any) => Observable.throw({ error: 'true' }));
   }
 
-  addSettings(settings: Settings): Observable<Object> {
+  public addSettings(settings: Settings): Observable<Settings> {
     return this.http.post(`${url}/api/settings`, settings, this.options)
       .map((res) => res.json())
       .catch((error: any) => Observable.throw({ error: 'true' }));
   }
 
-  editSettings(settings: Settings): Observable<Object> {
+  public editSettings(settings: Settings): Observable<Settings> {
     return this.http.put(`${url}/api/settings/${settings._id}`, settings, this.options)
       .map((res) => res.json())
       .catch((error: any) => Observable.throw({ error: 'true' }));
