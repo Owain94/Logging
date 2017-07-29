@@ -163,7 +163,8 @@
   },
   "greenkeeper": {
     "branchPrefix": "logging-update-",
-    "label": "logging-update"
+    "label": "logging-update",
+    "ignore": ["file-loader"]
   },
   "lint-staged": {
     "*.ts": "tslint",
