@@ -125,7 +125,10 @@
     "nodemon": "1.11.0",
     "npm-run-all": "4.0.2",
     "phantomjs-prebuilt": "2.1.14",
+    "postcss-browser-reporter": "0.5.0",
+    "postcss-cssnext": "3.0.2",
     "postcss-loader": "2.0.6",
+    "postcss-reduce-idents": "2.4.0",
     "postcss-url": "7.1.1",
     "pre-commit": "1.2.2",
     "progress-bar-webpack-plugin": "1.10.0",
@@ -164,7 +167,9 @@
   "greenkeeper": {
     "branchPrefix": "logging-update-",
     "label": "logging-update",
-    "ignore": ["file-loader"]
+    "ignore": [
+      "file-loader"
+    ]
   },
   "lint-staged": {
     "*.ts": "tslint",
