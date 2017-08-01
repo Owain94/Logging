@@ -46,6 +46,7 @@ import { LogDataComponent } from '../components/cases/case/log-data/log.data.com
 import { LogCategoriesComponent } from '../components/cases/case/log-categories/log.categories.component';
 
 import { CapitalizePipe } from '../pipes/capitalize.pipe';
+import { NewlinePipe } from '../pipes/newline.pipe';
 
 import { NotificationsService } from '../services/notifications.service';
 import { CaseService } from '../services/case.service';
@@ -103,7 +104,8 @@ const metaReducers: ActionReducer<any, any>[] = process.env.NODE_ENV === 'develo
     LogCategoriesComponent,
     NotificationComponent,
     NotificationsComponent,
-    CapitalizePipe
+    CapitalizePipe,
+    NewlinePipe
   ],
   entryComponents: [
     CaseDeleteDialogComponent,
