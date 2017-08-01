@@ -8,16 +8,20 @@ hr(*ngIf="browser && allCategories.length > 0 && selectedCategory != ''")
       [rows]="allCategorizedLogs[selectedCategory]",
       [reorderable]="false",
       [rowHeight]="'auto'",
-      [sorts]="[{prop: 'when', dir: 'asc'}]",
-      [scrollbarH]="true"
+      [scrollbarH]="true",
+      [footerHeight]="100"
+      [rowHeight]="'auto'"
     )
       ngx-datatable-column([sortable]="false", name="Where", [minWidth]="100", [maxWidth]="150")
-      ngx-datatable-column([sortable]="true",  name="When", [minWidth]="175", [maxWidth]="180")
+      ngx-datatable-column([sortable]="false",  name="When", [minWidth]="175", [maxWidth]="180")
       ngx-datatable-column([sortable]="false", name="What", [minWidth]="150")
       ngx-datatable-column([sortable]="false", name="Why", [minWidth]="150")
       ngx-datatable-column([sortable]="false", name="How", [minWidth]="150")
       ngx-datatable-column([sortable]="false", name="With", [minWidth]="175", [maxWidth]="200")
       ngx-datatable-column([sortable]="false", name="Result")
+        ng-template(let-column="column", let-sort="sortFn", ngx-datatable-header-template) Results
+        ng-template(let-row="row", let-value="value", ngx-datatable-cell-template)
+          span([innerHTML]="resultValue(value)")
       ngx-datatable-column([sortable]="false", name="Edit", [width]="40", [minWidth]="40", [maxWidth]="45", prop="_id")
         ng-template(let-column="column", let-sort="sortFn", ngx-datatable-header-template)
         ng-template(let-row="row", let-value="value", ngx-datatable-cell-template)
@@ -28,3 +32,10 @@ hr(*ngIf="browser && allCategories.length > 0 && selectedCategory != ''")
         ng-template(let-row="row", let-value="value", ngx-datatable-cell-template)
           a((click)="deleteLog(value)")
             span.icon.icon-trash
+      ngx-datatable-footer
+        ng-template(ngx-datatable-footer-template, let-rowCount="rowCount")
+          .footer
+            div
+              strong Summary:
+            hr
+            div Entries: {{ rowCount }}
