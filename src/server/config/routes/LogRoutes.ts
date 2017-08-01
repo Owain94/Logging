@@ -15,6 +15,7 @@ class LogRoutes {
 
     router.get('/', logController.retrieve);
     router.post('/', logController.create);
+    router.post('/cli', logController.createCli);
     router.put('/:_id', logController.update);
     router.delete('/:_id', logController.delete);
 
