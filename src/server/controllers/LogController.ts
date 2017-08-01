@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 
 import IBaseController = require('./BaseController');
 import LogBusiness = require('../app/business/LogBusiness');
+import SettingsBusiness = require('../app/business/SettingsBusiness');
 import ILogModel = require('../app/model/interfaces/ILogModel');
 
 class LogController implements IBaseController<LogBusiness> {
@@ -28,6 +29,52 @@ class LogController implements IBaseController<LogBusiness> {
           });
         }
       });
+    } catch (e)  {
+      console.log(e);
+      res.send({'error': 'true'});
+    }
+  }
+
+  createCli(req: Request, res: Response): void {
+    try {
+      const log: ILogModel = <ILogModel>req.body;
+      const settingsBusiness = new SettingsBusiness();
+      const logBusiness = new LogBusiness();
+
+      settingsBusiness.retrieve(
+        (error, result) => {
+          if (error) {
+            res.send({'error': 'true'});
+            return;
+          } else {
+            log.who = result[0].name;
+            log.case = result[0].case;
+            log.why = `[ ${result[0].invpre} ] PLACEHOLDER`;
+            log.what = 'PLACEHOLDER';
+            log.where = result[0].location;
+            log.how = log.how.trim();
+
+            logBusiness.create(log, (errorLog, resultLog) => {
+              if (errorLog) {
+                res.send({'error': 'true'});
+              } else {
+                res.send({
+                  'error': 'false',
+                  '_id': resultLog._id,
+                  'who': log.who,
+                  'what': log.what,
+                  'where': log.where,
+                  'when': log.when,
+                  'why': log.why,
+                  'how': log.how,
+                  'with': log.with,
+                  'case': log.case
+                });
+              }
+            });
+          }
+        }
+      );
     } catch (e)  {
       console.log(e);
       res.send({'error': 'true'});

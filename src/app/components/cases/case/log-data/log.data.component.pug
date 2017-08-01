@@ -8,13 +8,12 @@ hr(*ngIf="browser && allCategories.length > 0 && selectedCategory != ''")
       [rows]="allCategorizedLogs[selectedCategory]",
       [reorderable]="false",
       [rowHeight]="'auto'",
-      [sorts]="[{prop: 'when', dir: 'asc'}]",
       [scrollbarH]="true",
       [footerHeight]="100"
       [rowHeight]="'auto'"
     )
       ngx-datatable-column([sortable]="false", name="Where", [minWidth]="100", [maxWidth]="150")
-      ngx-datatable-column([sortable]="true",  name="When", [minWidth]="175", [maxWidth]="180")
+      ngx-datatable-column([sortable]="false",  name="When", [minWidth]="175", [maxWidth]="180")
       ngx-datatable-column([sortable]="false", name="What", [minWidth]="150")
       ngx-datatable-column([sortable]="false", name="Why", [minWidth]="150")
       ngx-datatable-column([sortable]="false", name="How", [minWidth]="150")
