@@ -9,7 +9,9 @@ hr(*ngIf="browser && allCategories.length > 0 && selectedCategory != ''")
       [reorderable]="false",
       [rowHeight]="'auto'",
       [sorts]="[{prop: 'when', dir: 'asc'}]",
-      [scrollbarH]="true"
+      [scrollbarH]="true",
+      [footerHeight]="100"
+      [rowHeight]="'auto'"
     )
       ngx-datatable-column([sortable]="false", name="Where", [minWidth]="100", [maxWidth]="150")
       ngx-datatable-column([sortable]="true",  name="When", [minWidth]="175", [maxWidth]="180")
@@ -28,3 +30,10 @@ hr(*ngIf="browser && allCategories.length > 0 && selectedCategory != ''")
         ng-template(let-row="row", let-value="value", ngx-datatable-cell-template)
           a((click)="deleteLog(value)")
             span.icon.icon-trash
+      ngx-datatable-footer
+        ng-template(ngx-datatable-footer-template, let-rowCount="rowCount")
+          .footer
+            div
+              strong Summary:
+            hr
+            div Entries: {{ rowCount }}
