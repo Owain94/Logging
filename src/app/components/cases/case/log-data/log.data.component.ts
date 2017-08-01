@@ -91,6 +91,10 @@ export class LogDataComponent implements OnInit {
     });
   }
 
+  public resultValue(value: string) {
+    return value.replace(new RegExp('\n', 'g'), '<br />');
+  }
+
   public editLog(id: string): void {
     const dialogRef = this.dialog.open(LogEditDialogComponent, {
       data: this.allLogs.filter((log: LogItem) => {
