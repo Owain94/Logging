@@ -23,6 +23,10 @@ export interface LogState {
   error?: boolean
 }
 
+export interface State {
+  log: LogState;
+}
+
 const initialState: LogState = {
   data: []
 };
@@ -110,7 +114,12 @@ export function logReducer(state: LogState = initialState, action: Actions) {
   }
 };
 
-export const getLogState = createFeatureSelector<LogState>('log');
+const getLoggingState = createFeatureSelector<any>('logging');
+
+const getLogState = createSelector(
+  getLoggingState,
+  (state: State) => state.log
+);
 
 export const getLogsForCase = (id: string) => createSelector(
   getLogState,

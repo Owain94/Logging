@@ -20,6 +20,10 @@ export interface SettingsState {
   error?: boolean
 }
 
+export interface State {
+  settings: SettingsState;
+}
+
 const initialState: SettingsState = {
   data: [],
 };
@@ -83,7 +87,12 @@ export function settingsReducer(state: SettingsState = initialState, action: Act
   }
 };
 
-export const getSettingsState = createFeatureSelector<SettingsState>('settings');
+const getLoggingState = createFeatureSelector<any>('logging');
+
+export const getSettingsState = createSelector(
+  getLoggingState,
+  (state: State) => state.settings
+);
 
 export const getSettings = createSelector(
   getSettingsState,

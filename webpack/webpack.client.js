@@ -30,7 +30,6 @@ module.exports = {
     "filename": "[name].[chunkhash:5].bundle.js",
     "chunkFilename": "[id].[chunkhash:5].chunk.js"
   },
-  "target": "web",
   "plugins": [
     new HtmlWebpackPlugin({
       "template": "./src/index.pug",
@@ -77,5 +76,6 @@ module.exports = {
     new webpack.DefinePlugin({
       "process.env.NODE_PLATFORM": JSON.stringify("client")
     })
-  ]
+  ],
+  "target": "web"
 };

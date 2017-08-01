@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 
 import { Settings } from '../store/models/settings.model';
 
@@ -14,29 +14,20 @@ import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class SettingsService {
-  private options: RequestOptions;
-
-  constructor(private http: Http) {
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    this.options = new RequestOptions({ headers: headers });
-  }
+  constructor(private http: HttpClient) {}
 
   public loadSettings(): Observable<Settings> {
     return this.http.get(`${url}/api/settings`)
-      .map(res => res.json())
       .catch((error: any) => Observable.throw({ error: 'true' }));
   }
 
-  public addSettings(settings: Settings): Observable<Settings> {
-    return this.http.post(`${url}/api/settings`, settings, this.options)
-      .map((res) => res.json())
+  public addSettings(settings: Settings): Observable<Object> {
+    return this.http.post(`${url}/api/settings`, settings)
       .catch((error: any) => Observable.throw({ error: 'true' }));
   }
 
-  public editSettings(settings: Settings): Observable<Settings> {
-    return this.http.put(`${url}/api/settings/${settings._id}`, settings, this.options)
-      .map((res) => res.json())
+  public editSettings(settings: Settings): Observable<Object> {
+    return this.http.put(`${url}/api/settings/${settings._id}`, settings)
       .catch((error: any) => Observable.throw({ error: 'true' }));
   }
 }

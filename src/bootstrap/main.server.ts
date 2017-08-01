@@ -52,6 +52,10 @@ ROUTES.forEach((route: string) => {
 
 app.use('/api', new Routes().routes);
 
+app.get('*', (req: Request, res: Response) => {
+  res.redirect('/404');
+});
+
 const server = http.createServer(app);
 
 server.listen(app.get('port'), function(){
