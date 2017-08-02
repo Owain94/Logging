@@ -30,7 +30,8 @@ export const defaultIcons: Icons = {
       <path d="M0 0h24v24H0z" fill="none"/>
       <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>
     </svg>
-  `warn: `
+  `,
+  warn: `
     <svg class="simple-notification-svg" xmlns="http://www.w3.org/2000/svg" fill="#ffffff" width="64" viewBox="0 0 64 64" height="64">
       <circle cx="32.086" cy="50.142" r="2.256"/>
       <path d="M30.08 25.012V42.32c0 1.107.897 2.005 2.006 2.005s2.006-.897 2.006-2.005V25.012c0-1.107-.897-2.006-2.006-2.006s-2.006.898-2.006 2.006z"/>
