@@ -8,7 +8,7 @@ describe('NotFoundComponent', () => {
   let notFoundComponent: NotFoundComponent;
   let notFoundFixture: ComponentFixture<NotFoundComponent>;
 
-  beforeEach( async(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule

@@ -6,7 +6,7 @@ describe('NotFoundComponent', () => {
   let menuComponent: MenuComponent;
   let menuFixture: ComponentFixture<MenuComponent>;
 
-  beforeEach( async(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
         MenuComponent
