@@ -11,10 +11,10 @@ export function Log(): ClassDecorator {
       LIFECYCLE_HOOKS.forEach(hook => {
         const original = constructor.prototype[hook];
 
-        constructor.prototype[hook] = function (...args: Array<any>) {
-          console.log(`%c ${component} - ${hook}`, `color: #4CAF50; font-weight: bold`, ...args);
+        constructor.prototype[hook] = function () {
+          console.log(`%c ${component} - ${hook}`, `color: #4CAF50; font-weight: bold`);
           // tslint:disable-next-line:no-unused-expression
-          original && original.apply(this, args);
+          original && original.apply(this);
         };
       });
     }
