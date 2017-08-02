@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Store } from '@ngrx/store';
@@ -41,7 +41,7 @@ import 'rxjs/add/operator/take';
 })
 @Log()
 @AutoUnsubscribe()
-export class CaseComponent implements OnInit {
+export class CaseComponent implements OnInit, OnDestroy {
   @logObservable public case: Observable<Case> = null;
   public log: Observable<Array<LogItem>> = null;
 
@@ -77,6 +77,10 @@ export class CaseComponent implements OnInit {
 
       this.handleStates();
     });
+  }
+
+  ngOnDestroy(): void {
+    // pass
   }
 
   public addLog(log: LogItem): void {

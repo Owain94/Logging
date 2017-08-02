@@ -1,5 +1,5 @@
 
-import { Component, ChangeDetectionStrategy, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { Store } from '@ngrx/store';
@@ -24,7 +24,7 @@ import { Subject } from 'rxjs/Subject';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 @Log()
-export class LogAddComponent implements OnInit {
+export class LogAddComponent implements OnInit, OnDestroy {
 
   @Input() id: string;
 
@@ -59,6 +59,10 @@ export class LogAddComponent implements OnInit {
         `${new Date().toLocaleDateString()}, ${new Date().toLocaleString([], {hour: '2-digit', minute: '2-digit', hour12: false})}`
       )
     );
+  }
+
+  ngOnDestroy(): void {
+    // pass
   }
 
   private initForm(): void {
