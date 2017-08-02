@@ -8,6 +8,7 @@ const tsConfig = {
 };
 
 const tsConfigAot = {
+  test: "./tsconfig.spec.json",
   client: "./tsconfig.app.json",
   server: "./tsconfig.server.aot.json"
 };
