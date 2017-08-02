@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 
 import { Store } from '@ngrx/store';
 
@@ -22,7 +22,7 @@ import 'rxjs/add/operator/take';
 })
 @Log()
 @AutoUnsubscribe()
-export class HomeComponent {
+export class HomeComponent implements OnDestroy {
 
   @logObservable public settings: Observable<SettingsState> = null;
   @logObservable public cases: Observable<CaseState> = null;
@@ -35,5 +35,9 @@ export class HomeComponent {
   ) {
     this.cases = this.store.select<CaseState>(getCaseState);
     this.settings = this.store.select<SettingsState>(getSettingsState);
+  }
+
+  ngOnDestroy(): void {
+    // pass
   }
 }

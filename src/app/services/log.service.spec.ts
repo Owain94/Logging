@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, inject } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { url } from '../../helpers/constants';
@@ -28,6 +28,12 @@ describe('The log service', () => {
   afterEach(() => {
     httpMock.verify();
   });
+
+  it('should instantiate',
+    inject([LogService], (service: LogService) => {
+      expect(service instanceof LogService).toBeTruthy();
+    })
+  );
 
   describe('loadLogs()', () => {
     it('should return an Observable<Array<Log>>', (done: any) => {

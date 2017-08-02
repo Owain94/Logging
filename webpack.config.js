@@ -27,11 +27,15 @@ module.exports = function (options, webpackOptions) {
     ]
   });
 
-  let testConfig = webpackMerge({}, commonPartial, testPartial);
+  let testConfig = webpackMerge({}, commonPartial, testPartial, {
+    plugins: [
+      getAotPlugin("test", !!options.aot)
+    ]
+  });
 
   if (options.aot) {
-    clientConfig = webpackMerge({}, clientConfig, webpackMerge({}, clientProdPartial, prodPartial));
-    serverConfig = webpackMerge({}, serverConfig, webpackMerge({}, serverProdPartial, prodPartial));
+    clientConfig = webpackMerge({}, clientConfig, clientProdPartial, prodPartial);
+    serverConfig = webpackMerge({}, serverConfig, serverProdPartial, prodPartial);
   } else {
     clientConfig = webpackMerge({}, clientConfig, devPartial);
     serverConfig = webpackMerge({}, serverConfig, devPartial);

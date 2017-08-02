@@ -2,6 +2,7 @@ export interface Icons {
   alert: string;
   error: string;
   info: string;
+  warn: string;
   success: string;
 }
 /* tslint:disable */
@@ -29,5 +30,12 @@ export const defaultIcons: Icons = {
       <path d="M0 0h24v24H0z" fill="none"/>
       <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>
     </svg>
-  `
+  `,
+  warn: `
+    <svg class="simple-notification-svg" xmlns="http://www.w3.org/2000/svg" fill="#ffffff" width="64" viewBox="0 0 64 64" height="64">
+      <circle cx="32.086" cy="50.142" r="2.256"/>
+      <path d="M30.08 25.012V42.32c0 1.107.897 2.005 2.006 2.005s2.006-.897 2.006-2.005V25.012c0-1.107-.897-2.006-2.006-2.006s-2.006.898-2.006 2.006z"/>
+      <path d="M63.766 59.234L33.856 3.082c-.697-1.308-2.844-1.308-3.54 0L.407 59.234c-.331.622-.312 1.372.051 1.975.362.605 1.015.975 1.72.975h59.816c.705 0 1.357-.369 1.721-.975.361-.603.381-1.353.051-1.975zM5.519 58.172L32.086 8.291l26.568 49.881H5.519z"/>
+    </svg>
+    `
 };

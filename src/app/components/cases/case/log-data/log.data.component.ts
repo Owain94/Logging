@@ -5,7 +5,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { WebworkerService } from './../../../../services/webworker.service';
 
 import {
-  Component, ChangeDetectionStrategy, OnInit, Input, Output, EventEmitter, PLATFORM_ID, Inject
+  Component, ChangeDetectionStrategy, OnInit, Input, Output, EventEmitter, PLATFORM_ID, Inject, OnDestroy
 } from '@angular/core';
 
 import { Log } from '../../../../decorators/log.decorator';
@@ -21,7 +21,7 @@ import { Subscription } from 'rxjs/Subscription';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 @Log()
-export class LogDataComponent implements OnInit {
+export class LogDataComponent implements OnInit, OnDestroy {
 
   @Input() @logObservable log: Observable<any>;
   @Input() selectedCategory: string;
@@ -73,6 +73,10 @@ export class LogDataComponent implements OnInit {
   ngOnInit(): void {
     this.browser = isPlatformBrowser(this.platformId);
     this.handleStates();
+  }
+
+  ngOnDestroy(): void {
+    // pass
   }
 
   private handleStates(): void {

@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { MdDialog } from '@angular/material';
 
@@ -42,7 +42,7 @@ import 'rxjs/add/operator/take';
 })
 @Log()
 @AutoUnsubscribe()
-export class CasesComponent implements OnInit {
+export class CasesComponent implements OnInit, OnDestroy {
 
   @logObservable public cases: Observable<CaseState> = null;
 
@@ -67,6 +67,10 @@ export class CasesComponent implements OnInit {
   ngOnInit(): void {
     this.HandleStates();
     this.initForm();
+  }
+
+  ngOnDestroy(): void {
+    // pass
   }
 
   private initForm(): void {

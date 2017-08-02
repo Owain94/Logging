@@ -1,10 +1,13 @@
 const path = require("path");
 const glob = require("glob");
+const nodeModules = path.join(process.cwd(), "node_modules");
 const FaviconsWebpackPlugin = require("favicons-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
 const BrotliPlugin = require("brotli-webpack-plugin");
 const PurifyCSSPlugin = require("purifycss-webpack");
 const PurifyPlugin = require("ngo").PurifyPlugin;
+
+const { CommonsChunkPlugin } = require("webpack").optimize;
 
 /**
  * This is a client prod config which should be merged on top of common config
@@ -62,6 +65,17 @@ module.exports = {
           "mat-ripple-element"
         ]
       }
+    }),
+    new CommonsChunkPlugin({
+      "name": "inline",
+      "minChunks": null
+    }),
+    new CommonsChunkPlugin({
+      "name": "vendor",
+      "minChunks": (module) => module.resource && module.resource.startsWith(nodeModules),
+      "chunks": [
+        "main"
+      ]
     }),
     new FaviconsWebpackPlugin({
       "appName": "Inkie's",
