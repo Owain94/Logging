@@ -8,7 +8,7 @@ describe('HeaderComponent', () => {
   let headerComponent: HeaderComponent;
   let headerFixture: ComponentFixture<HeaderComponent>;
 
-  beforeEach( async(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule
