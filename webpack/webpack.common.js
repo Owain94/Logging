@@ -31,7 +31,9 @@ const postcssPlugins = () => {
         ]
       )
     ),
-    postcssNext(),
+    postcssNext({
+      "warnForDuplicates": false
+    }),
     postcssReduceIdents(),
     cssnano({
       "preset": [

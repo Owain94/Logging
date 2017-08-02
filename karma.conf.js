@@ -42,7 +42,8 @@ module.exports = function (config) {
     browsers: [
       "PhantomJS"
     ],
-    singleRun: true
+    singleRun: true,
+    captureTimeout: 10000
   };
 
   config.set(configuration);

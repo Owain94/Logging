@@ -2,6 +2,7 @@ const { AotPlugin } = require("@ngtools/webpack");
 const { webpack } = require("webpack");
 
 const tsConfig = {
+  test: "./tsconfig.spec.json",
   client: "./tsconfig.app.json",
   server: "./tsconfig.server.json"
 };
@@ -12,6 +13,7 @@ const tsConfigAot = {
 };
 
 const mainPath = {
+  test: "./src/bootstrap/main.ts",
   client: "./src/bootstrap/main.ts",
   server: "./src/bootstrap/main.server.ts"
 };

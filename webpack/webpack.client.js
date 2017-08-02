@@ -4,9 +4,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const HtmlWebpackExcludeAssetsPlugin = require("html-webpack-exclude-assets-plugin");
 const ScriptExtHtmlWebpackPlugin = require("script-ext-html-webpack-plugin");
 
-const { CommonsChunkPlugin } = require("webpack").optimize;
-
-const nodeModules = path.join(process.cwd(), "node_modules");
 const entryPoints = ["inline","polyfills","sw-register","styles","vendor","main"];
 
 /**
@@ -62,17 +59,6 @@ module.exports = {
     new HtmlWebpackExcludeAssetsPlugin(),
     new ScriptExtHtmlWebpackPlugin({
       "async": "main"
-    }),
-    new CommonsChunkPlugin({
-      "name": "inline",
-      "minChunks": null
-    }),
-    new CommonsChunkPlugin({
-      "name": "vendor",
-      "minChunks": (module) => module.resource && module.resource.startsWith(nodeModules),
-      "chunks": [
-        "main"
-      ]
     }),
     new webpack.DefinePlugin({
       "process.env.NODE_PLATFORM": JSON.stringify("client")

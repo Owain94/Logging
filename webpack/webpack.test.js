@@ -1,8 +1,6 @@
 const path = require("path");
 const webpack = require("webpack");
 
-const { AotPlugin } = require("@ngtools/webpack");
-
 module.exports = {
   "devtool": "inline-source-map",
   "resolve": {
@@ -28,16 +26,6 @@ module.exports = {
       }
     ]
   },
-  "plugins": [
-    new AotPlugin({
-      "tsConfigPath": path.join(process.cwd(), "tsconfig.spec.json"),
-      "mainPath": path.join(process.cwd(), "src/bootstrap/main.ts")
-    }),
-    new webpack.SourceMapDevToolPlugin({
-      "filename": null, 
-      "test": /\.(ts|js)($|\?)/i
-    })
-  ],
   "node": {
     "process": false
   }
