@@ -2,15 +2,15 @@ import { Component, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 
 import { Store } from '@ngrx/store';
 
-import { getCaseState, CaseState } from '../../store/reducers/case.reducer';
-import { getSettingsState, SettingsState } from '../../store/reducers/settings.reducer';
+import { Settings } from '../../store/models/settings.model';
+
+import { getSettings } from '../../store/reducers/settings.reducer';
 
 import { Log } from '../../decorators/log.decorator';
 import { logObservable } from '../../decorators/log.observable.decorator';
 import { AutoUnsubscribe } from '../../decorators/auto.unsubscribe.decorator';
 
 import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
 
 import 'rxjs/add/operator/take';
 
@@ -24,17 +24,10 @@ import 'rxjs/add/operator/take';
 @AutoUnsubscribe()
 export class HomeComponent implements OnDestroy {
 
-  @logObservable public settings: Observable<SettingsState> = null;
-  @logObservable public cases: Observable<CaseState> = null;
+  @logObservable public settings: Observable<Settings>;
 
-  public settingsSubscription: Subscription;
-  public caseSubscription: Subscription;
-  public storeSubscription: Subscription;
-
-  constructor(private store: Store<CaseState | SettingsState>
-  ) {
-    this.cases = this.store.select<CaseState>(getCaseState);
-    this.settings = this.store.select<SettingsState>(getSettingsState);
+  constructor(private store: Store<Settings>) {
+    this.settings = this.store.select<Settings>(getSettings);
   }
 
   ngOnDestroy(): void {
