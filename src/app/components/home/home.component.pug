@@ -1,6 +1,9 @@
 app-header([headerHeading]="['Home', '']")
 
 .section
-  .row(*ngIf="settings")
+  .row
     .large-12.columns
-      p Hi, {{ (settings | async)?.name }} you're currently working from {{ (settings | async)?.location }} with the reason {{ (settings | async)?.invpre }}
+      p(*ngIf="(settings | async)?.name; else no_settings") Hi, {{ (settings | async)?.name }} you're currently working from {{ (settings | async)?.location }} with the reason {{ (settings | async)?.invpre }}
+      ng-template(#no_settings="")
+        p No settings found, 
+          a(routerLink="/settings") click here.
