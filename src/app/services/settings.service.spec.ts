@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, inject } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { url } from '../../helpers/constants';
@@ -28,6 +28,12 @@ describe('The settings service', () => {
   afterEach(() => {
     httpMock.verify();
   });
+
+  it('should instantiate',
+    inject([SettingsService], (service: SettingsService) => {
+      expect(service instanceof SettingsService).toBeTruthy();
+    })
+  );
 
   describe('loadSettings()', () => {
     it('should return an Observable<Settings>', (done: any) => {
