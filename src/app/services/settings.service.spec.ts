@@ -37,20 +37,22 @@ describe('The settings service', () => {
 
   describe('loadSettings()', () => {
     it('should return an Observable<Settings>', (done: any) => {
-      const mockResponse = {
-        '_id': '1',
-        'name': 'test',
-        'case': 'test',
-        'invpre': 'test',
-        'location': 'test',
-      };
+      const mockResponse = [
+        {
+          '_id': '1',
+          'name': 'test',
+          'case': 'test',
+          'invpre': 'test',
+          'location': 'test',
+        }
+      ];
 
       settingsService.loadSettings().subscribe((settings) => {
-        expect(settings._id).toEqual('1');
-        expect(settings.name).toEqual('test');
-        expect(settings.case).toEqual('test');
-        expect(settings.invpre).toEqual('test');
-        expect(settings.location).toEqual('test');
+        expect(settings[0]._id).toEqual('1');
+        expect(settings[0].name).toEqual('test');
+        expect(settings[0].case).toEqual('test');
+        expect(settings[0].invpre).toEqual('test');
+        expect(settings[0].location).toEqual('test');
         done();
       });
 
