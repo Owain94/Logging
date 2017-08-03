@@ -16,7 +16,11 @@ class SettingsController implements IBaseController<SettingsBusiness> {
         } else {
           res.send({
             'error': 'false',
-            '_id': result._id
+            '_id': result._id,
+            'name': req.body.name,
+            'case': req.body.case,
+            'invpre': req.body.invpre,
+            'location': req.body.location
           });
         }
       });
