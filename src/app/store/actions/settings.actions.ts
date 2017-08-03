@@ -19,7 +19,7 @@ export class LoadSettings implements Action {
 export class LoadSettingsSuccess implements Action {
   readonly type = LOAD_SETTINGS_SUCCESS;
 
-  constructor(public payload: Settings) {}
+  constructor(public payload: Array<Settings>) {}
 }
 
 export class AddSettings implements Action {

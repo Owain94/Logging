@@ -57,14 +57,14 @@ export class EditCaseFailure implements Action {
   readonly type = EDIT_CASE_FAILURE;
 }
 
-export class DeleteCaseSuccess implements Action {
-  readonly type = DELETE_CASE_SUCCESS;
+export class DeleteCase implements Action {
+  readonly type = DELETE_CASE;
 
   constructor(public payload: Case) {}
 }
 
-export class DeleteCase implements Action {
-  readonly type = DELETE_CASE;
+export class DeleteCaseSuccess implements Action {
+  readonly type = DELETE_CASE_SUCCESS;
 
   constructor(public payload: Case) {}
 }

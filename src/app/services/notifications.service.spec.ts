@@ -9,7 +9,9 @@ describe('The notifications service', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [NotificationsService],
+      providers: [
+        NotificationsService
+      ],
     });
   });
 

@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { Store } from '@ngrx/store';
 
-import { SettingsState, getSettings } from '../../../../store/reducers/settings.reducer';
+import { getSettings } from '../../../../store/reducers/settings.reducer';
 
 import { Settings } from '../../../../store/models/settings.model';
 import { Log as LogItem } from '../../../../store/models/log.model';
@@ -44,7 +44,7 @@ export class LogAddComponent implements OnInit, OnDestroy {
   public datetimeValue: Subject<string> = new Subject<string>();
 
   constructor(private formBuilder: FormBuilder,
-              private store: Store<SettingsState>) {
+              private store: Store<Settings>) {
     this.settings = this.store.select<Settings>(getSettings);
     this.datetime = IntervalObservable.create();
   }
