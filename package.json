@@ -74,6 +74,7 @@
     "zone.js": "0.8.16"
   },
   "devDependencies": {
+    "@angular-devkit/build-optimizer": "0.0.10",
     "@angular/compiler-cli": "4.3.3",
     "@angular/language-service": "4.3.3",
     "@ngtools/webpack": "1.5.5",
@@ -120,7 +121,6 @@
     "karma-webpack": "2.0.4",
     "less-loader": "4.0.5",
     "lint-staged": "4.0.2",
-    "ngo": "file:/Users/Owain/angular/ngo",
     "node-loader": "0.6.0",
     "nodemon": "1.11.0",
     "npm-run-all": "4.0.2",
