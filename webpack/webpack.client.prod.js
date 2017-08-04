@@ -5,7 +5,7 @@ const FaviconsWebpackPlugin = require("favicons-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
 const BrotliPlugin = require("brotli-webpack-plugin");
 const PurifyCSSPlugin = require("purifycss-webpack");
-const PurifyPlugin = require('@angular-devkit/build-optimizer').PurifyPlugin;
+const PurifyPlugin = require("@angular-devkit/build-optimizer").PurifyPlugin;
 
 const { CommonsChunkPlugin } = require("webpack").optimize;
 
