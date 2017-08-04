@@ -4,7 +4,7 @@
       h4 Categories
       button.button.button-margin(*ngFor="let category of allCategories; let i = index; trackBy: trackByFn", [innerText]="category | capitalize", (click)="selectCategory(category)")
 
-    ng-template(#no_categories="") No categories found, add your first log item by clicking the 'Add Log' button.
+    ng-template(#no_categories="") Add your first log item by clicking the 'Add Log' button.
 
 hr
 

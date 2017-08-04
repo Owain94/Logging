@@ -1,5 +1,5 @@
-.row()
-  form([formGroup]="addLogForm", (ngSubmit)="submitForm(addLogForm.value)")
+.row
+  form(*ngIf="(settings | async)?.name; else no_settings", [formGroup]="addLogForm", (ngSubmit)="submitForm(addLogForm.value)")
     .large-6.columns
       label() Name
         input(type="text", [value]="(settings | async)?.name", disabled)
@@ -43,3 +43,8 @@
 
     .large-12.columns.end
       button.button.button-margin(type="submit", [disabled]="!addLogForm.valid") Add
+
+  ng-template(#no_settings="")
+  .large-12.columns
+    p No settings found, you can't add a new log item 
+      a(routerLink="/settings") click here.

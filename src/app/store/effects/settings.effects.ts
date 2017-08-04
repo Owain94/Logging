@@ -35,7 +35,7 @@ export class SettingsEffects {
     .ofType(REQUEST_SETTINGS)
     .startWith(new LoadSettings())
     .switchMap((action: LoadSettings) => this.settingsService.loadSettings())
-    .map((settings: Settings) => new LoadSettingsSuccess(settings));
+    .map((settings: Array<Settings>) => new LoadSettingsSuccess(settings));
 
   @Effect()
   addSettings = this.actions

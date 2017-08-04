@@ -16,7 +16,7 @@ import 'rxjs/add/operator/catch';
 export class SettingsService {
   constructor(private httpClient: HttpClient) {}
 
-  public loadSettings(): Observable<Settings> {
+  public loadSettings(): Observable<Array<Settings>> {
     return this.httpClient.get(`${url}/api/settings`)
       .catch((error: any) => Observable.throw({ error: 'true' }));
   }
