@@ -1,7 +1,6 @@
 import { TestBed, ComponentFixture, async } from '@angular/core/testing';
 
 import { LogCategoriesComponent } from './log.categories.component';
-import { CapitalizePipe } from '../../../../pipes/capitalize.pipe';
 
 describe('LogCategoriesComponent', () => {
   let logCategoriesComponent: LogCategoriesComponent;
@@ -10,8 +9,7 @@ describe('LogCategoriesComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        LogCategoriesComponent,
-        CapitalizePipe
+        LogCategoriesComponent
       ],
     });
   }));
