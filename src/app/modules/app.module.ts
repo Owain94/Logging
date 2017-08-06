@@ -11,8 +11,6 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { RoutingModule } from './routing/routing.module';
 
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-
 import { AppActionsSubject } from '../store/app.action.subject';
 import { AppActions } from '../store/app.actions';
 
@@ -43,9 +41,9 @@ import { LogEditDialogComponent } from '../components/cases/case/log-edit-dialog
 import { LogExportComponent } from '../components/cases/case/log-export/log.export.component';
 import { LogAddComponent } from '../components/cases/case/log-add/log.add.component';
 import { LogDataComponent } from '../components/cases/case/log-data/log.data.component';
+import { LogDataRowComponent } from '../components/cases/case/log-data/log-data-row/log.data.row.component';
 import { LogCategoriesComponent } from '../components/cases/case/log-categories/log.categories.component';
 
-import { CapitalizePipe } from '../pipes/capitalize.pipe';
 import { NewlinePipe } from '../pipes/newline.pipe';
 import { LocaleDatePipe } from '../pipes/locale.date.pipe';
 
@@ -102,10 +100,10 @@ const metaReducers: ActionReducer<any, any>[] = process.env.NODE_ENV === 'develo
     LogExportComponent,
     LogAddComponent,
     LogDataComponent,
+    LogDataRowComponent,
     LogCategoriesComponent,
     NotificationComponent,
     NotificationsComponent,
-    CapitalizePipe,
     NewlinePipe,
     LocaleDatePipe
   ],
@@ -117,8 +115,6 @@ const metaReducers: ActionReducer<any, any>[] = process.env.NODE_ENV === 'develo
   imports: [
     MdButtonModule,
     MdDialogModule,
-
-    NgxDatatableModule,
 
     CommonModule,
     HttpClientModule,

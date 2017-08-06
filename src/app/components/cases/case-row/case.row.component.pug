@@ -15,8 +15,8 @@
         button.button.button-margin(type="submit", [disabled]="!editCaseForm.valid") Save
 
   ng-template(#not_editing="")
-    a.large-3.medium-12.small-12.columns([innerText]="'Name: ' + (singleCase.name | capitalize)", [routerLink]="['case', singleCase._id]")
-    a.large-7.medium-12.small-12.columns([innerText]="'Description: ' + (singleCase.description | capitalize)", [routerLink]="['case', singleCase._id]")
+    a.large-3.medium-12.small-12.columns.capitalize([innerText]="'Name: ' + (singleCase.name)", [routerLink]="['case', singleCase._id]")
+    a.large-7.medium-12.small-12.columns.capitalize([innerText]="'Description: ' + (singleCase.description)", [routerLink]="['case', singleCase._id]")
     .large-1.medium-12.small-12.columns.actions-margin.text-center-actions
       a((click)="editCase()")
         span.icon.icon-pencil

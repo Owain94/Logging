@@ -1,6 +1,3 @@
-import { LogDeleteDialogComponent } from './../log-delete-dialog/log.delete.dialog.component';
-import { LogEditDialogComponent } from './../log-edit-dialog/log.edit.dialog.component';
-import { MdDialog } from '@angular/material';
 import { isPlatformBrowser } from '@angular/common';
 import { WebworkerService } from './../../../../services/webworker.service';
 
@@ -8,10 +5,12 @@ import {
   Component, ChangeDetectionStrategy, OnInit, Input, Output, EventEmitter, PLATFORM_ID, Inject, OnDestroy
 } from '@angular/core';
 
-import { Log } from '../../../../decorators/log.decorator';
-import { Observable } from 'rxjs/Observable';
-import { logObservable } from '../../../../decorators/log.observable.decorator';
 import { Log as LogItem } from '../../../../store/models/log.model';
+
+import { Log } from '../../../../decorators/log.decorator';
+import { logObservable } from '../../../../decorators/log.observable.decorator';
+
+import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
@@ -24,6 +23,7 @@ import { Subscription } from 'rxjs/Subscription';
 export class LogDataComponent implements OnInit, OnDestroy {
 
   @Input() @logObservable log: Observable<any>;
+  // tslint:disable-next-line:no-inferrable-types
   @Input() selectedCategory: string;
 
   @Output() editLogEvent: EventEmitter<LogItem> = new EventEmitter<LogItem>();
@@ -36,9 +36,6 @@ export class LogDataComponent implements OnInit, OnDestroy {
   public allLogs: Array<LogItem> = [];
   public allCategories: Array<string> = [];
   public allCategorizedLogs: Object = {};
-
-  // tslint:disable-next-line:no-inferrable-types
-  public browser: boolean = false;
 
   private static handleLog(allLogs: any): [Array<string>, Object] {
     const allCategories =
@@ -65,13 +62,11 @@ export class LogDataComponent implements OnInit, OnDestroy {
     return [allCategories, allCategorizedLogs];
   }
 
-  constructor(public dialog: MdDialog,
-              private webworkerService: WebworkerService,
+  constructor(private webworkerService: WebworkerService,
               @Inject(PLATFORM_ID) private platformId: Object) {
   }
 
   ngOnInit(): void {
-    this.browser = isPlatformBrowser(this.platformId);
     this.handleStates();
   }
 
@@ -81,39 +76,38 @@ export class LogDataComponent implements OnInit, OnDestroy {
 
   private handleStates(): void {
     this.logSubscription = this.log.subscribe((res) => {
-      if (this.browser) {
-        const handleLogPromise = this.webworkerService.run(LogDataComponent.handleLog, this.allLogs = res);
-        handleLogPromise.then((result: any) => {
-          this.allCategories = result[0];
-          this.allCategorizedLogs = result[1];
+      this.allLogs = res;
 
-          this.allCategoriesEvent.emit(this.allCategories);
-          this.allCategorizedLogsEvent.emit(this.allCategorizedLogs);
+      if (isPlatformBrowser(this.platformId)) {
+        const handleLogPromise = this.webworkerService.run(LogDataComponent.handleLog, this.allLogs);
+        handleLogPromise.then((result: any) => {
+          this.resolveHandleLog(result[0], result[1]);
           this.webworkerService.terminate(handleLogPromise);
         });
+      } else {
+        const resolveHandleLog = LogDataComponent.handleLog(this.allLogs);
+        this.resolveHandleLog(resolveHandleLog[0], resolveHandleLog[1]);
       }
     });
   }
 
-  public editLog(id: string): void {
-    const dialogRef = this.dialog.open(LogEditDialogComponent, {
-      data: this.allLogs.filter((log: LogItem) => {
-        return log._id === id;
-      })[0]
-    });
-    dialogRef.afterClosed().subscribe((result: LogItem | null) => {
-      if (result !== null) {
-        this.editLogEvent.emit(result);
-      }
-    });
+  private resolveHandleLog(allCategories: Array<string>, allCategorizedLogs: Object): void {
+    this.allCategories = allCategories;
+    this.allCategorizedLogs = allCategorizedLogs;
+
+    this.allCategoriesEvent.emit(this.allCategories);
+    this.allCategorizedLogsEvent.emit(this.allCategorizedLogs);
+  }
+
+  public editLog(logItem: LogItem): void {
+    this.editLogEvent.emit(logItem);
   }
 
   public deleteLog(id: string): void {
-    const dialogRef = this.dialog.open(LogDeleteDialogComponent);
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.deleteLogEvent.emit(id);
-      }
-    });
+    this.deleteLogEvent.emit(id);
+  }
+
+  public trackByFn(index: number, item: LogItem): string {
+    return(item._id);
   }
 }
