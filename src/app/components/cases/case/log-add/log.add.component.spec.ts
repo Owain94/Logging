@@ -99,7 +99,7 @@ describe('LogAddComponent', () => {
 
         'who': '',
         'where': '',
-        'when': '',
+        'when': 1,
         'case': ''
       }
     );
@@ -126,7 +126,7 @@ describe('LogAddComponent', () => {
 
         'who': '',
         'where': '',
-        'when': '',
+        'when': 1,
         'case': ''
       }
     );

@@ -17,7 +17,7 @@
 
       .large-6.columns
         label() Date time
-          input(type="text", [value]="logItem.when", disabled)
+          input(type="text", [value]="logItem.when | localeDate", disabled)
 
       .row
         .large-12.columns

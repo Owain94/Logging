@@ -36,7 +36,9 @@ export class LogExportComponent {
     const data: Blob = new Blob([excelBuffer], {
       type: EXCEL_TYPE
     });
-    FileSaver.saveAs(data, `${fileName}_logs_export_${new Date().toLocaleString().replace(', ', '-')}.xlsx`);
+    FileSaver.saveAs(data,
+      `${fileName}_logs_export_${new Date().toLocaleDateString()}_${new Date().toLocaleTimeString()}.xlsx`
+    );
   }
 
 }

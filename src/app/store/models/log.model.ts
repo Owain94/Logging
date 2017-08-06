@@ -4,7 +4,7 @@ export class Log {
     who: string;
     what: string;
     where: string;
-    when: string;
+    when: number;
     why: string;
     how: string;
     with: string;

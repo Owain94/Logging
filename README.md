@@ -27,7 +27,6 @@ ipaddress="xxx.xxx.xxx.xxx:8000"
 last=$1
 
 prev=$(fc -ln -1)
-datetime=`date +"%d/%m/%Y"`", "`date +"%H:%M:%S"`
 
 while true; do
   echo -n "Do you want to log this command? [Y/n] "
@@ -39,5 +38,5 @@ while true; do
   esac
 done
 
-curl --request POST "http://$ipaddress/api/log/cli" --data "how=$prev" --data "when=$datetime" --data "with=Terminal"
+curl --request POST "http://$ipaddress/api/log/cli" --data "how=$prev" --data --data "with=Terminal"
 ```

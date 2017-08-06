@@ -45,7 +45,7 @@ describe('The log service', () => {
         'with': 'test',
         'who': 'test',
         'where': 'test',
-        'when': '01/01/1970, 00:00:00',
+        'when': 1,
         'case': '1',
         'result': ''
       }, {
@@ -56,7 +56,7 @@ describe('The log service', () => {
         'with': 'test',
         'who': 'test',
         'where': 'test',
-        'when': '01/01/1970, 00:00:00',
+        'when': 2,
         'case': '2',
         'result': 'test'
       }];
@@ -70,7 +70,7 @@ describe('The log service', () => {
         expect(logs[0].with).toEqual('test');
         expect(logs[0].who).toEqual('test');
         expect(logs[0].where).toEqual('test');
-        expect(logs[0].when).toEqual('01/01/1970, 00:00:00');
+        expect(logs[0].when).toEqual(1);
         expect(logs[0].case).toEqual('1');
         expect(logs[0].result).toEqual('');
         expect(logs[1]._id).toEqual('2');
@@ -80,7 +80,7 @@ describe('The log service', () => {
         expect(logs[1].with).toEqual('test');
         expect(logs[1].who).toEqual('test');
         expect(logs[1].where).toEqual('test');
-        expect(logs[1].when).toEqual('01/01/1970, 00:00:00');
+        expect(logs[1].when).toEqual(2);
         expect(logs[1].case).toEqual('2');
         expect(logs[1].result).toEqual('test');
         done();
@@ -113,7 +113,7 @@ describe('The log service', () => {
         'with': 'test',
         'who': 'test',
         'where': 'test',
-        'when': '01/01/1970, 00:00:00',
+        'when': 3,
         'case': '1',
         'result': ''
       };
@@ -126,7 +126,7 @@ describe('The log service', () => {
         'with': 'test',
         'who': 'test',
         'where': 'test',
-        'when': '01/01/1970, 00:00:00',
+        'when': 3,
         'case': '1',
         'result': '',
         'error': 'false'
@@ -140,7 +140,7 @@ describe('The log service', () => {
         expect(log.with).toEqual('test');
         expect(log.who).toEqual('test');
         expect(log.where).toEqual('test');
-        expect(log.when).toEqual('01/01/1970, 00:00:00');
+        expect(log.when).toEqual(3);
         expect(log.case).toEqual('1');
         expect(log.result).toEqual('');
         expect(JSON.parse(log.error)).toBeFalsy();
@@ -159,7 +159,7 @@ describe('The log service', () => {
         'with': 'test',
         'who': 'test',
         'where': 'test',
-        'when': '01/01/1970, 00:00:00',
+        'when': 3,
         'case': '1',
         'result': ''
       };
@@ -187,7 +187,7 @@ describe('The log service', () => {
         'with': 'test',
         'who': 'test',
         'where': 'test',
-        'when': '01/01/1970, 00:00:00',
+        'when': 3,
         'case': '1',
         'result': ''
       };
@@ -200,7 +200,7 @@ describe('The log service', () => {
         'with': 'test',
         'who': 'test',
         'where': 'test',
-        'when': '01/01/1970, 00:00:00',
+        'when': 3,
         'case': '1',
         'result': '',
         'error': 'false'
@@ -214,7 +214,7 @@ describe('The log service', () => {
         expect(log.with).toEqual('test');
         expect(log.who).toEqual('test');
         expect(log.where).toEqual('test');
-        expect(log.when).toEqual('01/01/1970, 00:00:00');
+        expect(log.when).toEqual(3);
         expect(log.case).toEqual('1');
         expect(log.result).toEqual('');
         expect(JSON.parse(log.error)).toBeFalsy();
@@ -234,7 +234,7 @@ describe('The log service', () => {
         'with': 'test',
         'who': 'test',
         'where': 'test',
-        'when': '01/01/1970, 00:00:00',
+        'when': 3,
         'case': '1',
         'result': ''
       };
@@ -262,7 +262,7 @@ describe('The log service', () => {
         'with': 'test',
         'who': 'test',
         'where': 'test',
-        'when': '01/01/1970, 00:00:00',
+        'when': 3,
         'case': '1',
         'result': ''
       };
@@ -275,7 +275,7 @@ describe('The log service', () => {
         'with': 'test',
         'who': 'test',
         'where': 'test',
-        'when': '01/01/1970, 00:00:00',
+        'when': 3,
         'case': '1',
         'result': '',
         'error': 'false'
@@ -289,7 +289,7 @@ describe('The log service', () => {
         expect(log.with).toEqual('test');
         expect(log.who).toEqual('test');
         expect(log.where).toEqual('test');
-        expect(log.when).toEqual('01/01/1970, 00:00:00');
+        expect(log.when).toEqual(3);
         expect(log.case).toEqual('1');
         expect(log.result).toEqual('');
         expect(JSON.parse(log.error)).toBeFalsy();
@@ -309,7 +309,7 @@ describe('The log service', () => {
         'with': 'test',
         'who': 'test',
         'where': 'test',
-        'when': '01/01/1970, 00:00:00',
+        'when': 3,
         'case': '1',
         'result': ''
       };

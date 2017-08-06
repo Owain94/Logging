@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MdButtonModule, MdDialogModule, MdDialogRef, MdDialog } from '@angular/material';
 
 import { LogEditDialogComponent } from './log.edit.dialog.component';
+import { LocaleDatePipe } from '../../../../pipes/locale.date.pipe';
 
 const mockData = {
   '_id': '2',
@@ -14,7 +15,7 @@ const mockData = {
   'with': 'test',
   'who': 'test',
   'where': 'test',
-  'when': '01/01/1970, 00:00:00',
+  'when': 1,
   'case': '2',
   'result': 'test'
 };
@@ -33,7 +34,8 @@ describe('CaseDeleteDialogComponent', () => {
         MdDialogModule
       ],
       declarations: [
-        LogEditDialogComponent
+        LogEditDialogComponent,
+        LocaleDatePipe
       ]
     }).overrideModule(BrowserDynamicTestingModule, {
       set: {
@@ -76,7 +78,7 @@ describe('CaseDeleteDialogComponent', () => {
     logEditDialog.afterClosed().subscribe((res) => {
       expect(res._id).toEqual('2');
       expect(res.who).toEqual('test');
-      expect(res.when).toEqual('01/01/1970, 00:00:00');
+      expect(res.when).toEqual(1);
       expect(res.case).toEqual('2');
       expect(res.why).toEqual('[ test ] test');
       expect(res.what).toEqual('test');
@@ -94,7 +96,7 @@ describe('CaseDeleteDialogComponent', () => {
     logEditDialog.afterClosed().subscribe((res) => {
       expect(res._id).toEqual('2');
       expect(res.who).toEqual('test');
-      expect(res.when).toEqual('01/01/1970, 00:00:00');
+      expect(res.when).toEqual(1);
       expect(res.case).toEqual('2');
       expect(res.why).toEqual('[ test ] test');
       expect(res.what).toEqual('test');

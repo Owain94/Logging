@@ -79,8 +79,7 @@ export class LogAddComponent implements OnInit, OnDestroy {
     this.settings.take(1).subscribe((settings: Settings) => {
       log.who = settings.name;
       log.where = settings.location;
-      log.when =
-        `${new Date().toLocaleDateString()}, ${new Date().toLocaleString([], {hour: '2-digit', minute: '2-digit', hour12: false})}`;
+      log.when = new Date().getTime();
       log.case = this.id;
       log.why = `[ ${settings.invpre} ] ${log.why}`;
       if (log.result) {

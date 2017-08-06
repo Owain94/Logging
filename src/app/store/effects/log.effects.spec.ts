@@ -90,7 +90,7 @@ const payload = {
   'with': 'testing',
   'who': 'testing',
   'where': 'testing',
-  'when': '02/01/1970, 00:00:00',
+  'when': 1,
   'case': '2'
 }
 
