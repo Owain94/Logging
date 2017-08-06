@@ -27,7 +27,7 @@ onmessage = function(event) {
           delete allLogs[categories[cat]][obj]['error']
 
           var date = allLogs[categories[cat]][obj]['when']
-          allLogs[categories[cat]][obj]['when'] = `${new Date(date).toLocaleDateString()}, ${new Date(date).toLocaleString([], {hour: '2-digit', minute: '2-digit'})}`
+          allLogs[categories[cat]][obj]['when'] = new Date(date).toLocaleDateString() + ', '+ new Date(date).toLocaleString([], {hour: '2-digit', minute: '2-digit'})
 
           charCount.who = allLogs[categories[cat]][obj]['who'].length
 
