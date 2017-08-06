@@ -30,6 +30,7 @@ import { MenuComponent } from '../components/main/menu/menu.component';
 import { FooterComponent } from '../components/main/footer/footer.component';
 import { HomeComponent } from '../components/home/home.component';
 import { CasesComponent } from '../components/cases/cases.component';
+import { AddCaseComponent } from '../components/cases/add-case/add.case.component';
 import { CaseRowComponent } from '../components/cases/case-row/case.row.component';
 import { SettingsComponent } from '../components/settings/settings.component';
 import { NotFoundComponent } from '../components/notfound/notfound.component';
@@ -91,6 +92,7 @@ const metaReducers: ActionReducer<any, any>[] = process.env.NODE_ENV === 'develo
     FooterComponent,
     HomeComponent,
     CasesComponent,
+    AddCaseComponent,
     CaseRowComponent,
     CaseComponent,
     SettingsComponent,

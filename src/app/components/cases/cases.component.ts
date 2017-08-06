@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { MdDialog } from '@angular/material';
 
 import { Store } from '@ngrx/store';
@@ -37,7 +37,6 @@ import 'rxjs/add/operator/take';
 @Component({
   selector: 'app-cases',
   templateUrl: './cases.component.pug',
-  styleUrls: ['./cases.component.styl'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 @Log()
@@ -58,7 +57,6 @@ export class CasesComponent implements OnInit, OnDestroy {
   constructor(public dialog: MdDialog,
               private store: Store<CaseState>,
               private actions: AppActions,
-              private formBuilder: FormBuilder,
               private notificationsService: NotificationsService
   ) {
     this.cases = store.select<CaseState>(getCaseState);
@@ -66,23 +64,14 @@ export class CasesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.HandleStates();
-    this.initForm();
   }
 
   ngOnDestroy(): void {
     // pass
   }
 
-  private initForm(): void {
-    this.addCaseForm = this.formBuilder.group({
-      'name': [null, Validators.required],
-      'description': [null, Validators.required]
-    });
-  }
-
   private HandleStates(): void {
     this.addCaseSuccessSubscription = this.actions.ofType(ADD_CASE_SUCCESS).subscribe(() => {
-      this.initForm();
       this.notification(false, 'Case successfully added.')
     });
 
@@ -121,7 +110,7 @@ export class CasesComponent implements OnInit, OnDestroy {
     }
   }
 
-  public submitForm(singleCase: Case): void {
+  public addCase(singleCase: Case): void {
     this.store.dispatch(new AddCase(singleCase));
   }
 
