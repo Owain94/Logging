@@ -20,7 +20,7 @@ class LogSchema {
         required: true
       },
       when: {
-        type: String,
+        type: Number,
         required: true
       },
       why: {

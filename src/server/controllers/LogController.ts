@@ -53,6 +53,7 @@ class LogController implements IBaseController<LogBusiness> {
             log.what = 'PLACEHOLDER';
             log.where = result[0].location;
             log.how = log.how.trim();
+            log.when = new Date().getTime();
 
             logBusiness.create(log, (errorLog, resultLog) => {
               if (errorLog) {
