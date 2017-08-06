@@ -46,6 +46,7 @@ import { LogCategoriesComponent } from '../components/cases/case/log-categories/
 
 import { NewlinePipe } from '../pipes/newline.pipe';
 import { LocaleDatePipe } from '../pipes/locale.date.pipe';
+import { HighlightPipe } from '../pipes/highlight.pipe';
 
 import { NotificationsService } from '../services/notifications.service';
 import { CaseService } from '../services/case.service';
@@ -105,7 +106,8 @@ const metaReducers: ActionReducer<any, any>[] = process.env.NODE_ENV === 'develo
     NotificationComponent,
     NotificationsComponent,
     NewlinePipe,
-    LocaleDatePipe
+    LocaleDatePipe,
+    HighlightPipe
   ],
   entryComponents: [
     CaseDeleteDialogComponent,

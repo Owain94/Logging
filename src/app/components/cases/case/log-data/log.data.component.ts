@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import { WebworkerService } from './../../../../services/webworker.service';
+import { FormControl } from '@angular/forms';
 
 import {
   Component, ChangeDetectionStrategy, OnInit, Input, Output, EventEmitter, PLATFORM_ID, Inject, OnDestroy
@@ -10,8 +10,13 @@ import { Log as LogItem } from '../../../../store/models/log.model';
 import { Log } from '../../../../decorators/log.decorator';
 import { logObservable } from '../../../../decorators/log.observable.decorator';
 
+import { WebworkerService } from './../../../../services/webworker.service';
+
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
+
+import 'rxjs/add/operator/debounceTime';
 
 @Component({
   selector: 'app-log-data',
@@ -32,10 +37,15 @@ export class LogDataComponent implements OnInit, OnDestroy {
   @Output() allCategorizedLogsEvent: EventEmitter<Object> = new EventEmitter<Object>();
 
   private logSubscription: Subscription;
+  private filterInputSubscription: Subscription;
 
   public allLogs: Array<LogItem> = [];
   public allCategories: Array<string> = [];
   public allCategorizedLogs: Object = {};
+
+  // tslint:disable-next-line:no-inferrable-types
+  public filterText: Subject<string> = new Subject<string>();
+  public filterInput = new FormControl();
 
   private static handleLog(allLogs: any): [Array<string>, Object] {
     const allCategories =
@@ -68,6 +78,13 @@ export class LogDataComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.handleStates();
+
+    this.filterInputSubscription = this.filterInput
+      .valueChanges
+      .debounceTime(250)
+      .subscribe((term) => {
+        this.filterText.next(term);
+      });
   }
 
   ngOnDestroy(): void {

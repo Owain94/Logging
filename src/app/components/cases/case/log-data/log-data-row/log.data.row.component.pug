@@ -1,12 +1,12 @@
 .row.full-width
-  .large-1.columns([innerText]="logItem.where")
-  .large-1.columns([innerText]="logItem.when | localeDate")
-  .large-2.columns([innerText]="logItem.what")
-  .large-2.columns([innerText]="logItem.why")
-  .large-2.columns([innerText]="logItem.how")
-  .large-1.columns([innerText]="logItem.with")
+  .large-1.columns([innerHTML]="logItem.where | highlight : filter")
+  .large-1.columns([innerHTML]="logItem.when | localeDate")
+  .large-2.columns([innerHTML]="logItem.what | highlight : filter")
+  .large-2.columns([innerHTML]="logItem.why | highlight : filter")
+  .large-2.columns([innerHTML]="logItem.how | highlight : filter")
+  .large-1.columns([innerHTML]="logItem.with | highlight : filter")
   .large-2.columns
-    span([innerHTML]="(logItem.result ? logItem.result : 'empty') | newline", [style.opacity]="logItem.result ? 1 : 0")
+    span([innerHTML]="(logItem.result ? logItem.result : 'empty') | newline | highlight : filter", [style.opacity]="logItem.result ? 1 : 0")
   .large-1.columns
     a((click)="editLog()")
       span.icon.icon-pencil

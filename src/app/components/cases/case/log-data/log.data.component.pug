@@ -1,5 +1,14 @@
 hr(*ngIf="allCategories.length > 0 && selectedCategory != ''")
 
+.row
+  .large-2.columns.filter-margin.hide-for-medium-only
+    span Search
+
+  .large-10.medium-12.columns
+    input(type="text", placeholder="Search", [formControl]="filterInput")
+
+hr(*ngIf="allCategories.length > 0 && selectedCategory != ''")
+
 .row.full-width.headers(*ngIf="allCategories.length > 0 && selectedCategory != ''")
   .large-1.columns Where
   .large-1.columns When
@@ -11,4 +20,4 @@ hr(*ngIf="allCategories.length > 0 && selectedCategory != ''")
 
 .row.full-width(*ngIf="allCategories.length > 0 && selectedCategory != ''")
   .large-12.columns(*ngFor="let item of allCategorizedLogs[selectedCategory]; let i = index; trackBy: trackByFn")
-    app-log-data-row([logItem]="item", (editLogEvent)="editLog($event)", (deleteLogEvent)="deleteLog($event)")
+    app-log-data-row([logItem]="item", [filterText]="filterText", (editLogEvent)="editLog($event)", (deleteLogEvent)="deleteLog($event)")

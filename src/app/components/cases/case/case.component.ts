@@ -83,6 +83,11 @@ export class CaseComponent implements OnInit, OnDestroy {
     // pass
   }
 
+  public allCategorizedLogsEvent(categorizedLogs: Object) {
+    this.allCategorizedLogs = categorizedLogs;
+
+  }
+
   public addLog(log: LogItem): void {
     this.store.dispatch(new AddLog(log));
   }

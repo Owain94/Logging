@@ -1,5 +1,5 @@
 import {
-  Component, ChangeDetectionStrategy, Input, Output, EventEmitter
+  Component, ChangeDetectionStrategy, Input, Output, EventEmitter, OnInit, ChangeDetectorRef
 } from '@angular/core';
 
 import { MdDialog } from '@angular/material';
@@ -11,6 +11,8 @@ import { Log as LogItem } from '../../../../../store/models/log.model';
 import { LogEditDialogComponent } from '../../log-edit-dialog/log.edit.dialog.component';
 import { LogDeleteDialogComponent } from '../../log-delete-dialog/log.delete.dialog.component';
 
+import { Subject } from 'rxjs/Subject';
+
 @Component({
   selector: 'app-log-data-row',
   templateUrl: './log.data.row.component.pug',
@@ -18,14 +20,25 @@ import { LogDeleteDialogComponent } from '../../log-delete-dialog/log.delete.dia
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 @Log()
-export class LogDataRowComponent {
+export class LogDataRowComponent implements OnInit {
 
   @Input() logItem: LogItem;
+  @Input() filterText: Subject<string>;
 
   @Output() editLogEvent: EventEmitter<LogItem> = new EventEmitter<LogItem>();
   @Output() deleteLogEvent: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor(public dialog: MdDialog) {
+  public filter = '';
+
+  constructor(public dialog: MdDialog,
+              private changeDetectorRef: ChangeDetectorRef) {
+  }
+
+  ngOnInit(): void {
+    this.filterText.subscribe((filter) => {
+      this.filter = filter;
+      this.changeDetectorRef.markForCheck();
+    });
   }
 
   public editLog(): void {
@@ -43,7 +56,6 @@ export class LogDataRowComponent {
     const dialogRef = this.dialog.open(LogDeleteDialogComponent);
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(this.logItem._id);
         this.deleteLogEvent.emit(this.logItem._id);
       }
     });
