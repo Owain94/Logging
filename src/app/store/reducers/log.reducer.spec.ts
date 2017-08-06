@@ -21,7 +21,7 @@ const state = {
       'with': 'test',
       'who': 'test',
       'where': 'test',
-      'when': '19/07/2017, 04:44:45',
+      'when': 1,
       'case': '1',
       'result': ''
     }
@@ -36,7 +36,7 @@ const payload = {
   'with': '',
   'who': '',
   'where': '',
-  'when': '',
+  'when': 1,
   'case': '',
   'result': ''
 }
@@ -49,7 +49,7 @@ const payloadEdit = {
   'with': 'testing',
   'who': 'testing',
   'where': 'testing',
-  'when': '19/07/2017, 04:44:45',
+  'when': 1,
   'case': '2',
   'result': 'testing'
 }
@@ -87,7 +87,7 @@ describe('The log reducer', () => {
     expect(subject.data[0].with).toEqual('testing');
     expect(subject.data[0].who).toEqual('testing');
     expect(subject.data[0].where).toEqual('testing');
-    expect(subject.data[0].when).toEqual('19/07/2017, 04:44:45');
+    expect(subject.data[0].when).toEqual(1);
     expect(subject.data[0].case).toEqual('2');
     expect(subject.data[0].result).toEqual('testing');
     expect(subject.error).toBeFalsy();
@@ -102,7 +102,7 @@ describe('The log reducer', () => {
     expect(subject.data[0].with).toEqual('test');
     expect(subject.data[0].who).toEqual('test');
     expect(subject.data[0].where).toEqual('test');
-    expect(subject.data[0].when).toEqual('19/07/2017, 04:44:45');
+    expect(subject.data[0].when).toEqual(1);
     expect(subject.data[0].case).toEqual('1');
     expect(subject.data[0].result).toEqual('');
     expect(subject.error).toBeTruthy();
@@ -123,7 +123,7 @@ describe('The log reducer', () => {
     expect(subject.data[0].with).toEqual('test');
     expect(subject.data[0].who).toEqual('test');
     expect(subject.data[0].where).toEqual('test');
-    expect(subject.data[0].when).toEqual('19/07/2017, 04:44:45');
+    expect(subject.data[0].when).toEqual(1);
     expect(subject.data[0].case).toEqual('1');
     expect(subject.data[0].result).toEqual('');
     expect(subject.error).toBeTruthy();
