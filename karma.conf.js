@@ -13,7 +13,7 @@ module.exports = function (config) {
       }
     },
     files: [
-      { pattern: "./node_modules/Intl/locale-data/jsonp/nl-NL.js", watched: false },
+      { pattern: "./node_modules/intl/locale-data/jsonp/nl-NL.js", watched: false },
       { pattern: "./spec-bundle.js", watched: false }
     ],
     proxies: {
