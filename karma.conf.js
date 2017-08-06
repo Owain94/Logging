@@ -3,7 +3,8 @@ module.exports = function (config) {
 
   var configuration = {
     basePath: "",
-    frameworks: ["jasmine"],
+    frameworks: ["jasmine", "intl-shim"],
+    plugin: [require('karma-intl-shim')],
     exclude: [],
     client: {
       captureConsole: true,
@@ -12,7 +13,8 @@ module.exports = function (config) {
       }
     },
     files: [
-      { pattern: "./spec-bundle.js", watched: false },
+      { pattern: './node_modules/Intl/locale-data/jsonp/nl-NL.js', watched: false },
+      { pattern: "./spec-bundle.js", watched: false }
     ],
     proxies: {
       "/assets/": "/base/src/assets/"

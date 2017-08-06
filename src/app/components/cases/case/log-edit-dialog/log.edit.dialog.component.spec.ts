@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MdButtonModule, MdDialogModule, MdDialogRef, MdDialog } from '@angular/material';
 
 import { LogEditDialogComponent } from './log.edit.dialog.component';
+import { LocaleDatePipe } from '../../../../pipes/locale.date.pipe';
 
 const mockData = {
   '_id': '2',
@@ -33,7 +34,8 @@ describe('CaseDeleteDialogComponent', () => {
         MdDialogModule
       ],
       declarations: [
-        LogEditDialogComponent
+        LogEditDialogComponent,
+        LocaleDatePipe
       ]
     }).overrideModule(BrowserDynamicTestingModule, {
       set: {
