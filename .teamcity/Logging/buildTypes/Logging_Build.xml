@@ -23,7 +23,7 @@
       <runner id="RUNNER_11" name="Run: yarn test" type="jonnyzzz.yarn">
         <parameters>
           <param name="teamcity.step.mode" value="default" />
-          <param name="yarn_commands" value="run codacy:test" />
+          <param name="yarn_commands" value="run ci:test" />
         </parameters>
       </runner>
       <runner id="RUNNER_12" name="Run: yarn protractor" type="jonnyzzz.yarn">
