@@ -33,21 +33,21 @@ export class LogDataComponent implements OnInit, OnDestroy {
 
   @Output() editLogEvent: EventEmitter<LogItem> = new EventEmitter<LogItem>();
   @Output() deleteLogEvent: EventEmitter<string> = new EventEmitter<string>();
-  @Output() allCategoriesEvent: EventEmitter<Array<string>> = new EventEmitter<Array<string>>();
+  @Output() allCategoriesEvent: EventEmitter<Array<Object>> = new EventEmitter<Array<Object>>();
   @Output() allCategorizedLogsEvent: EventEmitter<Object> = new EventEmitter<Object>();
 
   private logSubscription: Subscription;
   private filterInputSubscription: Subscription;
 
   public allLogs: Array<LogItem> = [];
-  public allCategories: Array<string> = [];
+  public allCategories: Array<Object> = [];
   public allCategorizedLogs: Object = {};
 
   // tslint:disable-next-line:no-inferrable-types
   public filterText: Subject<string> = new Subject<string>();
   public filterInput = new FormControl();
 
-  private static handleLog(allLogs: any): [Array<string>, Object] {
+  private static handleLog(allLogs: any): [Array<Object>, Object] {
     const allCategories =
       allLogs.map(
         (item: any) =>
@@ -63,13 +63,22 @@ export class LogDataComponent implements OnInit, OnDestroy {
         });
       }
     }
-
+    const allCountedCategories = []
     if (allCategories.length > 0 && allLogs.length > 0) {
       allCategories.unshift('All');
       allCategorizedLogs['All'] = allLogs;
+
+      for (const cat in allCategories) {
+        if (allCategories.hasOwnProperty(cat)) {
+          allCountedCategories.push({
+            'category': allCategories[cat],
+            'entries': allCategorizedLogs[allCategories[cat]].length
+          });
+        }
+      }
     }
 
-    return [allCategories, allCategorizedLogs];
+    return [allCountedCategories, allCategorizedLogs];
   }
 
   constructor(private webworkerService: WebworkerService,
@@ -108,11 +117,11 @@ export class LogDataComponent implements OnInit, OnDestroy {
     });
   }
 
-  private resolveHandleLog(allCategories: Array<string>, allCategorizedLogs: Object): void {
+  private resolveHandleLog(allCategories: Array<Object>, allCategorizedLogs: Object): void {
     this.allCategories = allCategories;
     this.allCategorizedLogs = allCategorizedLogs;
 
-    this.allCategoriesEvent.emit(this.allCategories);
+    this.allCategoriesEvent.emit(allCategories);
     this.allCategorizedLogsEvent.emit(this.allCategorizedLogs);
   }
 

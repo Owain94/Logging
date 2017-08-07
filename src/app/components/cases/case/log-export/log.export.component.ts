@@ -14,7 +14,7 @@ export class LogExportComponent {
 
   @Input() caseName: string;
   @Input() categorizedLogs: Object;
-  @Input() categories: Array<string>;
+  @Input() categories: Array<Object>;
 
   constructor() { }
 
@@ -40,5 +40,4 @@ export class LogExportComponent {
       `${fileName}_logs_export_${new Date().toLocaleDateString()}_${new Date().toLocaleTimeString()}.xlsx`
     );
   }
-
 }

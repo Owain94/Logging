@@ -49,6 +49,8 @@ import { NewlinePipe } from '../pipes/newline.pipe';
 import { LocaleDatePipe } from '../pipes/locale.date.pipe';
 import { HighlightPipe } from '../pipes/highlight.pipe';
 
+import { CountoDirective } from './../directives/counto.directive';
+
 import { NotificationsService } from '../services/notifications.service';
 import { CaseService } from '../services/case.service';
 import { SettingsService } from '../services/settings.service';
@@ -109,7 +111,8 @@ const metaReducers: ActionReducer<any, any>[] = process.env.NODE_ENV === 'develo
     NotificationsComponent,
     NewlinePipe,
     LocaleDatePipe,
-    HighlightPipe
+    HighlightPipe,
+    CountoDirective
   ],
   entryComponents: [
     CaseDeleteDialogComponent,
