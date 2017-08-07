@@ -1,4 +1,5 @@
 const webpack = require("webpack")
+const OptimizeJsPlugin = require("optimize-js-plugin");
 
 /**
  * This is a prod config to be merged with the Client config
@@ -27,6 +28,9 @@ module.exports = {
         "pure_getters": true
       },
       "comments": false
+    }),
+    new OptimizeJsPlugin({
+      "sourceMap": false
     }),
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify("production")
