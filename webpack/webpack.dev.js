@@ -1,4 +1,4 @@
-const webpack = require("webpack");
+const webpack = require("webpack")
 
 /**
  * This is a dev config to be merged with the Client config
@@ -17,4 +17,4 @@ module.exports = {
       "process.env.NODE_ENV": JSON.stringify("development")
     })
   ]
-};
+}

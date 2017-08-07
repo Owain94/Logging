@@ -1,18 +1,18 @@
-const path = require("path");
-const ProgressBarPlugin = require("progress-bar-webpack-plugin");
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const autoprefixer = require("autoprefixer");
-const postcssUrl = require('postcss-url');
-const postcssNext = require("postcss-cssnext");
-const postcssReduceIdents = require("postcss-reduce-idents");
-const postcssBrowserReporter = require("postcss-browser-reporter");
-const postcssReporter = require("postcss-reporter");
-const cssnano = require("cssnano");
-const url = require("postcss-url");
-const webpack = require("webpack");
+const path = require("path")
+const ProgressBarPlugin = require("progress-bar-webpack-plugin")
+const ExtractTextPlugin = require("extract-text-webpack-plugin")
+const autoprefixer = require("autoprefixer")
+const postcssUrl = require('postcss-url')
+const postcssNext = require("postcss-cssnext")
+const postcssReduceIdents = require("postcss-reduce-idents")
+const postcssBrowserReporter = require("postcss-browser-reporter")
+const postcssReporter = require("postcss-reporter")
+const cssnano = require("cssnano")
+const url = require("postcss-url")
+const webpack = require("webpack")
 
-const { LoaderOptionsPlugin } = require("webpack");
-const { AotPlugin } = require("@ngtools/webpack");
+const { LoaderOptionsPlugin } = require("webpack")
+const { AotPlugin } = require("@ngtools/webpack")
 
 
 const postcssPlugins = () => {
@@ -42,8 +42,8 @@ const postcssPlugins = () => {
     }),
     postcssBrowserReporter(),
     postcssReporter()
-  ];
-};
+  ]
+}
 
 module.exports = {
   "devtool": "inline-source-map",
@@ -255,4 +255,4 @@ module.exports = {
     "clearImmediate": false,
     "setImmediate": false
   }
-};
+}

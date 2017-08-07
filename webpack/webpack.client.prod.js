@@ -1,14 +1,14 @@
-const path = require("path");
-const glob = require("glob");
-const nodeModules = path.join(process.cwd(), "node_modules");
-const FaviconsWebpackPlugin = require("favicons-webpack-plugin");
-const CompressionPlugin = require("compression-webpack-plugin");
-const BrotliPlugin = require("brotli-webpack-plugin");
-const PurifyCSSPlugin = require("purifycss-webpack");
-const PurifyPlugin = require("@angular-devkit/build-optimizer").PurifyPlugin;
-const SubresourceIntegrityPlugin = require('webpack-subresource-integrity');
+const path = require("path")
+const glob = require("glob")
+const nodeModules = path.join(process.cwd(), "node_modules")
+const FaviconsWebpackPlugin = require("favicons-webpack-plugin")
+const CompressionPlugin = require("compression-webpack-plugin")
+const BrotliPlugin = require("brotli-webpack-plugin")
+const PurifyCSSPlugin = require("purifycss-webpack")
+const PurifyPlugin = require("@angular-devkit/build-optimizer").PurifyPlugin
+const SubresourceIntegrityPlugin = require('webpack-subresource-integrity')
 
-const { CommonsChunkPlugin } = require("webpack").optimize;
+const { CommonsChunkPlugin } = require("webpack").optimize
 
 /**
  * This is a client prod config which should be merged on top of common config
@@ -130,4 +130,4 @@ module.exports = {
       "minRatio": 0.8
     })
   ]
-};
+}
