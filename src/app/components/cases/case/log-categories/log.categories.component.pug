@@ -12,4 +12,4 @@ hr
   .large-6.columns
     h4 {{ _allCategories[selectedCategory]?.category }}
   .large-6.columns
-    h4(appCountoDirective="", [step]="250 / _allCategories[selectedCategory]?.entries", [countTo]="_allCategories[selectedCategory]?.entries", [countFrom]="0", [duration]="0.25", (countoChange)="entries = $event", [innerText]="'Amount of log entries: ' + ((entries ? entries : 0) | number : '1.0-0')")
+    h4(appCountoDirective="", [step]="10", [countTo]="_allCategories[selectedCategory]?.entries", [countFrom]="countFrom", [duration]="0.35", (countoChange)="entries = $event", (countoEnd)="countFrom = $event", [innerText]="'Amount of log entries: ' + ((entries ? entries : 0) | number : '1.0-0')")

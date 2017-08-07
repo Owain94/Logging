@@ -24,6 +24,9 @@ export class LogCategoriesComponent {
   // tslint:disable-next-line:no-inferrable-types
   public selectedCategory: number = -1;
 
+  // tslint:disable-next-line:no-inferrable-types
+  public countFrom: number = 0;
+
   public selectCategory(category: number): void {
     this.selectedCategory = category;
     this.changeCategoryEvent.emit(this._allCategories[category].category);

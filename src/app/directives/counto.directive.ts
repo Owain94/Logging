@@ -30,7 +30,8 @@ export class CountoDirective {
     this.run();
   }
 
-  @Output() countoChange = new EventEmitter();
+  @Output() countoChange: EventEmitter<number> = new EventEmitter<number>();
+  @Output() countoEnd: EventEmitter<number> = new EventEmitter<number>();
 
   private _timer: any;
   private _duration: number;
@@ -58,6 +59,7 @@ export class CountoDirective {
         if (this._countTo < this._countFrom) {
           if (intermediate <= this._countTo) {
             clearInterval(this._timer);
+            this.countoEnd.emit(this._countTo);
             this.countoChange.emit(this._countTo);
           } else {
             this.countoChange.emit(intermediate);
@@ -66,6 +68,7 @@ export class CountoDirective {
         } else {
           if (intermediate >= this._countTo) {
             clearInterval(this._timer);
+            this.countoEnd.emit(this._countTo);
             this.countoChange.emit(this._countTo);
           } else {
             this.countoChange.emit(intermediate);
