@@ -21,6 +21,11 @@ const postcssPlugins = () => {
       {
         filter: (asset) => asset.url.startsWith('/') && !asset.url.startsWith('//'),
         url: (asset) => `/${asset.url}`.replace(/\/\/+/g, '/')
+      },
+      {
+        filter: (asset) => !(asset.absolutePath.endsWith('.svg') && asset.hash),
+        url: 'inline',
+        maxSize: 10
       }
     ]),
     postcssNext({
