@@ -6,7 +6,7 @@ const CompressionPlugin = require("compression-webpack-plugin")
 const BrotliPlugin = require("brotli-webpack-plugin")
 const PurifyCSSPlugin = require("purifycss-webpack")
 const PurifyPlugin = require("@angular-devkit/build-optimizer").PurifyPlugin
-const SubresourceIntegrityPlugin = require('webpack-subresource-integrity')
+const SubresourceIntegrityPlugin = require("webpack-subresource-integrity")
 
 const { CommonsChunkPlugin } = require("webpack").optimize
 
@@ -82,7 +82,7 @@ module.exports = {
       ]
     }),
     new FaviconsWebpackPlugin({
-      "appName": "Inkie's",
+      "appName": "Logging",
       "appDescription": "Logging",
       "developerName": "Owain van Brakel",
       "developerURL": "https://www.owain.nl",
@@ -114,7 +114,7 @@ module.exports = {
       }
     }),
     new SubresourceIntegrityPlugin({
-      "hashFuncNames": ['sha256', 'sha384']
+      "hashFuncNames": ["sha256", "sha384"]
     }),
     new CompressionPlugin({
       "asset": "[path].gz[query]",

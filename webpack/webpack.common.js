@@ -2,7 +2,7 @@ const path = require("path")
 const ProgressBarPlugin = require("progress-bar-webpack-plugin")
 const ExtractTextPlugin = require("extract-text-webpack-plugin")
 const autoprefixer = require("autoprefixer")
-const postcssUrl = require('postcss-url')
+const postcssUrl = require("postcss-url")
 const postcssNext = require("postcss-cssnext")
 const postcssReduceIdents = require("postcss-reduce-idents")
 const postcssBrowserReporter = require("postcss-browser-reporter")
@@ -19,12 +19,12 @@ const postcssPlugins = () => {
   return [
     postcssUrl([
       {
-        filter: (asset) => asset.url.startsWith('/') && !asset.url.startsWith('//'),
-        url: (asset) => `/${asset.url}`.replace(/\/\/+/g, '/')
+        filter: (asset) => asset.url.startsWith("/") && !asset.url.startsWith("//"),
+        url: (asset) => `/${asset.url}`.replace(/\/\/+/g, "/")
       },
       {
-        filter: (asset) => !(asset.absolutePath.endsWith('.svg') && asset.hash),
-        url: 'inline',
+        filter: (asset) => !(asset.absolutePath.endsWith(".svg") && asset.hash),
+        url: "inline",
         maxSize: 10
       }
     ]),

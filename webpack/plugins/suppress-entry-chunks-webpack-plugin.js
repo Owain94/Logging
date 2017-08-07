@@ -1,7 +1,7 @@
 function SuppressExtractedTextChunksWebpackPlugin() {}
 
 SuppressExtractedTextChunksWebpackPlugin.prototype.apply = function (compiler) {
-  compiler.plugin('compilation', function (compilation) {
+  compiler.plugin("compilation", function (compilation) {
     const cssOnlyChunks = []
       const entryPoints = compilation.options.entry
       for (const entryPoint of Object.keys(entryPoints)) {
@@ -10,7 +10,7 @@ SuppressExtractedTextChunksWebpackPlugin.prototype.apply = function (compiler) {
             cssOnlyChunks.push(entryPoint)
         }
       }
-    compilation.plugin('after-seal', (callback) => {
+    compilation.plugin("after-seal", (callback) => {
       compilation.chunks
         .filter((chunk) => cssOnlyChunks.indexOf(chunk.name) !== -1)
         .forEach((chunk) => {
@@ -26,10 +26,10 @@ SuppressExtractedTextChunksWebpackPlugin.prototype.apply = function (compiler) {
         })
       callback()
     })
-    compilation.plugin('html-webpack-plugin-alter-asset-tags',
+    compilation.plugin("html-webpack-plugin-alter-asset-tags",
       (htmlPluginData, callback) => {
         const filterFn = (tag) =>
-          !(tag.tagName === 'script' && tag.attributes.src.match(/\.css$/))
+          !(tag.tagName === "script" && tag.attributes.src.match(/\.css$/))
         htmlPluginData.head = htmlPluginData.head.filter(filterFn)
         htmlPluginData.body = htmlPluginData.body.filter(filterFn)
         callback(null, htmlPluginData)
