@@ -6,6 +6,7 @@ const CompressionPlugin = require("compression-webpack-plugin");
 const BrotliPlugin = require("brotli-webpack-plugin");
 const PurifyCSSPlugin = require("purifycss-webpack");
 const PurifyPlugin = require("@angular-devkit/build-optimizer").PurifyPlugin;
+const SubresourceIntegrityPlugin = require('webpack-subresource-integrity');
 
 const { CommonsChunkPlugin } = require("webpack").optimize;
 
@@ -39,6 +40,9 @@ module.exports = {
         ]
       }
     ]
+  },
+  "output": {
+    "crossOriginLoading": "anonymous"
   },
   "plugins": [
     new PurifyPlugin(),
@@ -108,6 +112,9 @@ module.exports = {
         "yandex": true,
         "windows": true
       }
+    }),
+    new SubresourceIntegrityPlugin({
+      "hashFuncNames": ['sha256', 'sha384']
     }),
     new CompressionPlugin({
       "asset": "[path].gz[query]",
