@@ -1,5 +1,5 @@
 const webpack = require("webpack")
-const OptimizeJsPlugin = require("optimize-js-plugin");
+const OptimizeJsPlugin = require("optimize-js-plugin")
 
 /**
  * This is a prod config to be merged with the Client config
