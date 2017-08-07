@@ -2,7 +2,7 @@ const path = require("path");
 const ProgressBarPlugin = require("progress-bar-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const autoprefixer = require("autoprefixer");
-const postcss = require("postcss");
+const postcssUrl = require('postcss-url');
 const postcssNext = require("postcss-cssnext");
 const postcssReduceIdents = require("postcss-reduce-idents");
 const postcssBrowserReporter = require("postcss-browser-reporter");
@@ -17,20 +17,12 @@ const { AotPlugin } = require("@ngtools/webpack");
 
 const postcssPlugins = () => {
   return [
-    postcss().use(
-      url(
-        [
-          {
-            filter: "*", url: (URL) => {
-              if (!URL.startsWith("/") || URL.startsWith("//")) {
-                return URL;
-              }
-              return `${URL}`.replace(/\/\/+/g, "/");
-            }
-          }
-        ]
-      )
-    ),
+    postcssUrl([
+      {
+        filter: (asset) => asset.url.startsWith('/') && !asset.url.startsWith('//'),
+        url: (asset) => `/${asset.url}`.replace(/\/\/+/g, '/')
+      }
+    ]),
     postcssNext({
       "warnForDuplicates": false
     }),
