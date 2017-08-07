@@ -1,7 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const HtmlWebpackExcludeAssetsPlugin = require("html-webpack-exclude-assets-plugin");
+const SuppressExtractedTextChunksWebpackPlugin = require("./plugins/suppress-entry-chunks-webpack-plugin");
 const ScriptExtHtmlWebpackPlugin = require("script-ext-html-webpack-plugin");
 
 const entryPoints = ["inline","polyfills","sw-register","styles","vendor","main"];
@@ -43,7 +43,6 @@ module.exports = {
       "showErrors": true,
       "chunks": "all",
       "excludeChunks": [],
-      "excludeAssets": [/style.*.js/],
       "chunksSortMode": function sort(left, right) {
         let leftIndex = entryPoints.indexOf(left.names[0]);
         let rightindex = entryPoints.indexOf(right.names[0]);
@@ -56,10 +55,10 @@ module.exports = {
         }
       }
     }),
-    new HtmlWebpackExcludeAssetsPlugin(),
     new ScriptExtHtmlWebpackPlugin({
       "async": "main"
     }),
+    new SuppressExtractedTextChunksWebpackPlugin(),
     new webpack.DefinePlugin({
       "process.env.NODE_PLATFORM": JSON.stringify("client")
     })
