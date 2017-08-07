@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
 
 import { Log } from '../../../../decorators/log.decorator';
 
@@ -9,20 +9,20 @@ import { Log } from '../../../../decorators/log.decorator';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 @Log()
-export class LogCategoriesComponent implements OnChanges {
+export class LogCategoriesComponent {
 
-  @Input() allCategories: Array<string> = [];
+  @Input() set allCategories(value: Array<string>) {
+    this._allCategories = value;
+    if (this._allCategories.length > 0 && this.selectedCategory === '') {
+      this.selectCategory(this._allCategories[0]);
+    }
+  }
 
   @Output() changeCategoryEvent: EventEmitter<string> = new EventEmitter<string>();
 
+  public _allCategories: Array<string> = [];
   // tslint:disable-next-line:no-inferrable-types
   public selectedCategory: string = '';
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (this.allCategories.length > 0 && this.selectedCategory === '') {
-      this.selectCategory(this.allCategories[0]);
-    }
-  }
 
   public selectCategory(category: string): void {
     this.selectedCategory = category;

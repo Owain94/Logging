@@ -1,14 +1,13 @@
 .row
   .large-12.columns
-    div(*ngIf="allCategories.length > 0; else no_categories")
+    div(*ngIf="_allCategories.length > 0; else no_categories")
       h4 Categories
-      button.button.button-margin(*ngFor="let category of allCategories; let i = index; trackBy: trackByFn", [innerText]="category", (click)="selectCategory(category)")
+      button.button.button-margin(*ngFor="let category of _allCategories; let i = index; trackBy: trackByFn", [innerText]="category", (click)="selectCategory(category)")
 
     ng-template(#no_categories="") Add your first log item by clicking the 'Add Log' button.
 
 hr
 
-.row(*ngIf="allCategories.length > 0 && selectedCategory != ''")
-  .large-12.columns
-
+.row(*ngIf="_allCategories.length > 0 && selectedCategory != ''")
+  .large-6.columns
     h4([innerText]="selectedCategory")

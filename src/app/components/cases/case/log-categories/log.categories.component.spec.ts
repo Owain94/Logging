@@ -29,21 +29,6 @@ describe('LogCategoriesComponent', () => {
     expect(logCategoriesComponent.selectedCategory).toEqual('');
   });
 
-  describe('ngOnChanges', () => {
-    it('should set the category', () => {
-      expect(logCategoriesComponent.selectedCategory).toEqual('');
-      logCategoriesComponent.ngOnChanges(undefined);
-      expect(logCategoriesComponent.selectedCategory).toEqual('all');
-    });
-
-    it('shouldn\'t set the categorywhen none available', () => {
-      logCategoriesComponent.allCategories = [];
-      expect(logCategoriesComponent.selectedCategory).toEqual('');
-      logCategoriesComponent.ngOnChanges(undefined);
-      expect(logCategoriesComponent.selectedCategory).toEqual('');
-    });
-  });
-
   it('changing the category should emit', (done: any) => {
     logCategoriesComponent.changeCategoryEvent.subscribe(
       (res: string) => {
