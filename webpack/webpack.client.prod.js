@@ -1,13 +1,14 @@
-const path = require("path");
-const glob = require("glob");
-const nodeModules = path.join(process.cwd(), "node_modules");
-const FaviconsWebpackPlugin = require("favicons-webpack-plugin");
-const CompressionPlugin = require("compression-webpack-plugin");
-const BrotliPlugin = require("brotli-webpack-plugin");
-const PurifyCSSPlugin = require("purifycss-webpack");
-const PurifyPlugin = require("@angular-devkit/build-optimizer").PurifyPlugin;
+const path = require("path")
+const glob = require("glob")
+const nodeModules = path.join(process.cwd(), "node_modules")
+const FaviconsWebpackPlugin = require("favicons-webpack-plugin")
+const CompressionPlugin = require("compression-webpack-plugin")
+const BrotliPlugin = require("brotli-webpack-plugin")
+const PurifyCSSPlugin = require("purifycss-webpack")
+const PurifyPlugin = require("@angular-devkit/build-optimizer").PurifyPlugin
+const SubresourceIntegrityPlugin = require("webpack-subresource-integrity")
 
-const { CommonsChunkPlugin } = require("webpack").optimize;
+const { CommonsChunkPlugin } = require("webpack").optimize
 
 /**
  * This is a client prod config which should be merged on top of common config
@@ -39,6 +40,9 @@ module.exports = {
         ]
       }
     ]
+  },
+  "output": {
+    "crossOriginLoading": "anonymous"
   },
   "plugins": [
     new PurifyPlugin(),
@@ -78,7 +82,7 @@ module.exports = {
       ]
     }),
     new FaviconsWebpackPlugin({
-      "appName": "Inkie's",
+      "appName": "Logging",
       "appDescription": "Logging",
       "developerName": "Owain van Brakel",
       "developerURL": "https://www.owain.nl",
@@ -109,6 +113,9 @@ module.exports = {
         "windows": true
       }
     }),
+    new SubresourceIntegrityPlugin({
+      "hashFuncNames": ["sha256", "sha384"]
+    }),
     new CompressionPlugin({
       "asset": "[path].gz[query]",
       "algorithm": "gzip",
@@ -123,4 +130,4 @@ module.exports = {
       "minRatio": 0.8
     })
   ]
-};
+}

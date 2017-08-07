@@ -1,5 +1,5 @@
-const path = require("path");
-const webpack = require("webpack");
+const path = require("path")
+const webpack = require("webpack")
 
 /**
  * This is a server config which should be merged on top of common config
@@ -38,4 +38,4 @@ module.exports = {
       "process.env.NODE_PLATFORM": JSON.stringify("server")
     })
   ]
-};
+}

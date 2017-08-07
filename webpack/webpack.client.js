@@ -1,10 +1,10 @@
-const path = require("path");
-const webpack = require("webpack");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const HtmlWebpackExcludeAssetsPlugin = require("html-webpack-exclude-assets-plugin");
-const ScriptExtHtmlWebpackPlugin = require("script-ext-html-webpack-plugin");
+const path = require("path")
+const webpack = require("webpack")
+const HtmlWebpackPlugin = require("html-webpack-plugin")
+const SuppressExtractedTextChunksWebpackPlugin = require("./plugins/suppress-entry-chunks-webpack-plugin")
+const ScriptExtHtmlWebpackPlugin = require("script-ext-html-webpack-plugin")
 
-const entryPoints = ["inline","polyfills","sw-register","styles","vendor","main"];
+const entryPoints = ["inline","polyfills","sw-register","styles","vendor","main"]
 
 /**
  * This is a client config which should be merged on top of common config
@@ -43,25 +43,24 @@ module.exports = {
       "showErrors": true,
       "chunks": "all",
       "excludeChunks": [],
-      "excludeAssets": [/style.*.js/],
       "chunksSortMode": function sort(left, right) {
-        let leftIndex = entryPoints.indexOf(left.names[0]);
-        let rightindex = entryPoints.indexOf(right.names[0]);
+        let leftIndex = entryPoints.indexOf(left.names[0])
+        let rightindex = entryPoints.indexOf(right.names[0])
         if (leftIndex > rightindex) {
-            return 1;
+            return 1
         } else if (leftIndex < rightindex) {
-            return -1;
+            return -1
         } else {
-            return 0;
+            return 0
         }
       }
     }),
-    new HtmlWebpackExcludeAssetsPlugin(),
     new ScriptExtHtmlWebpackPlugin({
       "async": "main"
     }),
+    new SuppressExtractedTextChunksWebpackPlugin(),
     new webpack.DefinePlugin({
       "process.env.NODE_PLATFORM": JSON.stringify("client")
     })
   ]
-};
+}

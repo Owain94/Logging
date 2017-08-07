@@ -1,36 +1,33 @@
-const path = require("path");
-const ProgressBarPlugin = require("progress-bar-webpack-plugin");
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const autoprefixer = require("autoprefixer");
-const postcss = require("postcss");
-const postcssNext = require("postcss-cssnext");
-const postcssReduceIdents = require("postcss-reduce-idents");
-const postcssBrowserReporter = require("postcss-browser-reporter");
-const postcssReporter = require("postcss-reporter");
-const cssnano = require("cssnano");
-const url = require("postcss-url");
-const webpack = require("webpack");
+const path = require("path")
+const ProgressBarPlugin = require("progress-bar-webpack-plugin")
+const ExtractTextPlugin = require("extract-text-webpack-plugin")
+const autoprefixer = require("autoprefixer")
+const postcssUrl = require("postcss-url")
+const postcssNext = require("postcss-cssnext")
+const postcssReduceIdents = require("postcss-reduce-idents")
+const postcssBrowserReporter = require("postcss-browser-reporter")
+const postcssReporter = require("postcss-reporter")
+const cssnano = require("cssnano")
+const url = require("postcss-url")
+const webpack = require("webpack")
 
-const { LoaderOptionsPlugin } = require("webpack");
-const { AotPlugin } = require("@ngtools/webpack");
+const { LoaderOptionsPlugin } = require("webpack")
+const { AotPlugin } = require("@ngtools/webpack")
 
 
 const postcssPlugins = () => {
   return [
-    postcss().use(
-      url(
-        [
-          {
-            filter: "*", url: (URL) => {
-              if (!URL.startsWith("/") || URL.startsWith("//")) {
-                return URL;
-              }
-              return `${URL}`.replace(/\/\/+/g, "/");
-            }
-          }
-        ]
-      )
-    ),
+    postcssUrl([
+      {
+        filter: (asset) => asset.url.startsWith("/") && !asset.url.startsWith("//"),
+        url: (asset) => `/${asset.url}`.replace(/\/\/+/g, "/")
+      },
+      {
+        filter: (asset) => !(asset.absolutePath.endsWith(".svg") && asset.hash),
+        url: "inline",
+        maxSize: 10
+      }
+    ]),
     postcssNext({
       "warnForDuplicates": false
     }),
@@ -45,8 +42,8 @@ const postcssPlugins = () => {
     }),
     postcssBrowserReporter(),
     postcssReporter()
-  ];
-};
+  ]
+}
 
 module.exports = {
   "devtool": "inline-source-map",
@@ -258,4 +255,4 @@ module.exports = {
     "clearImmediate": false,
     "setImmediate": false
   }
-};
+}

@@ -1,5 +1,5 @@
 module.exports = function (config) {
-  var testWebpackConfig = require("./webpack.config.js")({ test: true, aot: false });
+  var testWebpackConfig = require("./webpack.config.js")({ test: true, aot: false })
 
   var configuration = {
     basePath: "",
@@ -46,7 +46,7 @@ module.exports = function (config) {
     ],
     singleRun: true,
     captureTimeout: 10000
-  };
+  }
 
-  config.set(configuration);
-};
+  config.set(configuration)
+}
