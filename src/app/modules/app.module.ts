@@ -11,8 +11,6 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { RoutingModule } from './routing/routing.module';
 
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-
 import { AppActionsSubject } from '../store/app.action.subject';
 import { AppActions } from '../store/app.actions';
 
@@ -32,6 +30,7 @@ import { MenuComponent } from '../components/main/menu/menu.component';
 import { FooterComponent } from '../components/main/footer/footer.component';
 import { HomeComponent } from '../components/home/home.component';
 import { CasesComponent } from '../components/cases/cases.component';
+import { AddCaseComponent } from '../components/cases/add-case/add.case.component';
 import { CaseRowComponent } from '../components/cases/case-row/case.row.component';
 import { SettingsComponent } from '../components/settings/settings.component';
 import { NotFoundComponent } from '../components/notfound/notfound.component';
@@ -43,11 +42,12 @@ import { LogEditDialogComponent } from '../components/cases/case/log-edit-dialog
 import { LogExportComponent } from '../components/cases/case/log-export/log.export.component';
 import { LogAddComponent } from '../components/cases/case/log-add/log.add.component';
 import { LogDataComponent } from '../components/cases/case/log-data/log.data.component';
+import { LogDataRowComponent } from '../components/cases/case/log-data/log-data-row/log.data.row.component';
 import { LogCategoriesComponent } from '../components/cases/case/log-categories/log.categories.component';
 
-import { CapitalizePipe } from '../pipes/capitalize.pipe';
 import { NewlinePipe } from '../pipes/newline.pipe';
 import { LocaleDatePipe } from '../pipes/locale.date.pipe';
+import { HighlightPipe } from '../pipes/highlight.pipe';
 
 import { NotificationsService } from '../services/notifications.service';
 import { CaseService } from '../services/case.service';
@@ -92,6 +92,7 @@ const metaReducers: ActionReducer<any, any>[] = process.env.NODE_ENV === 'develo
     FooterComponent,
     HomeComponent,
     CasesComponent,
+    AddCaseComponent,
     CaseRowComponent,
     CaseComponent,
     SettingsComponent,
@@ -102,12 +103,13 @@ const metaReducers: ActionReducer<any, any>[] = process.env.NODE_ENV === 'develo
     LogExportComponent,
     LogAddComponent,
     LogDataComponent,
+    LogDataRowComponent,
     LogCategoriesComponent,
     NotificationComponent,
     NotificationsComponent,
-    CapitalizePipe,
     NewlinePipe,
-    LocaleDatePipe
+    LocaleDatePipe,
+    HighlightPipe
   ],
   entryComponents: [
     CaseDeleteDialogComponent,
@@ -117,8 +119,6 @@ const metaReducers: ActionReducer<any, any>[] = process.env.NODE_ENV === 'develo
   imports: [
     MdButtonModule,
     MdDialogModule,
-
-    NgxDatatableModule,
 
     CommonModule,
     HttpClientModule,

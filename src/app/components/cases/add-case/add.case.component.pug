@@ -1,0 +1,18 @@
+.row
+  .large-12.columns.text-center
+    h4 Add a case
+
+.row
+  form([formGroup]="addCaseForm", (ngSubmit)="submitForm(addCaseForm.value)")
+    .large-3.medium-12.small-12.columns
+      label([ngClass]="{ 'error': !addCaseForm.controls['name'].valid && addCaseForm.controls['name'].touched }") Name
+        input(type="text", [formControl]="addCaseForm.controls['name']", [ngClass]="{ 'error': !addCaseForm.controls['name'].valid && addCaseForm.controls['name'].touched }")
+      small.error(*ngIf="!addCaseForm.controls['name'].valid && addCaseForm.controls['name'].touched") Name is mandatory
+
+    .large-7.medium-12.small-12.columns
+      label([ngClass]="{ 'error': !addCaseForm.controls['description'].valid && addCaseForm.controls['description'].touched }") Description
+        input(type="text", [formControl]="addCaseForm.controls['description']", [ngClass]="{ 'error': !addCaseForm.controls['description'].valid && addCaseForm.controls['description'].touched }")
+      small.error(*ngIf="!addCaseForm.controls['description'].valid && addCaseForm.controls['description'].touched") Description is mandatory
+
+    .large-1.medium-12.small-12.columns.end
+      button.button.button-margin(type="submit", [disabled]="!addCaseForm.valid") Add

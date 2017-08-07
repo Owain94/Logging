@@ -1,4 +1,4 @@
-app-header([headerHeading]="[(case | async)?.name | capitalize, (case | async)?.description | capitalize]")
+app-header([headerHeading]="[(case | async)?.name, (case | async)?.description]")
 
 .section
   .row
@@ -11,6 +11,6 @@ app-header([headerHeading]="[(case | async)?.name | capitalize, (case | async)?.
   hr
 
   app-log-categories([allCategories]="allCategories", (changeCategoryEvent)="selectedCategory = $event")
-  app-log-data([log]="log", [selectedCategory]="selectedCategory", (editLogEvent)="editLog($event)", (deleteLogEvent)="deleteLog($event)", (allCategoriesEvent)="allCategories = $event", (allCategorizedLogsEvent)="allCategorizedLogs = $event")
+  app-log-data([log]="log", [selectedCategory]="selectedCategory", (editLogEvent)="editLog($event)", (deleteLogEvent)="deleteLog($event)", (allCategoriesEvent)="allCategories = $event", (allCategorizedLogsEvent)="allCategorizedLogsEvent($event)")
 
 app-notifications

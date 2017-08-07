@@ -1,44 +1,23 @@
-hr(*ngIf="browser && allCategories.length > 0 && selectedCategory != ''")
+hr(*ngIf="allCategories.length > 0 && selectedCategory != ''")
 
-.row.full-width(*ngIf="browser && selectedCategory != ''")
-  .large-12.columns
+.row
+  .large-2.columns.filter-margin.hide-for-medium-only
+    span Search
 
-    ngx-datatable.material.full-width(
-      [columnMode]="'force'",
-      [rows]="allCategorizedLogs[selectedCategory]",
-      [reorderable]="false",
-      [rowHeight]="'auto'",
-      [scrollbarH]="true",
-      [footerHeight]="100"
-      [rowHeight]="'auto'"
-    )
-      ngx-datatable-column([sortable]="false", name="Where", [minWidth]="100", [maxWidth]="150")
-      ngx-datatable-column([sortable]="false",  name="When", [minWidth]="175", [maxWidth]="180")
-        ng-template(let-column="column", let-sort="sortFn", ngx-datatable-header-template) When
-        ng-template(let-row="row", let-value="value", ngx-datatable-cell-template)
-          span([innerText]="value | localeDate")
-      ngx-datatable-column([sortable]="false", name="What", [minWidth]="150")
-      ngx-datatable-column([sortable]="false", name="Why", [minWidth]="150")
-      ngx-datatable-column([sortable]="false", name="How", [minWidth]="150")
-      ngx-datatable-column([sortable]="false", name="With", [minWidth]="175", [maxWidth]="200")
-      ngx-datatable-column([sortable]="false", name="Result")
-        ng-template(let-column="column", let-sort="sortFn", ngx-datatable-header-template) Results
-        ng-template(let-row="row", let-value="value", ngx-datatable-cell-template)
-          span([innerHTML]="value | newline")
-      ngx-datatable-column([sortable]="false", name="Edit", [width]="40", [minWidth]="40", [maxWidth]="45", prop="_id")
-        ng-template(let-column="column", let-sort="sortFn", ngx-datatable-header-template)
-        ng-template(let-row="row", let-value="value", ngx-datatable-cell-template)
-          a((click)="editLog(value)")
-            span.icon.icon-pencil
-      ngx-datatable-column([sortable]="false", name="Delete", [width]="40", [minWidth]="40", [maxWidth]="45", prop="_id")
-        ng-template(let-column="column", let-sort="sortFn", ngx-datatable-header-template)
-        ng-template(let-row="row", let-value="value", ngx-datatable-cell-template)
-          a((click)="deleteLog(value)")
-            span.icon.icon-trash
-      ngx-datatable-footer
-        ng-template(ngx-datatable-footer-template, let-rowCount="rowCount")
-          .footer
-            div
-              strong Summary:
-            hr
-            div Entries: {{ rowCount }}
+  .large-10.medium-12.columns
+    input(type="text", placeholder="Search", [formControl]="filterInput")
+
+hr(*ngIf="allCategories.length > 0 && selectedCategory != ''")
+
+.row.full-width.headers(*ngIf="allCategories.length > 0 && selectedCategory != ''")
+  .large-1.columns Where
+  .large-1.columns When
+  .large-2.columns What
+  .large-2.columns Why
+  .large-2.columns How
+  .large-1.columns With
+  .large-2.columns.end Results
+
+.row.full-width(*ngIf="allCategories.length > 0 && selectedCategory != ''")
+  .large-12.columns(*ngFor="let item of allCategorizedLogs[selectedCategory]; let i = index; trackBy: trackByFn")
+    app-log-data-row([logItem]="item", [filterText]="filterText", (editLogEvent)="editLog($event)", (deleteLogEvent)="deleteLog($event)")
