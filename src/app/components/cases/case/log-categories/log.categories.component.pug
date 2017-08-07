@@ -1,14 +1,15 @@
 .row
   .large-12.columns
-    div(*ngIf="allCategories.length > 0; else no_categories")
+    div(*ngIf="_allCategories.length > 0; else no_categories")
       h4 Categories
-      button.button.button-margin(*ngFor="let category of allCategories; let i = index; trackBy: trackByFn", [innerText]="category", (click)="selectCategory(category)")
+      button.button.button-margin(*ngFor="let category of _allCategories; let i = index; trackBy: trackByFn", [innerText]="category.category", (click)="selectCategory(i)")
 
     ng-template(#no_categories="") Add your first log item by clicking the 'Add Log' button.
 
 hr
 
-.row(*ngIf="allCategories.length > 0 && selectedCategory != ''")
-  .large-12.columns
-
-    h4([innerText]="selectedCategory")
+.row(*ngIf="selectedCategory != -1")
+  .large-6.columns
+    h4 {{ _allCategories[selectedCategory]?.category }}
+  .large-6.columns
+    h4(appCountoDirective="", [step]="250 / _allCategories[selectedCategory]?.entries", [countTo]="_allCategories[selectedCategory]?.entries", [countFrom]="0", [duration]="0.25", (countoChange)="entries = $event", [innerText]="'Amount of log entries: ' + ((entries ? entries : 0) | number : '1.0-0')")

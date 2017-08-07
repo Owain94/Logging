@@ -173,7 +173,7 @@
     ]
   },
   "lint-staged": {
-    "*.ts": "tslint",
+    "*.ts": "tslint --type-check --project tsconfig.app.json && tslint --type-check --project tsconfig.server.json",
     "*.css": "stylelint",
     "*.pug": "pug-lint",
     "*.styl": "stylint"

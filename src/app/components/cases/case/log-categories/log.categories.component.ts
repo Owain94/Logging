@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
 
 import { Log } from '../../../../decorators/log.decorator';
 
@@ -9,24 +9,24 @@ import { Log } from '../../../../decorators/log.decorator';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 @Log()
-export class LogCategoriesComponent implements OnChanges {
+export class LogCategoriesComponent {
 
-  @Input() allCategories: Array<string> = [];
-
-  @Output() changeCategoryEvent: EventEmitter<string> = new EventEmitter<string>();
-
-  // tslint:disable-next-line:no-inferrable-types
-  public selectedCategory: string = '';
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (this.allCategories.length > 0 && this.selectedCategory === '') {
-      this.selectCategory(this.allCategories[0]);
+  @Input() set allCategories(value: Array<{ 'category': string,  'entries': number}>) {
+    this._allCategories = value;
+    if (this._allCategories.length > 0 && this.selectedCategory === -1) {
+      this.selectCategory(0);
     }
   }
 
-  public selectCategory(category: string): void {
+  @Output() changeCategoryEvent: EventEmitter<string> = new EventEmitter<string>();
+
+  public _allCategories: Array<{ 'category': string,  'entries': number}> = [];
+  // tslint:disable-next-line:no-inferrable-types
+  public selectedCategory: number = -1;
+
+  public selectCategory(category: number): void {
     this.selectedCategory = category;
-    this.changeCategoryEvent.emit(category);
+    this.changeCategoryEvent.emit(this._allCategories[category].category);
   }
 
   public trackByFn(index: number, item: string): number {

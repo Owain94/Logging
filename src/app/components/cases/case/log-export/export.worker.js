@@ -1,9 +1,16 @@
 import * as XLSX from 'xlsx'
 
 onmessage = function(event) {
-  var categories = event.data.categories
+  var numberedCategories = event.data.categories
   var allLogs = event.data.categorizedLogs
+  var categories = []
   var allLogsJson = {}
+
+  for (var cat in numberedCategories) {
+    if (numberedCategories.hasOwnProperty(cat)) {
+      categories.push(numberedCategories[cat].category);
+    }
+  }
 
   for (var cat in categories) {
     if (categories.hasOwnProperty(cat)) {
