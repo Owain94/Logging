@@ -26,7 +26,10 @@ export class LogExportComponent {
         categories: this.categories,
         categorizedLogs: this.categorizedLogs
       });
-      worker.onmessage = (event: any) => this.saveAsExcelFile(event.data.excelBuffer, this.caseName);
+      worker.onmessage = (event: any) => {
+        this.saveAsExcelFile(event.data.excelBuffer, this.caseName);
+        worker.terminate();
+      }
     }
   }
 
