@@ -33,7 +33,7 @@ export class MainComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.routerEventsSubscription = this.router.events.subscribe(path => {
       if (path instanceof NavigationEnd) {
-        this.brokerService.scrollTo(0, 0);
+        this.brokerService.scrollTo(0, 0, 'instant');
       }
     });
 
@@ -64,7 +64,7 @@ export class MainComponent implements OnInit, OnDestroy {
     // pass
   }
 
-  private scrollTo(data: Array<number>): void {
+  private scrollTo(data: [number, number, ScrollBehavior]): void {
     const args = new UiArguments('scroll');
     args.method = 'scroll';
     const fnArg = new FnArg(data, PRIMITIVE);

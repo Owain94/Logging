@@ -4,14 +4,14 @@ import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class BrokerService {
-  public scroll = new Subject<Array<number>>();
+  public scroll = new Subject<[number, number, ScrollBehavior]>();
   public exportData = new Subject<[any, string]>();
   public notification = new Subject<{type: string, title: string, content: string}>();
   public confirm = new Subject<{title: string, content: string}>();
   public confirmReturn = new Subject<boolean>();
 
-  public scrollTo(x: number, y: number) {
-    this.scroll.next([x, y]);
+  public scrollTo(x: number, y: number, behavior: ScrollBehavior) {
+    this.scroll.next([x, y, behavior]);
   }
 
   public publishData(data: [any, string]) {

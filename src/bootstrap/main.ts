@@ -21,8 +21,8 @@ bootstrapWorkerUi('webworker.bundle.js', WORKER_UI_LOCATION_PROVIDERS).then((pla
   const exportBroker = brokerFactory.createMessageBroker('EXPORT_CHANNEL', false);
   const notificationBroker = brokerFactory.createMessageBroker('NOTIFICATION_CHANNEL', false);
 
-  UiBroker.registerMethod('scroll', [ PRIMITIVE ], (data: Array<number>) => {
-    window.scroll(data[0], data[1]);
+  UiBroker.registerMethod('scroll', [ PRIMITIVE ], (data: [number, number, ScrollBehavior]) => {
+    window.scroll({top: data[0], left: data[1], behavior: data[2]});
     return Promise.resolve();
   }, PRIMITIVE);
 
