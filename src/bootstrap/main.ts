@@ -12,6 +12,9 @@ import * as swal from 'sweetalert';
 
 import * as FileSaver from 'file-saver';
 
+Error['stackTraceLimit'] = Infinity;
+require('zone.js/dist/long-stack-trace-zone');
+
 bootstrapWorkerUi('webworker.bundle.js', WORKER_UI_LOCATION_PROVIDERS).then((platformRef: PlatformRef) => {
   const brokerFactory: ServiceMessageBrokerFactory = platformRef.injector.get(ServiceMessageBrokerFactory);
   const UiBroker = brokerFactory.createMessageBroker('UI_CHANNEL', false);
