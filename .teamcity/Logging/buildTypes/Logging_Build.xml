@@ -6,6 +6,9 @@
     <options>
       <option name="allowExternalStatus" value="true" />
     </options>
+    <disabled-settings>
+      <setting-ref ref="RUNNER_12" />
+    </disabled-settings>
     <parameters />
     <build-runners>
       <runner id="RUNNER_9" name="Run: yarn install" type="jonnyzzz.yarn">
