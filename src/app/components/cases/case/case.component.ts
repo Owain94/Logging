@@ -26,7 +26,7 @@ import { Log } from '../../../decorators/log.decorator';
 import { logObservable } from '../../../decorators/log.observable.decorator';
 import { AutoUnsubscribe } from '../../../decorators/auto.unsubscribe.decorator';
 
-import { NotificationsService } from '../../../services/notifications.service';
+import { BrokerService } from '../../../services/broker.service';
 
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
@@ -65,7 +65,7 @@ export class CaseComponent implements OnInit, OnDestroy {
   constructor(private activatedRoute: ActivatedRoute,
               private store: Store<Array<LogItem> | Case>,
               private actions: AppActions,
-              private notificationsService: NotificationsService) {
+              private brokerService: BrokerService) {
   }
 
   ngOnInit(): void {
@@ -97,6 +97,10 @@ export class CaseComponent implements OnInit, OnDestroy {
 
   public deleteLog(id: string): void {
     this.store.dispatch(new DeleteLog({'_id': id}));
+  }
+
+  public categorySelected(category: string): void {
+    this.selectedCategory = category;
   }
 
   private handleStates(): void {
@@ -132,12 +136,12 @@ export class CaseComponent implements OnInit, OnDestroy {
 
   private notification(error: boolean, description: string): void {
     if (error) {
-      this.notificationsService.error(
+      this.brokerService.error(
         'Error',
         description
       );
     } else {
-      this.notificationsService.success(
+      this.brokerService.success(
         'Success',
         description
       );

@@ -1,8 +1,7 @@
-import { CommonModule } from '@angular/common';
 import { NgModule, ErrorHandler } from '@angular/core';
+import { CommonModule, APP_BASE_HREF } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MdButtonModule, MdDialogModule } from '@angular/material';
 
 import { StoreModule, ActionReducerMap, ActionReducer, ActionsSubject } from '@ngrx/store';
 // import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
@@ -34,11 +33,6 @@ import { AddCaseComponent } from '../components/cases/add-case/add.case.componen
 import { CaseRowComponent } from '../components/cases/case-row/case.row.component';
 import { SettingsComponent } from '../components/settings/settings.component';
 import { NotFoundComponent } from '../components/notfound/notfound.component';
-import { NotificationsComponent } from '../components/notifications/notifications.component';
-import { NotificationComponent } from '../components/notifications/notification/notification.component';
-import { CaseDeleteDialogComponent } from '../components/cases/case-delete-dialog/case.delete.dialog.component';
-import { LogDeleteDialogComponent } from '../components/cases/case/log-delete-dialog/log.delete.dialog.component';
-import { LogEditDialogComponent } from '../components/cases/case/log-edit-dialog/log.edit.dialog.component';
 import { LogExportComponent } from '../components/cases/case/log-export/log.export.component';
 import { LogAddComponent } from '../components/cases/case/log-add/log.add.component';
 import { LogDataComponent } from '../components/cases/case/log-data/log.data.component';
@@ -51,11 +45,10 @@ import { HighlightPipe } from '../pipes/highlight.pipe';
 
 import { CountoDirective } from './../directives/counto.directive';
 
-import { NotificationsService } from '../services/notifications.service';
 import { CaseService } from '../services/case.service';
 import { SettingsService } from '../services/settings.service';
 import { LogService } from '../services/log.service';
-import { WebworkerService } from '../services/webworker.service';
+import { BrokerService } from '../services/broker.service';
 
 import * as Raven from 'raven-js';
 
@@ -99,30 +92,17 @@ const metaReducers: ActionReducer<any, any>[] = process.env.NODE_ENV === 'develo
     CaseComponent,
     SettingsComponent,
     NotFoundComponent,
-    CaseDeleteDialogComponent,
-    LogDeleteDialogComponent,
-    LogEditDialogComponent,
     LogExportComponent,
     LogAddComponent,
     LogDataComponent,
     LogDataRowComponent,
     LogCategoriesComponent,
-    NotificationComponent,
-    NotificationsComponent,
     NewlinePipe,
     LocaleDatePipe,
     HighlightPipe,
     CountoDirective
   ],
-  entryComponents: [
-    CaseDeleteDialogComponent,
-    LogDeleteDialogComponent,
-    LogEditDialogComponent
-  ],
   imports: [
-    MdButtonModule,
-    MdDialogModule,
-
     CommonModule,
     HttpClientModule,
     ReactiveFormsModule,
@@ -147,6 +127,10 @@ const metaReducers: ActionReducer<any, any>[] = process.env.NODE_ENV === 'develo
       useFactory: provideErrorHandler
     },
     {
+      provide: APP_BASE_HREF,
+      useValue: '/'
+    },
+    {
       provide: ActionsSubject,
       useClass: AppActionsSubject
     },
@@ -154,9 +138,7 @@ const metaReducers: ActionReducer<any, any>[] = process.env.NODE_ENV === 'develo
     CaseService,
     SettingsService,
     LogService,
-
-    NotificationsService,
-    WebworkerService
+    BrokerService
   ],
   exports: [
     MainComponent

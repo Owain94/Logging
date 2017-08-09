@@ -41,7 +41,7 @@ export class LogAddComponent implements OnInit, OnDestroy {
   // tslint:disable-next-line:no-inferrable-types
   public prefix: string = '';
   // tslint:disable-next-line:no-inferrable-types
-  public datetimeValue: Subject<string> = new Subject<string>();
+  public datetimeValue: Subject<number> = new Subject<number>();
 
   constructor(private formBuilder: FormBuilder,
               private store: Store<Settings>) {
@@ -55,9 +55,7 @@ export class LogAddComponent implements OnInit, OnDestroy {
     this.datetime = IntervalObservable.create(1000);
 
     this.datetimeSubscription = this.datetime.subscribe(() =>
-      this.datetimeValue.next(
-        `${new Date().toLocaleDateString()}, ${new Date().toLocaleString([], {hour: '2-digit', minute: '2-digit', hour12: false})}`
-      )
+      this.datetimeValue.next(new Date().getTime())
     );
   }
 

@@ -1,9 +1,11 @@
-import { enableProdMode } from '@angular/core';
 import '../polyfills/polyfills.server';
+
+import * as express from 'express';
+
+import { enableProdMode } from '@angular/core';
 import { AppServerModule } from '../app/modules/app.server.module';
 import { ngExpressEngine } from '../app/modules/ng-express-engine/express-engine';
 
-import * as express from 'express';
 import { Request, Response } from 'express';
 import { ROUTES } from '../helpers/routes';
 import { Routes } from '../server/config/routes/Routes';

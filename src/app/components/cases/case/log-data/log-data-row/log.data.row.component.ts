@@ -2,14 +2,11 @@ import {
   Component, ChangeDetectionStrategy, Input, Output, EventEmitter, OnInit, ChangeDetectorRef
 } from '@angular/core';
 
-import { MdDialog } from '@angular/material';
-
 import { Log } from '../../../../../decorators/log.decorator';
 
 import { Log as LogItem } from '../../../../../store/models/log.model';
 
-import { LogEditDialogComponent } from '../../log-edit-dialog/log.edit.dialog.component';
-import { LogDeleteDialogComponent } from '../../log-delete-dialog/log.delete.dialog.component';
+import { BrokerService } from '../../../../../services/broker.service';
 
 import { Subject } from 'rxjs/Subject';
 
@@ -30,7 +27,7 @@ export class LogDataRowComponent implements OnInit {
 
   public filter = '';
 
-  constructor(public dialog: MdDialog,
+  constructor(private brokerService: BrokerService,
               private changeDetectorRef: ChangeDetectorRef) {
   }
 
@@ -42,22 +39,30 @@ export class LogDataRowComponent implements OnInit {
   }
 
   public editLog(): void {
-    const dialogRef = this.dialog.open(LogEditDialogComponent, {
+    /*const dialogRef = this.dialog.open(LogEditDialogComponent, {
       data: this.logItem
     });
     dialogRef.afterClosed().subscribe((result: LogItem | null) => {
       if (result !== null) {
         this.editLogEvent.emit(result);
       }
-    });
+    });*/
   }
 
   public deleteLog(): void {
-    const dialogRef = this.dialog.open(LogDeleteDialogComponent);
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.deleteLogEvent.emit(this.logItem._id);
+    const deletePromtSubscription = this.brokerService.confirmReturn.subscribe(
+      (res: boolean) => {
+        if (res) {
+          setTimeout(() => this.deleteLogEvent.emit(this.logItem._id), 100);
+        }
+
+        deletePromtSubscription.unsubscribe();
       }
-    });
+    );
+
+    this.brokerService.confirmPrompt(
+      'Delete?',
+      'Are you sure you want to delete the log item?',
+    );
   }
 }

@@ -9,13 +9,15 @@
     ]
   },
   "angularCompilerOptions": {
+    "debug": false,
+    "genDir": "ngfactory",
     "entryModule": "./src/app/modules/app.browser.module#AppBrowserModule"
   },
   "include": [
     "src/**/*"
   ],
   "exclude": [
-    "./src/bootstrap/main.worker.aot.ts",
+    "./src/bootstrap/main.worker.ts",
     "./src/bootstrap/main.server.ts",
     "./src/server/**/*"
   ]

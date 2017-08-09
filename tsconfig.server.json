@@ -8,5 +8,10 @@
   ],
   "angularCompilerOptions": {
     "entryModule": "./src/app/modules/app.server.module#AppServerModule"
-  }
+  },
+  "exclude": [
+    "./src/bootstrap/main.ts",
+    "./src/bootstrap/main.worker.ts",
+    "./src/bootstrap/main.worker.aot.ts"
+  ]
 }

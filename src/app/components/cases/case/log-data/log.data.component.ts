@@ -1,16 +1,12 @@
-import { isPlatformBrowser } from '@angular/common';
-import { FormControl } from '@angular/forms';
-
 import {
-  Component, ChangeDetectionStrategy, OnInit, Input, Output, EventEmitter, PLATFORM_ID, Inject, OnDestroy
+  Component, ChangeDetectionStrategy, OnInit, Input, Output, EventEmitter, OnDestroy
 } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 import { Log as LogItem } from '../../../../store/models/log.model';
 
 import { Log } from '../../../../decorators/log.decorator';
 import { logObservable } from '../../../../decorators/log.observable.decorator';
-
-import { WebworkerService } from './../../../../services/webworker.service';
 
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -81,10 +77,6 @@ export class LogDataComponent implements OnInit, OnDestroy {
     return [allCountedCategories, allCategorizedLogs];
   }
 
-  constructor(private webworkerService: WebworkerService,
-              @Inject(PLATFORM_ID) private platformId: Object) {
-  }
-
   ngOnInit(): void {
     this.handleStates();
 
@@ -102,18 +94,8 @@ export class LogDataComponent implements OnInit, OnDestroy {
 
   private handleStates(): void {
     this.logSubscription = this.log.subscribe((res) => {
-      this.allLogs = res;
-
-      if (isPlatformBrowser(this.platformId)) {
-        const handleLogPromise = this.webworkerService.run(LogDataComponent.handleLog, this.allLogs);
-        handleLogPromise.then((result: any) => {
-          this.resolveHandleLog(result[0], result[1]);
-          this.webworkerService.terminate(handleLogPromise);
-        });
-      } else {
-        const resolveHandleLog = LogDataComponent.handleLog(this.allLogs);
-        this.resolveHandleLog(resolveHandleLog[0], resolveHandleLog[1]);
-      }
+      const resolveHandleLog = LogDataComponent.handleLog(this.allLogs = res);
+      this.resolveHandleLog(resolveHandleLog[0], resolveHandleLog[1]);
     });
   }
 

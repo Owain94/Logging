@@ -1,6 +1,5 @@
 import { Component, ChangeDetectionStrategy, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { MdDialog } from '@angular/material';
 
 import { Store } from '@ngrx/store';
 
@@ -21,13 +20,11 @@ import { getCaseState, CaseState } from '../../store/reducers/case.reducer';
 
 import { Case } from '../../store/models/case.model';
 
-import { CaseDeleteDialogComponent } from '../cases/case-delete-dialog/case.delete.dialog.component';
-
 import { Log } from '../../decorators/log.decorator';
 import { logObservable } from '../../decorators/log.observable.decorator';
 import { AutoUnsubscribe } from '../../decorators/auto.unsubscribe.decorator';
 
-import { NotificationsService } from '../../services/notifications.service';
+import { BrokerService } from '../../services/broker.service';
 
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -54,10 +51,9 @@ export class CasesComponent implements OnInit, OnDestroy {
 
   public addCaseForm: FormGroup;
 
-  constructor(public dialog: MdDialog,
-              private store: Store<CaseState>,
+  constructor(private store: Store<CaseState>,
               private actions: AppActions,
-              private notificationsService: NotificationsService
+              private brokerService: BrokerService
   ) {
     this.cases = store.select<CaseState>(getCaseState);
   }
@@ -98,12 +94,12 @@ export class CasesComponent implements OnInit, OnDestroy {
 
   private notification(error: boolean, description: string): void {
     if (error) {
-      this.notificationsService.error(
+      this.brokerService.error(
         'Error',
         description
       );
     } else {
-      this.notificationsService.success(
+      this.brokerService.success(
         'Success',
         description
       );
@@ -119,14 +115,20 @@ export class CasesComponent implements OnInit, OnDestroy {
   }
 
   public deleteCase(singleCase: Case): void {
-    const dialogRef = this.dialog.open(CaseDeleteDialogComponent, {
-      data: `${singleCase.name} - ${singleCase.description}`
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.store.dispatch(new DeleteCase(singleCase));
+    const deletePromtSubscription = this.brokerService.confirmReturn.subscribe(
+      (res: boolean) => {
+        if (res) {
+          setTimeout(() => this.store.dispatch(new DeleteCase(singleCase)), 100);
+        }
+
+        deletePromtSubscription.unsubscribe();
       }
-    });
+    );
+
+    this.brokerService.confirmPrompt(
+      'Delete?',
+      `Are you sure you want to delete the case ${singleCase.name} - ${singleCase.description}?`,
+    );
   }
 
   public trackByFn(index: number, item: Case): string {

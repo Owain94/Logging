@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, OnInit, AfterContentInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, AfterContentInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Store } from '@ngrx/store';
@@ -7,6 +7,7 @@ import {
   LOAD_SETTINGS,
   ADD_SETTINGS,
   EDIT_SETTINGS,
+  LoadSettings,
   AddSettings,
   EditSettings
 } from '../../store/actions/settings.actions';
@@ -21,7 +22,7 @@ import { Log } from '../../decorators/log.decorator';
 import { logObservable } from '../../decorators/log.observable.decorator';
 import { AutoUnsubscribe } from '../../decorators/auto.unsubscribe.decorator';
 
-import { NotificationsService } from '../../services/notifications.service';
+import { BrokerService } from '../../services/broker.service';
 
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -31,8 +32,7 @@ import 'rxjs/add/operator/take';
 @Component({
   selector: 'app-home',
   templateUrl: './settings.component.pug',
-  styleUrls: ['./settings.component.styl'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./settings.component.styl']
 })
 @Log()
 @AutoUnsubscribe()
@@ -50,8 +50,7 @@ export class SettingsComponent implements OnInit, AfterContentInit {
 
   constructor(private store: Store<SettingsState | CaseState>,
               private formBuilder: FormBuilder,
-              private notificationsService: NotificationsService,
-              private changeDetectorRef: ChangeDetectorRef
+              private brokerService: BrokerService
   ) {
     this.settings = store.select<SettingsState>(getSettingsState);
     this.cases = store.select<CaseState>(getCaseState);
@@ -81,8 +80,6 @@ export class SettingsComponent implements OnInit, AfterContentInit {
         'location': [null, Validators.required]
       });
     }
-
-    this.changeDetectorRef.markForCheck();
   }
 
   private loadSettingsAndHandleStates() {
@@ -103,6 +100,8 @@ export class SettingsComponent implements OnInit, AfterContentInit {
             } else {
               this.notification(false, 'Settings successfully edited.');
             }
+
+            this.store.dispatch(new LoadSettings());
 
             break;
           }
@@ -130,22 +129,19 @@ export class SettingsComponent implements OnInit, AfterContentInit {
 
   private notification(error: boolean, description: string) {
     if (error) {
-      this.notificationsService.error(
+      this.brokerService.error(
         'Error',
         description
       );
     } else {
-      this.notificationsService.success(
+      this.brokerService.success(
         'Success',
         description
       );
     }
-
-    this.changeDetectorRef.markForCheck();
   }
 
   public submitForm(settings: Settings): void {
-
     if (this.initialSettings) {
       settings._id = this.settingsId;
       this.store.dispatch(new EditSettings(settings));

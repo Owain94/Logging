@@ -1,4 +1,4 @@
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformServer } from '@angular/common';
 import { Directive, Input, Output, EventEmitter, Inject, PLATFORM_ID } from '@angular/core';
 
 @Directive({
@@ -41,7 +41,7 @@ export class CountoDirective {
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
   run() {
-    if (isPlatformBrowser(this.platformId)) {
+    if (!isPlatformServer(this.platformId)) {
       clearInterval(this._timer);
 
       if (isNaN(this._duration) || isNaN(this._step) || isNaN(this._countFrom) || isNaN(this._countTo)

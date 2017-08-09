@@ -240,7 +240,7 @@ module.exports = {
     new webpack.IgnorePlugin(/vertx/),
     new ProgressBarPlugin(),
     new ExtractTextPlugin({
-      "filename": "[name].[contenthash:5].bundle.css",
+      "filename": "[name].bundle.css",
       "allChunks": true
     })
   ],
