@@ -11,6 +11,8 @@ import { SettingsEffects } from '../../../../store/effects/settings.effects';
 
 import { LogAddComponent } from './log.add.component';
 
+import { LocaleDatePipe } from '../../../../pipes/locale.date.pipe';
+
 import { SettingsService } from '../../../../services/settings.service';
 
 import { Observable } from 'rxjs/Observable';
@@ -50,7 +52,8 @@ describe('LogAddComponent', () => {
         ]),
       ],
       declarations: [
-        LogAddComponent
+        LogAddComponent,
+        LocaleDatePipe
       ],
       providers: [
         { provide: SettingsService, useClass: MockSettingsService }
