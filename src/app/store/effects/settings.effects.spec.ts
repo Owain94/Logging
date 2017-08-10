@@ -21,6 +21,8 @@ import { SettingsService } from '../../services/settings.service';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Observable } from 'rxjs/Observable';
 
+import 'rxjs/add/observable/of';
+
 let error: boolean;
 
 const MockSettingsService = {

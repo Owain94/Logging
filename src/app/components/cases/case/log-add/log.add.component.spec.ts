@@ -17,6 +17,8 @@ import { SettingsService } from '../../../../services/settings.service';
 
 import { Observable } from 'rxjs/Observable';
 
+import 'rxjs/add/observable/of';
+
 class MockSettingsService {
   public loadSettings(): Observable<Array<Settings>> {
     return Observable.of(
