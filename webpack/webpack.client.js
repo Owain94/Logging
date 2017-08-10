@@ -27,8 +27,8 @@ module.exports = {
   "target": "web",
   "plugins": [
     new webpack.optimize.CommonsChunkPlugin({
-      "name": 'main',
-      "async": 'common',
+      "name": "main",
+      "async": "common",
       "children": true,
       "minChunks": 2
     }),
