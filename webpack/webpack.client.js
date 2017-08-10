@@ -26,6 +26,12 @@ module.exports = {
   },
   "target": "web",
   "plugins": [
+    new webpack.optimize.CommonsChunkPlugin({
+      "name": 'main',
+      "async": 'common',
+      "children": true,
+      "minChunks": 2
+    }),
     new CommonsChunkPlugin({
       "name": "inline",
       "minChunks": null,
@@ -33,13 +39,6 @@ module.exports = {
         "main",
         "polyfills",
         "styles"
-      ]
-    }),
-    new CommonsChunkPlugin({
-      "name": "vendor",
-      "minChunks": (module) => module.resource && module.resource.startsWith(nodeModules),
-      "chunks": [
-        "main"
       ]
     }),
     new HtmlWebpackPlugin({
