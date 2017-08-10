@@ -64,7 +64,7 @@ export class MainComponent implements OnInit, OnDestroy {
     // pass
   }
 
-  private scrollTo(data: [number, number, ScrollBehavior]): void {
+  public scrollTo(data: [number, number, ScrollBehavior]): void {
     const args = new UiArguments('scroll');
     args.method = 'scroll';
     const fnArg = new FnArg(data, PRIMITIVE);
