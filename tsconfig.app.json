@@ -2,11 +2,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./tmp",
-    "module": "es2015",
-    "lib": [
-      "dom",
-      "es2015"
-    ]
+    "module": "es2015"
   },
   "angularCompilerOptions": {
     "entryModule": "./src/app/modules/app.browser.module#AppBrowserModule"
