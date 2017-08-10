@@ -25,9 +25,7 @@ module.exports = {
         "join_vars": true,
         "negate_iife": false,
         "screw_ie8": true,
-        "pure_getters": true,
-        // PURE comments work best with 3 passes.
-        "passes": 3
+        "pure_getters": true
       },
       "comments": false
     }),
