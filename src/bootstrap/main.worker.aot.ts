@@ -1,4 +1,5 @@
 import '../polyfills/polyfills';
+import 'zone.js/dist/zone';
 
 import { enableProdMode } from '@angular/core';
 import { platformWorkerAppDynamic } from '@angular/platform-webworker-dynamic';
