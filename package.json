@@ -19,7 +19,7 @@
     "clean:build": "rimraf dist/out-tsc && rimraf src/aot",
     "clean:dist": "rimraf dist",
     "server": "nodemon dist/main.server.bundle.js",
-    "sw": "sw-precache --root=dist --config=sw-precache-config.js",
+    "sw": "sw-precache --config=sw-precache-config.js",
     "test": "karma start ./karma.conf.js",
     "watch:test": "karma start ./karma.conf.js --auto-watch --no-single-run",
     "ci:test": "npm run test && cat ./coverage/lcov.info | ./node_modules/.bin/codacy-coverage --language typescript && codecov -f coverage/*.json",

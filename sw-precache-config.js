@@ -17,15 +17,5 @@ module.exports = {
     "dist/**/*.ttf",
     "dist/**/*.woff",
     "dist/assets/**/*"
-  ],
-  runtimeCaching: [{
-    urlPattern: /http/,
-    handler: "fastest",
-    options: {
-        cache: {
-          maxEntries: 75,
-          name: "logging-cache"
-        }
-    }
-  }]
+  ]
 }
