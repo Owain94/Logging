@@ -10,7 +10,8 @@ import {
   InjectionToken,
   Type,
   CompilerFactory,
-  Compiler
+  Compiler,
+  StaticProvider
 } from '@angular/core';
 import {
   INITIAL_CONFIG,
@@ -30,7 +31,7 @@ export const RESPONSE = new InjectionToken<Response>('RESPONSE');
  */
 export interface NgSetupOptions {
   bootstrap: Type<{}> | NgModuleFactory<{}>;
-  providers?: Provider[];
+  providers?: StaticProvider[];
 }
 
 /**
@@ -64,17 +65,14 @@ export function ngExpressEngine(setupOptions: NgSetupOptions) {
   const compiler: Compiler = compilerFactory.createCompiler([
     {
       providers: [
-        { provide: ResourceLoader, useClass: FileLoader }
+        { provide: ResourceLoader, useClass: FileLoader, deps: [] }
       ]
     }
   ]);
 
-  setupOptions.providers = setupOptions.providers || [];
-
   return function (filePath: string, options: RenderOptions, callback: Send) {
 
     options.providers = options.providers || [];
-    setupOptions.providers = setupOptions.providers || [];
 
     try {
       const moduleOrFactory = options.bootstrap || setupOptions.bootstrap;
@@ -82,6 +80,8 @@ export function ngExpressEngine(setupOptions: NgSetupOptions) {
       if (!moduleOrFactory) {
         throw new Error('You must pass in a NgModule or NgModuleFactory to be bootstrapped');
       }
+
+      setupOptions.providers = setupOptions.providers || [];
 
       const extraProviders = setupOptions.providers.concat(
         options.providers,
@@ -149,7 +149,7 @@ function getFactory(
 /**
  * Get providers of the request and response
  */
-function getReqResProviders(req: Request, res: Response | undefined): Provider[] {
+function getReqResProviders(req: Request, res: Response): Provider[] {
   const providers: Provider[] = [
     {
       provide: REQUEST,
