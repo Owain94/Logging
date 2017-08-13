@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, PLATFORM_ID, OnDestroy } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Inject, PLATFORM_ID, OnDestroy, APP_ID } from '@angular/core';
 import { ClientMessageBrokerFactory, UiArguments, FnArg, PRIMITIVE, ClientMessageBroker } from '@angular/platform-webworker';
 import { isPlatformServer } from '@angular/common';
 import { Router, NavigationEnd } from '@angular/router';
@@ -17,7 +17,7 @@ import { Subscription } from 'rxjs/Subscription';
 })
 @Log()
 @AutoUnsubscribe()
-export class MainComponent implements OnInit, OnDestroy {
+export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private uiBroker: ClientMessageBroker;
   private exportBroker: ClientMessageBroker;
@@ -28,7 +28,8 @@ export class MainComponent implements OnInit, OnDestroy {
   constructor(private router: Router,
               private brokerService: BrokerService,
               private clientMessageBrokerFactory: ClientMessageBrokerFactory,
-              @Inject(PLATFORM_ID) private platformId: Object) {}
+              @Inject(PLATFORM_ID) private platformId: Object,
+              @Inject(APP_ID) private appId: string) {}
 
   ngOnInit(): void {
     this.routerEventsSubscription = this.router.events.subscribe(path => {
@@ -60,8 +61,27 @@ export class MainComponent implements OnInit, OnDestroy {
     }
   }
 
+  ngAfterViewInit(): void {
+    if (!isPlatformServer(this.platformId)) {
+      this.afterBoootstrap();
+    }
+  }
+
   ngOnDestroy(): void {
     // pass
+  }
+
+  public afterBoootstrap(): void {
+    const bootstrapBroker = this.clientMessageBrokerFactory.createMessageBroker('BOOTSTRAP_CHANNEL', false);
+
+    const args = new UiArguments('init');
+    args.method = 'init';
+    const fnArg = new FnArg(this.appId, PRIMITIVE);
+    fnArg.value = this.appId;
+    fnArg.type = PRIMITIVE;
+    args.args = [fnArg];
+
+    bootstrapBroker.runOnService(args, PRIMITIVE);
   }
 
   public scrollTo(data: [number, number, ScrollBehavior]): void {
