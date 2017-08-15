@@ -26,7 +26,7 @@ export class CaseRowComponent {
   // tslint:disable-next-line:no-inferrable-types
   public editModal: boolean = false;
 
-  public editCase(singleCase: Case): void {
+  public editCase(): void {
     this.editModal = true;
   }
 
