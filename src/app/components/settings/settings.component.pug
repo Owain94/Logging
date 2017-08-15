@@ -8,27 +8,27 @@ app-header([headerHeading]="['Settings', '']")
   form([formGroup]="settingsForm",(ngSubmit)="submitForm(settingsForm.value)")
     .row
       .large-6.medium-12.columns
-        label([ngClass]="{ 'error': !settingsForm.controls['name'].valid && settingsForm.controls['name'].touched }") Name
-          input(type="text", [formControl]="settingsForm.controls['name']", [ngClass]="{ 'error': !settingsForm.controls['name'].valid && settingsForm.controls['name'].touched }")
-        small.error(*ngIf="!settingsForm.controls['name'].valid && settingsForm.controls['name'].touched") Name is mandatory
+        label([ngClass]="{ 'error': isFieldValid('name') }") Name
+          input(type="text", [formControl]="settingsForm.controls['name']", [ngClass]="{ 'error': isFieldValid('name') }")
+        small.error(*ngIf="isFieldValid('name')") Name is mandatory
 
       .large-6.medium-12.columns
-        label([ngClass]="{ 'error': !settingsForm.controls['case'].valid && settingsForm.controls['case'].touched }") Case
-          select([formControl]="settingsForm.controls['case']", [ngClass]="{ 'error': !settingsForm.controls['case'].valid && settingsForm.controls['case'].touched }")
+        label([ngClass]="{ 'error': isFieldValid('case') }") Case
+          select([formControl]="settingsForm.controls['case']", [ngClass]="{ 'error': isFieldValid('case') }")
             option(*ngFor="let case of (cases | async)?.data; let i = index; trackBy: trackByFn", [value]="case._id", [innerText]="case.name + ' - ' + case.description")
-        small.error(*ngIf="!settingsForm.controls['case'].valid && settingsForm.controls['case'].touched") Case is mandatory
+        small.error(*ngIf="isFieldValid('case')") Case is mandatory
 
     .row
       .large-6.medium-12.columns
-        label(for="location", [ngClass]="{ 'error': !settingsForm.controls['location'].valid && settingsForm.controls['location'].touched }") Location
-          input.input-group-field(type="text", [formControl]="settingsForm.controls['location']", [ngClass]="{ 'error': !settingsForm.controls['location'].valid && settingsForm.controls['location'].touched }")
-        small.error(*ngIf="!settingsForm.controls['location'].valid && settingsForm.controls['location'].touched") Location is mandatory
+        label(for="location", [ngClass]="{ 'error': isFieldValid('location') }") Location
+          input.input-group-field(type="text", [formControl]="settingsForm.controls['location']", [ngClass]="{ 'error': isFieldValid('location') }")
+        small.error(*ngIf="isFieldValid('location')") Location is mandatory
 
       .large-6.medium-12.columns
-        label(for="invpre", [ngClass]="{ 'error': !settingsForm.controls['invpre'].valid && settingsForm.controls['invpre'].touched }") Reason prefix (example: memory forensics)
-          input.input-group-field(type="text", [formControl]="settingsForm.controls['invpre']", [ngClass]="{ 'error': !settingsForm.controls['invpre'].valid && settingsForm.controls['invpre'].touched }")
-        small.error(*ngIf="!settingsForm.controls['invpre'].valid && settingsForm.controls['invpre'].touched") Reason prefix is mandatory
+        label(for="invpre", [ngClass]="{ 'error': isFieldValid('invpre') }") Reason prefix (example: memory forensics)
+          input.input-group-field(type="text", [formControl]="settingsForm.controls['invpre']", [ngClass]="{ 'error': isFieldValid('invpre') }")
+        small.error(*ngIf="isFieldValid('invpre')") Reason prefix is mandatory
 
     .row
       .large-2.columns.end
-        button.button(type="submit", [disabled]="!settingsForm.valid") save
+        button.button(type="submit") Save

@@ -23,6 +23,7 @@ export class CaseRowEditDialogComponent implements OnInit {
 
   // tslint:disable-next-line:no-inferrable-types
   public hide: boolean = false;
+  private formSumitAttempt: boolean;
 
   constructor(private brokerService: BrokerService,
               private formBuilder: FormBuilder) {}
@@ -34,9 +35,16 @@ export class CaseRowEditDialogComponent implements OnInit {
     });
   }
 
+  public isFieldValid(field: string) {
+    return !this.editCaseForm.get(field).valid && this.formSumitAttempt;
+  }
+
   public submitForm(singleCase: Case): void {
-    singleCase._id = this.singleCase._id;
-    this.returnValue(singleCase)
+    this.formSumitAttempt = true;
+    if (this.editCaseForm.valid) {
+      singleCase._id = this.singleCase._id;
+      this.returnValue(singleCase)
+    }
   }
 
   public returnValue(result: boolean | Case): void {

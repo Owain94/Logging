@@ -11,14 +11,14 @@
               input(type="text", [value]="logItem.who", disabled)
 
           .small-6.columns
-            label([ngClass]="{ 'error': !editLogForm.controls['what'].valid && editLogForm.controls['what'].touched }") What (example found x file)
-              input(type="text", [formControl]="editLogForm.controls['what']", [ngClass]="{ 'error': !editLogForm.controls['what'].valid && editLogForm.controls['what'].touched }")
-            small.error(*ngIf="!editLogForm.controls['what'].valid && editLogForm.controls['what'].touched") What is mandatory
+            label([ngClass]="{ 'error': isFieldValid('what') }") What (example found x file)
+              input(type="text", [formControl]="editLogForm.controls['what']", [ngClass]="{ 'error': isFieldValid('what') }")
+            small.error(*ngIf="isFieldValid('what')") What is mandatory
 
           .small-6.columns
-            label([ngClass]="{ 'error': !editLogForm.controls['where'].valid && editLogForm.controls['where'].touched }") Location
-              input(type="text", [formControl]="editLogForm.controls['where']", [ngClass]="{ 'error': !editLogForm.controls['where'].valid && editLogForm.controls['where'].touched }")
-            small.error(*ngIf="!editLogForm.controls['where'].valid && editLogForm.controls['where'].touched") Location is mandatory
+            label([ngClass]="{ 'error': isFieldValid('where') }") Location
+              input(type="text", [formControl]="editLogForm.controls['where']", [ngClass]="{ 'error': isFieldValid('where') }")
+            small.error(*ngIf="isFieldValid('where')") Location is mandatory
 
           .small-6.columns
             label() Date time
@@ -26,23 +26,23 @@
 
           .row
             .small-12.columns
-              label([ngClass]="{ 'error': !editLogForm.controls['why'].valid && editLogForm.controls['why'].touched }", for="why") Why
+              label([ngClass]="{ 'error': isFieldValid('why') }", for="why") Why
               .row.collapse
                 .small-3.columns
                   span.prefix([innerText]="prefix")
                 .small-9.columns
-                  input(type="text", [formControl]="editLogForm.controls['why']", [ngClass]="{ 'error': !editLogForm.controls['why'].valid && editLogForm.controls['why'].touched }", id="why")
-                small.error.why-error(*ngIf="!editLogForm.controls['why'].valid && editLogForm.controls['why'].touched") Why is mandatory
+                  input(type="text", [formControl]="editLogForm.controls['why']", [ngClass]="{ 'error': isFieldValid('why') }", id="why")
+                small.error.why-error(*ngIf="isFieldValid('why')") Why is mandatory
 
           .small-6.columns
-            label([ngClass]="{ 'error': !editLogForm.controls['how'].valid && editLogForm.controls['how'].touched }") How (example: cat file)
-              input(type="text", [formControl]="editLogForm.controls['how']", [ngClass]="{ 'error': !editLogForm.controls['how'].valid && editLogForm.controls['how'].touched }")
-            small.error(*ngIf="!editLogForm.controls['how'].valid && editLogForm.controls['how'].touched") How is mandatory
+            label([ngClass]="{ 'error': isFieldValid('how') }") How (example: cat file)
+              input(type="text", [formControl]="editLogForm.controls['how']", [ngClass]="{ 'error': isFieldValid('how') }")
+            small.error(*ngIf="isFieldValid('how')") How is mandatory
 
           .small-6.columns
-            label([ngClass]="{ 'error': !editLogForm.controls['with'].valid && editLogForm.controls['with'].touched }") With (example: Terminal)
-              input(type="text", [formControl]="editLogForm.controls['with']", [ngClass]="{ 'error': !editLogForm.controls['with'].valid && editLogForm.controls['with'].touched }")
-            small.error(*ngIf="!editLogForm.controls['with'].valid && editLogForm.controls['with'].touched") With is mandatory
+            label([ngClass]="{ 'error': isFieldValid('with') }") With (example: Terminal)
+              input(type="text", [formControl]="editLogForm.controls['with']", [ngClass]="{ 'error': isFieldValid('with') }")
+            small.error(*ngIf="isFieldValid('with')") With is mandatory
 
           .small-12.columns
             label Results
@@ -50,5 +50,5 @@
       .modal-footer
         .row
           .small-12.text-center
-            button.button.button-margin(type="submit", [disabled]="!editLogForm.valid") Save
+            button.button.button-margin(type="submit") Save
             button.button.cancel((click)="returnValue(false)") Cancel

@@ -40,6 +40,7 @@ export class LogAddComponent implements OnInit, OnDestroy {
 
   // tslint:disable-next-line:no-inferrable-types
   public prefix: string = '';
+  private formSumitAttempt: boolean;
   // tslint:disable-next-line:no-inferrable-types
   public datetimeValue: Subject<number> = new Subject<number>();
 
@@ -73,19 +74,26 @@ export class LogAddComponent implements OnInit, OnDestroy {
     });
   }
 
-  public submitForm(log: LogItem): void {
-    this.settings.take(1).subscribe((settings: Settings) => {
-      log.who = settings.name;
-      log.where = settings.location;
-      log.when = new Date().getTime();
-      log.case = this.id;
-      log.why = `[ ${settings.invpre} ] ${log.why}`;
-      if (log.result) {
-        log.result = log.result.replace(/(?:\r\n|\r|\n)/g, '\n');
-      }
+  public isFieldValid(field: string) {
+    return !this.addLogForm.get(field).valid && this.formSumitAttempt;
+  }
 
-      this.addLog.emit(log);
-    });
+  public submitForm(log: LogItem): void {
+    this.formSumitAttempt = true;
+    if (this.addLogForm.valid) {
+      this.settings.take(1).subscribe((settings: Settings) => {
+        log.who = settings.name;
+        log.where = settings.location;
+        log.when = new Date().getTime();
+        log.case = this.id;
+        log.why = `[ ${settings.invpre} ] ${log.why}`;
+        if (log.result) {
+          log.result = log.result.replace(/(?:\r\n|\r|\n)/g, '\n');
+        }
+
+        this.addLog.emit(log);
+      });
+    }
   }
 
 }
