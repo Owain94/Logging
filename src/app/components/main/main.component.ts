@@ -71,61 +71,36 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
     // pass
   }
 
-  public afterBoootstrap(): void {
-    const bootstrapBroker = this.clientMessageBrokerFactory.createMessageBroker('BOOTSTRAP_CHANNEL', false);
-
-    const args = new UiArguments('init');
-    args.method = 'init';
-    const fnArg = new FnArg(this.appId, PRIMITIVE);
-    fnArg.value = this.appId;
+  private runOnUi(broker: ClientMessageBroker, func: string, data: any): Promise<any> {
+    const args = new UiArguments(func);
+    args.method = func;
+    const fnArg = new FnArg(data, PRIMITIVE);
+    fnArg.value = data;
     fnArg.type = PRIMITIVE;
     args.args = [fnArg];
 
-    bootstrapBroker.runOnService(args, PRIMITIVE);
+    return broker.runOnService(args, PRIMITIVE);
+  }
+
+  private afterBoootstrap(): void {
+    const bootstrapBroker = this.clientMessageBrokerFactory.createMessageBroker('BOOTSTRAP_CHANNEL', false);
+    this.runOnUi(bootstrapBroker, 'init', this.appId);
   }
 
   public scrollTo(data: [number, number, ScrollBehavior]): void {
-    const args = new UiArguments('scroll');
-    args.method = 'scroll';
-    const fnArg = new FnArg(data, PRIMITIVE);
-    fnArg.value = data;
-    fnArg.type = PRIMITIVE;
-    args.args = [fnArg];
-
-    this.uiBroker.runOnService(args, PRIMITIVE);
+    this.runOnUi(this.uiBroker, 'scroll', data);
   }
 
   private saveAsExcelFile(data: [any, string]): void {
-    const args = new UiArguments('export');
-    args.method = 'export';
-    const fnArg = new FnArg(data, PRIMITIVE);
-    fnArg.value = data;
-    fnArg.type = PRIMITIVE;
-    args.args = [fnArg];
-
-    this.exportBroker.runOnService(args, PRIMITIVE);
+    this.runOnUi(this.exportBroker, 'export', data);
   }
 
   private notification(data: {type: string, title: string, content: string}): void {
-    const args = new UiArguments('notification');
-    args.method = 'notification';
-    const fnArg = new FnArg(data, PRIMITIVE);
-    fnArg.value = data;
-    fnArg.type = PRIMITIVE;
-    args.args = [fnArg];
-
-    this.notificationBroker.runOnService(args, PRIMITIVE);
+    this.runOnUi(this.notificationBroker, 'notification', data);
   }
 
   private confirm(data: {title: string, content: string}): void {
-    const args = new UiArguments('confirm');
-    args.method = 'confirm';
-    const fnArg = new FnArg(data, PRIMITIVE);
-    fnArg.value = data;
-    fnArg.type = PRIMITIVE;
-    args.args = [fnArg];
-
-    this.notificationBroker.runOnService(args, PRIMITIVE).then(
+    this.runOnUi(this.notificationBroker, 'confirm', data).then(
       (res: boolean) => {
         this.brokerService.confirmReturnValue(res);
       }

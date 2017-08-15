@@ -12,7 +12,5 @@ export class Export {
     FileSaver.saveAs(blob,
       `${data[1]}_logs_export_${new Date().toLocaleDateString()}_${new Date().toLocaleTimeString()}.xlsx`
     );
-
-    return Promise.resolve();
   }
 }

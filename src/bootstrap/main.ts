@@ -27,7 +27,7 @@ const bootstrap = () => {
     BootstrapBroker.registerMethod('init', [ PRIMITIVE ], Ui.removeStyleTags, PRIMITIVE);
     UiBroker.registerMethod('scroll', [ PRIMITIVE ], Ui.scroll, PRIMITIVE);
 
-    exportBroker.registerMethod('export', [ PRIMITIVE ], Export, PRIMITIVE);
+    exportBroker.registerMethod('export', [ PRIMITIVE ], Export.export, PRIMITIVE);
 
     notificationBroker.registerMethod('notification', [ PRIMITIVE ], Notifications.notification, PRIMITIVE);
     notificationBroker.registerMethod('confirm', [ PRIMITIVE ], Notifications.confirm, PRIMITIVE);
