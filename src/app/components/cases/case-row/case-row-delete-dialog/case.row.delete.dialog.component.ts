@@ -1,19 +1,19 @@
 import { Component, ChangeDetectionStrategy, Input, Output, OnInit, EventEmitter } from '@angular/core';
 
-import { Case } from '../../../store/models/case.model';
+import { Case } from '../../../../store/models/case.model';
 
-import { Log } from '../../../decorators/log.decorator';
+import { Log } from '../../../../decorators/log.decorator';
 
-import { BrokerService } from '../../../services/broker.service';
+import { BrokerService } from '../../../../services/broker.service';
 
 @Component({
-  selector: 'app-case-delete-dialog',
-  templateUrl: './case.delete.dialog.component.pug',
-  styleUrls: ['./case.delete.dialog.component.styl'],
+  selector: 'app-case-row-delete-dialog',
+  templateUrl: './case.row.delete.dialog.component.pug',
+  styleUrls: ['./case.row.delete.dialog.component.styl'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 @Log()
-export class CaseDeleteDialogComponent implements OnInit {
+export class CaseRowDeleteDialogComponent implements OnInit {
   @Input() public singleCase: Case;
 
   @Output() public result = new EventEmitter<boolean>();

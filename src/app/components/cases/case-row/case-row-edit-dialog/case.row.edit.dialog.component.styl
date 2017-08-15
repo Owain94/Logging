@@ -1,0 +1,94 @@
+.modal
+  display block
+  position fixed
+  z-index 1
+  left 0
+  top 0
+  width 100%
+  height 100%
+  overflow auto
+  background-color rgba(0, 0, 0, .45)
+  animation fadeIn .3s
+
+@keyframes fadeIn
+  from
+    background-color rgba(0, 0, 0, 0)
+  to
+    background-color rgba(0, 0, 0, .4)
+
+.hide-modal
+  background-color rgba(0, 0, 0, 0)
+  animation fadeOut .2s
+
+@keyframes fadeOut
+  from
+    background-color rgba(0, 0, 0, .4)
+  to
+    background-color rgba(0, 0, 0, 0)
+
+.modal-content
+  position relative
+  background-color #fefefe
+  padding 0
+  border 1px solid #888
+  max-width 80%
+  transform scale(1) translate(-50%, -50%)
+  opacity 1
+  border-radius 5px
+  left 50%
+  top 50%
+  box-shadow 0 4px 8px 0 rgba(0, 0, 0, .2), 0 6px 20px 0 rgba(0, 0, 0, .19)
+  animation scaleIn .3s
+
+@keyframes scaleIn
+  0%
+    transform scale(.7) translate(-50%, -50%)
+    opacity 0
+  45%
+    transform scale(1.05) translate(-50%, -50%)
+  80%
+    transform scale(.95) translate(-50%, -50%)
+  100%
+    transform scale(1) translate(-50%, -50%)
+    opacity 1
+
+.hide-content
+  transform scale(0) translate(-50%, -50%)
+  opacity 0
+  animation slideFadeOut .2s
+
+@keyframes slideFadeOut
+  from
+    transform scale(1) translate(-50%, -50%)
+    opacity 1
+  to
+    transform scale(.5) translate(-50%, -50%)
+    opacity 0
+
+.close
+  color #900
+  float right
+  font-size 28px
+  font-weight bold
+
+.close:hover,
+.close:focus
+  color #000
+  text-decoration none
+  cursor pointer
+
+.modal-header
+  padding 2px 16px
+
+.modal-body
+  padding 2px 16px
+  margin-bottom 1rem
+
+.modal-footer
+  padding 2px 16px
+
+.cancel
+  background-color #ad3232 !important
+
+.button-margin
+  margin-right 5px

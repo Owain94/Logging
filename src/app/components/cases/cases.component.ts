@@ -50,9 +50,6 @@ export class CasesComponent implements OnInit, OnDestroy {
   private deleteCaseFailureSubscription: Subscription;
 
   public addCaseForm: FormGroup;
-  // tslint:disable-next-line:no-inferrable-types
-  public deleteModal: boolean = false;
-  public selectedCase: Case;
 
   constructor(private store: Store<CaseState>,
               private actions: AppActions,
@@ -111,16 +108,7 @@ export class CasesComponent implements OnInit, OnDestroy {
   }
 
   public deleteCase(singleCase: Case): void {
-    this.selectedCase = singleCase;
-    this.deleteModal = true;
-  }
-
-  public deleteCaseResult(result: boolean): void {
-    this.deleteModal = false;
-
-    if (result) {
-      this.store.dispatch(new DeleteCase(this.selectedCase));
-    }
+    this.store.dispatch(new DeleteCase(singleCase));
   }
 
   public trackByFn(index: number, item: Case): string {

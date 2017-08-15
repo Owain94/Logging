@@ -30,9 +30,10 @@ import { FooterComponent } from '../components/main/footer/footer.component';
 import { NotificationDialogComponent } from '../components/main/notification-dialog/notification.dialog.component';
 import { HomeComponent } from '../components/home/home.component';
 import { CasesComponent } from '../components/cases/cases.component';
+import { CaseRowEditDialogComponent } from '../components/cases/case-row/case-row-edit-dialog/case.row.edit.dialog.component';
+import { CaseRowDeleteDialogComponent } from '../components/cases/case-row/case-row-delete-dialog/case.row.delete.dialog.component';
 import { AddCaseComponent } from '../components/cases/add-case/add.case.component';
 import { CaseRowComponent } from '../components/cases/case-row/case.row.component';
-import { CaseDeleteDialogComponent } from '../components/cases/case-delete-dialog/case.delete.dialog.component';
 import { SettingsComponent } from '../components/settings/settings.component';
 import { NotFoundComponent } from '../components/notfound/notfound.component';
 import { LogExportComponent } from '../components/cases/case/log-export/log.export.component';
@@ -97,7 +98,8 @@ const metaReducers: ActionReducer<any, any>[] = process.env.NODE_ENV === 'develo
     CasesComponent,
     AddCaseComponent,
     CaseRowComponent,
-    CaseDeleteDialogComponent,
+    CaseRowEditDialogComponent,
+    CaseRowDeleteDialogComponent,
     CaseComponent,
     SettingsComponent,
     NotFoundComponent,

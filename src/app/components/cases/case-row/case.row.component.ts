@@ -1,5 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
 
 import { Case } from '../../../store/models/case.model';
 
@@ -14,47 +13,40 @@ import 'rxjs/add/operator/take';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 @Log()
-export class CaseRowComponent implements OnInit {
+export class CaseRowComponent {
 
   @Input('singleCase') public singleCase: Case;
 
   @Output() public onEdit = new EventEmitter<Case>();
   @Output() public onDelete = new EventEmitter<Case>();
 
-  public editCaseForm: FormGroup;
+
   // tslint:disable-next-line:no-inferrable-types
-  public editing: boolean = false;
+  public deleteModal: boolean = false;
+  // tslint:disable-next-line:no-inferrable-types
+  public editModal: boolean = false;
 
-  constructor(private formBuilder: FormBuilder
-  ) { }
-
-  ngOnInit(): void {
-    this.initForm();
+  public editCase(singleCase: Case): void {
+    this.editModal = true;
   }
 
-  private initForm(): void {
-    this.editCaseForm = this.formBuilder.group({
-      'name': [this.singleCase.name, Validators.required],
-      'description': [this.singleCase.description, Validators.required]
-    });
-  }
+  public editCaseResult(result: Case | boolean): void {
+    this.editModal = false;
 
-  public submitForm(singleCase: Case): void {
-    if (singleCase.name !== this.singleCase.name || singleCase.description !== this.singleCase.description) {
-      this.onEdit.emit({
-        _id: this.singleCase._id,
-        name: singleCase.name,
-        description: singleCase.description
-      });
+    if (result !== false) {
+      this.onEdit.emit(<Case> result);
     }
-    this.editing = false;
-  }
-
-  public editCase(): void {
-    this.editing = true;
   }
 
   public deleteCase(): void {
-    this.onDelete.emit(this.singleCase);
+    this.deleteModal = true;
+  }
+
+  public deleteCaseResult(result: boolean): void {
+    this.deleteModal = false;
+
+    if (result) {
+      this.onDelete.emit(this.singleCase)
+    }
   }
 }

@@ -1,0 +1,23 @@
+.modal([ngClass]="{'hide-modal': hide == true }")
+  .modal-content([ngClass]="{'hide-content': hide == true }")
+    form([formGroup]="editCaseForm", (ngSubmit)="submitForm(editCaseForm.value)")
+      .modal-header
+        span.close((click)="returnValue(false)") ×
+        h2 Edit case entry
+      .modal-body
+        .row
+          .small-6.columns
+            label([ngClass]="{ 'error': !editCaseForm.controls['name'].valid && editCaseForm.controls['name'].touched }") Name
+              input(type="text", [formControl]="editCaseForm.controls['name']", [ngClass]="{ 'error': !editCaseForm.controls['name'].valid && editCaseForm.controls['name'].touched }")
+            small.error(*ngIf="!editCaseForm.controls['name'].valid && editCaseForm.controls['name'].touched") Name is mandatory
+
+          .small-6.columns
+            label([ngClass]="{ 'error': !editCaseForm.controls['description'].valid && editCaseForm.controls['description'].touched }") Description
+              input(type="text", [formControl]="editCaseForm.controls['description']", [ngClass]="{ 'error': !editCaseForm.controls['description'].valid && editCaseForm.controls['description'].touched }")
+            small.error(*ngIf="!editCaseForm.controls['description'].valid && editCaseForm.controls['description'].touched") Description is mandatory
+
+      .modal-footer
+        .row
+          .small-12.text-center
+            button.button.button-margin(type="submit", [disabled]="!editCaseForm.valid") Save
+            button.button.cancel((click)="returnValue(false)") Cancel

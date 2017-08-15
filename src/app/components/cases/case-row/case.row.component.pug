@@ -1,28 +1,15 @@
 .row
-  div(*ngIf="editing; else not_editing")
-    form([formGroup]="editCaseForm", (ngSubmit)="submitForm(editCaseForm.value)")
-      .large-3.medium-12.small-12.columns
-        label([ngClass]="{ 'error': !editCaseForm.controls['name'].valid && editCaseForm.controls['name'].touched }") Name
-          input(type="text", [formControl]="editCaseForm.controls['name']", [ngClass]="{ 'error': !editCaseForm.controls['name'].valid && editCaseForm.controls['name'].touched }")
-        small.error(*ngIf="!editCaseForm.controls['name'].valid && editCaseForm.controls['name'].touched") Name is mandatory
+  a.large-3.medium-12.small-12.columns.capitalize([innerText]="'Name: ' + (singleCase.name)", [routerLink]="['case', singleCase._id]")
+  a.large-7.medium-12.small-12.columns.capitalize([innerText]="'Description: ' + (singleCase.description)", [routerLink]="['case', singleCase._id]")
+  .large-1.medium-12.small-12.columns.actions-margin.text-center-actions
+    a((click)="editCase()")
+      span.icon.icon-pencil
 
-      .large-7.medium-12.small-12.columns
-        label([ngClass]="{ 'error': !editCaseForm.controls['description'].valid && editCaseForm.controls['description'].touched }") Description
-          input(type="text", [formControl]="editCaseForm.controls['description']", [ngClass]="{ 'error': !editCaseForm.controls['description'].valid && editCaseForm.controls['description'].touched }")
-        small.error(*ngIf="!editCaseForm.controls['description'].valid && editCaseForm.controls['description'].touched") Description is mandatory
-
-      .large-1.medium-12.small-12.columns.end
-        button.button.button-margin(type="submit", [disabled]="!editCaseForm.valid") Save
-
-  ng-template(#not_editing="")
-    a.large-3.medium-12.small-12.columns.capitalize([innerText]="'Name: ' + (singleCase.name)", [routerLink]="['case', singleCase._id]")
-    a.large-7.medium-12.small-12.columns.capitalize([innerText]="'Description: ' + (singleCase.description)", [routerLink]="['case', singleCase._id]")
-    .large-1.medium-12.small-12.columns.actions-margin.text-center-actions
-      a((click)="editCase()")
-        span.icon.icon-pencil
-
-    .large-1.medium-12.small-12.columns.actions-margin.text-center-actions
-      a((click)="deleteCase()")
-        span.icon.icon-trash
+  .large-1.medium-12.small-12.columns.actions-margin.text-center-actions
+    a((click)="deleteCase()")
+      span.icon.icon-trash
 
   hr.hr-margin
+
+app-case-row-edit-dialog(*ngIf="editModal", [singleCase]="singleCase", (result)="editCaseResult($event)")
+app-case-row-delete-dialog(*ngIf="deleteModal", [singleCase]="singleCase", (result)="deleteCaseResult($event)")
