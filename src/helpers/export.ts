@@ -3,7 +3,7 @@ import * as FileSaver from 'file-saver';
 export class Export {
   public static export(
     data: [any, string]
-  ) {
+  ): void {
     const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 
     const blob: Blob = new Blob([data[0]], {

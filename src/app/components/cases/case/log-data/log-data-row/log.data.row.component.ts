@@ -45,7 +45,7 @@ export class LogDataRowComponent implements OnInit {
     });
   }
 
-  private newlineTransform(value: string) {
+  private newlineTransform(value: string): string {
     if (typeof(value) !== 'undefined' && value !== null) {
       return value.replace(new RegExp('\n', 'g'), '<br />');
     }
@@ -67,7 +67,7 @@ export class LogDataRowComponent implements OnInit {
     return search;
   }
 
-  private setHtmlText() {
+  private setHtmlText(): void {
     const where = this.filterTransform(this.logItem.where, this.filter);
     const what = this.filterTransform(this.logItem.what, this.filter);
     const why = this.filterTransform(this.logItem.why, this.filter);

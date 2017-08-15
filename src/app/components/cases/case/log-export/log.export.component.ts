@@ -22,7 +22,7 @@ export class LogExportComponent {
 
   constructor(private brokerService: BrokerService) {}
 
-  public export() {
+  public export(): void {
     const localeDate = new LocaleDatePipe();
     const categories = [];
     const allLogsJson = {};

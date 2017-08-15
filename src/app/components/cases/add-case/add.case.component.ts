@@ -30,7 +30,7 @@ export class AddCaseComponent implements OnInit {
     });
   }
 
-  public isFieldValid(field: string) {
+  public isFieldValid(field: string): boolean {
     return !this.addCaseForm.get(field).valid && this.formSubmitAttempt;
   }
 

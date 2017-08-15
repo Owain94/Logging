@@ -35,7 +35,7 @@ export class CaseRowEditDialogComponent implements OnInit {
     });
   }
 
-  public isFieldValid(field: string) {
+  public isFieldValid(field: string): boolean {
     return !this.editCaseForm.get(field).valid && this.formSubmitAttempt;
   }
 

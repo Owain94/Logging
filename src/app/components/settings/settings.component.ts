@@ -135,7 +135,7 @@ export class SettingsComponent implements OnInit, AfterContentInit {
     );
   }
 
-  public isFieldValid(field: string) {
+  public isFieldValid(field: string): boolean {
     return !this.settingsForm.get(field).valid && this.formSubmitAttempt;
   }
 

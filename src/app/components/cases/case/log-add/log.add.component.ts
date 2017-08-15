@@ -74,7 +74,7 @@ export class LogAddComponent implements OnInit, OnDestroy {
     });
   }
 
-  public isFieldValid(field: string) {
+  public isFieldValid(field: string): boolean {
     return !this.addLogForm.get(field).valid && this.formSubmitAttempt;
   }
 

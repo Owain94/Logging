@@ -128,7 +128,7 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
     'why': string,
     'how': string,
     'with': string,
-    'result': string,
+    'result': string
   }): void {
     this.runOnUi(this.dataBroker, 'setText', data);
   }

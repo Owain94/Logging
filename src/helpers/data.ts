@@ -9,7 +9,7 @@ export class Data {
       'with': string,
       'result': string,
     }
-  ) {
+  ): void {
     if (document.getElementById('where-' + data.i)) {
       document.getElementById('where-' + data.i).innerHTML = data.where;
       document.getElementById('what-' + data.i).innerHTML = data.what;

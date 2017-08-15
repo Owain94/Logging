@@ -18,11 +18,11 @@ export class BrokerService {
   public exportData = new Subject<[any, string]>();
   public notification = new Subject<{title: string, content: string}>();
 
-  public scrollTo(x: number, y: number, behavior: ScrollBehavior) {
+  public scrollTo(x: number, y: number, behavior: ScrollBehavior): void {
     this.scroll.next([x, y, behavior]);
   }
 
-  public stopScroll(data: boolean) {
+  public stopScroll(data: boolean): void {
     this.disableScroll.next(data);
   }
 
@@ -38,11 +38,11 @@ export class BrokerService {
     this.setHtmlText.next(data);
   }
 
-  public publishData(data: [any, string]) {
+  public publishData(data: [any, string]): void {
     this.exportData.next(data);
   }
 
-  public notificationText(title: string, content: string) {
+  public notificationText(title: string, content: string): void {
     return this.notification.next({title: title, content: content});
   }
 }

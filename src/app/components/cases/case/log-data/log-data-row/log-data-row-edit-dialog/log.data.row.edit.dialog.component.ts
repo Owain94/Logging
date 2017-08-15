@@ -45,7 +45,7 @@ export class LogDataRowEditDialogComponent implements OnInit {
     });
   }
 
-  public isFieldValid(field: string) {
+  public isFieldValid(field: string): boolean {
     return !this.editLogForm.get(field).valid && this.formSubmitAttempt;
   }
 

@@ -8,8 +8,4 @@ import { Log } from '../../decorators/log.decorator';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 @Log()
-export class NotFoundComponent {
-
-  constructor() {}
-
-}
+export class NotFoundComponent {}
