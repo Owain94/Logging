@@ -79,19 +79,8 @@ module.exports = {
       "minimize": true,
       "purifyOptions": {
         "whitelist": [
-          // SWEETALERT
           "stop-scrolling",
-          "*sweet-*",
-          "*sa-*",
-          "showSweetAlert",
-          "visible",
-          "cancel",
-          "confirm",
-          "animate",
-          "animateSuccessTip",
-          "animateSuccessLong",
-          "icon"
-          // END SWEETALERT
+          "mark",
         ]
       }
     }),
