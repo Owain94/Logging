@@ -1,12 +1,18 @@
 .row.full-width
-  .large-1.columns([id]="'where-' + i")
+  .large-1.columns(*ngIf="!server", [id]="'where-' + i")
+  .large-1.columns(*ngIf="server", [innerText]="logItem.where")
   .large-1.columns([innerText]="logItem.when | localeDate")
-  .large-2.columns([id]="'what-' + i")
-  .large-2.columns([id]="'why-' + i")
-  .large-2.columns([id]="'how-' + i")
-  .large-1.columns([id]="'with-' + i")
+  .large-2.columns(*ngIf="!server", [id]="'what-' + i")
+  .large-2.columns(*ngIf="server", [innerText]="logItem.what")
+  .large-2.columns(*ngIf="!server", [id]="'why-' + i")
+  .large-2.columns(*ngIf="server", [innerText]="logItem.why")
+  .large-2.columns(*ngIf="!server", [id]="'how-' + i")
+  .large-2.columns(*ngIf="server", [innerText]="logItem.how")
+  .large-1.columns(*ngIf="!server", [id]="'with-' + i")
+  .large-1.columns(*ngIf="server", [innerText]="logItem.with")
   .large-2.columns
-    span([id]="'result-' + i", [style.opacity]="logItem.result ? 1 : 0")
+    span(*ngIf="!server", [id]="'result-' + i", [style.opacity]="logItem.result ? 1 : 0")
+    span(*ngIf="server", [innerHTML]="(logItem.result ? logItem.result : 'empty') | newline", [style.opacity]="logItem.result ? 1 : 0")
   .large-1.columns
     a((click)="editLog()")
       span.icon.icon-pencil

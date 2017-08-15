@@ -130,7 +130,6 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
     'with': string,
     'result': string,
   }): void {
-    console.log('joe');
     this.runOnUi(this.dataBroker, 'setText', data);
   }
 

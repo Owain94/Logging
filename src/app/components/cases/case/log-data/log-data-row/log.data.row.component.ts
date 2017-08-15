@@ -1,4 +1,5 @@
-import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { isPlatformServer } from '@angular/common';
+import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 
 import { Log } from '../../../../../decorators/log.decorator';
 
@@ -30,8 +31,12 @@ export class LogDataRowComponent implements OnInit {
   public deleteModal: boolean = false;
   // tslint:disable-next-line:no-inferrable-types
   public editModal: boolean = false;
+  public server: boolean;
 
-  constructor(private brokerService: BrokerService) {}
+  constructor(private brokerService: BrokerService,
+              @Inject(PLATFORM_ID) private platformId: Object) {
+    this.server = isPlatformServer(this.platformId)
+  }
 
   ngOnInit(): void {
     this.filterText.subscribe((filter) => {
