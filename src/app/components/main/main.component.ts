@@ -1,10 +1,11 @@
-import { Component, OnInit, AfterViewInit, Inject, PLATFORM_ID, OnDestroy, APP_ID } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Inject, PLATFORM_ID, OnDestroy, APP_ID, HostListener } from '@angular/core';
 import { ClientMessageBrokerFactory, UiArguments, FnArg, PRIMITIVE, ClientMessageBroker } from '@angular/platform-webworker';
 import { isPlatformServer } from '@angular/common';
 import { Router, NavigationEnd } from '@angular/router';
 
 import { Log } from '../../decorators/log.decorator';
 import { AutoUnsubscribe } from '../../decorators/auto.unsubscribe.decorator';
+import { Debounce } from '../../decorators/debounce.decorator';
 
 import { BrokerService } from '../../services/broker.service';
 
@@ -24,6 +25,9 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
   private notificationBroker: ClientMessageBroker;
 
   private routerEventsSubscription: Subscription;
+
+  // tslint:disable-next-line:no-inferrable-types
+  public showScrollTop: boolean = false;
 
   constructor(private router: Router,
               private brokerService: BrokerService,
@@ -71,15 +75,27 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
     // pass
   }
 
-  private runOnUi(broker: ClientMessageBroker, func: string, data: any): Promise<any> {
+  private runOnUi(broker: ClientMessageBroker, func: string, data?: any): Promise<any> {
     const args = new UiArguments(func);
     args.method = func;
-    const fnArg = new FnArg(data, PRIMITIVE);
-    fnArg.value = data;
-    fnArg.type = PRIMITIVE;
-    args.args = [fnArg];
+    if (data) {
+      const fnArg = new FnArg(data, PRIMITIVE);
+      fnArg.value = data;
+      fnArg.type = PRIMITIVE;
+      args.args = [fnArg];
+    }
 
     return broker.runOnService(args, PRIMITIVE);
+  }
+
+  @HostListener('window:scroll', ['$event'])
+  @Debounce()
+  public onScroll(event: any) {
+    this.runOnUi(this.uiBroker, 'onScroll').then(
+      (res: boolean) => {
+        this.showScrollTop = res;
+      }
+    );
   }
 
   private afterBoootstrap(): void {

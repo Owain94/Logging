@@ -26,6 +26,7 @@ const bootstrap = () => {
 
     BootstrapBroker.registerMethod('init', [ PRIMITIVE ], Ui.removeStyleTags, PRIMITIVE);
     UiBroker.registerMethod('scroll', [ PRIMITIVE ], Ui.scroll, PRIMITIVE);
+    UiBroker.registerMethod('onScroll', [ PRIMITIVE ], Ui.onScroll, PRIMITIVE);
 
     exportBroker.registerMethod('export', [ PRIMITIVE ], Export.export, PRIMITIVE);
 
