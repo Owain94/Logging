@@ -1,12 +1,10 @@
 const path = require("path")
 const glob = require("glob")
-const webpack = require("webpack")
 const FaviconsWebpackPlugin = require("favicons-webpack-plugin")
 const CompressionPlugin = require("compression-webpack-plugin")
 const BrotliPlugin = require("brotli-webpack-plugin")
 const PurifyCSSPlugin = require("purifycss-webpack")
 const PurifyPlugin = require("@angular-devkit/build-optimizer").PurifyPlugin
-const OptimizeJsPlugin = require("optimize-js-plugin")
 const SubresourceIntegrityPlugin = require("webpack-subresource-integrity")
 
 /**
@@ -45,32 +43,6 @@ module.exports = {
   },
   "plugins": [
     new PurifyPlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      "mangle": {
-        "keep_fnames": true,
-        "screw_ie8": true
-      },
-      "compress": {
-        "warnings" : false,
-        "conditionals": true,
-        "unused": true,
-        "comparisons": true,
-        "sequences": true,
-        "dead_code": true,
-        "evaluate": true,
-        "if_return": true,
-        "join_vars": true,
-        "negate_iife": false,
-        "screw_ie8": true,
-        "pure_getters": true,
-        // PURE comments work best with 3 passes.
-        "passes": 3
-      },
-      "comments": false
-    }),
-    new OptimizeJsPlugin({
-      "sourceMap": false
-    }),
     new PurifyCSSPlugin({
       "paths": glob.sync(
         path.join(process.cwd(), "src/app/**/*.pug"),
