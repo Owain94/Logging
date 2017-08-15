@@ -6,6 +6,15 @@ import { Subject } from 'rxjs/Subject';
 export class BrokerService {
   public scroll = new Subject<[number, number, ScrollBehavior]>();
   public disableScroll = new Subject<boolean>();
+  public setHtmlText = new Subject<{
+    'i': number,
+    'where': string,
+    'what': string,
+    'why': string,
+    'how': string,
+    'with': string,
+    'result': string,
+  }>();
   public exportData = new Subject<[any, string]>();
   public notification = new Subject<{title: string, content: string}>();
 
@@ -15,6 +24,18 @@ export class BrokerService {
 
   public stopScroll(data: boolean) {
     this.disableScroll.next(data);
+  }
+
+  public setText(data: {
+    'i': number,
+    'where': string,
+    'what': string,
+    'why': string,
+    'how': string,
+    'with': string,
+    'result': string,
+  }) {
+    this.setHtmlText.next(data);
   }
 
   public publishData(data: [any, string]) {

@@ -21,6 +21,7 @@ import { Subscription } from 'rxjs/Subscription';
 export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private uiBroker: ClientMessageBroker;
+  private dataBroker: ClientMessageBroker;
   private exportBroker: ClientMessageBroker;
   private notificationBroker: ClientMessageBroker;
 
@@ -48,6 +49,7 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (!isPlatformServer(this.platformId)) {
       this.uiBroker = this.clientMessageBrokerFactory.createMessageBroker('UI_CHANNEL', false);
+      this.dataBroker = this.clientMessageBrokerFactory.createMessageBroker('DATA_CHANNEL', false);
       this.exportBroker = this.clientMessageBrokerFactory.createMessageBroker('EXPORT_CHANNEL', false);
       this.notificationBroker = this.clientMessageBrokerFactory.createMessageBroker('NOTIFICATION_CHANNEL', false);
 
@@ -57,6 +59,10 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
 
       this.brokerService.disableScroll.subscribe(
         (data) => this.disableScroll(data)
+      );
+
+      this.brokerService.setHtmlText.subscribe(
+        (data) => this.setText(data)
       );
 
       this.brokerService.exportData.subscribe(
@@ -113,6 +119,19 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public disableScroll(data: boolean): void {
     this.runOnUi(this.uiBroker, 'disableScroll', data);
+  }
+
+  public setText(data: {
+    'i': number,
+    'where': string,
+    'what': string,
+    'why': string,
+    'how': string,
+    'with': string,
+    'result': string,
+  }): void {
+    console.log('joe');
+    this.runOnUi(this.dataBroker, 'setText', data);
   }
 
   private saveAsExcelFile(data: [any, string]): void {

@@ -47,9 +47,7 @@ import {
 } from '../components/cases/case/log-data/log-data-row/log-data-row-edit-dialog/log.data.row.edit.dialog.component';
 import { LogCategoriesComponent } from '../components/cases/case/log-categories/log.categories.component';
 
-import { NewlinePipe } from '../pipes/newline.pipe';
 import { LocaleDatePipe } from '../pipes/locale.date.pipe';
-import { HighlightPipe } from '../pipes/highlight.pipe';
 
 import { CountoDirective } from './../directives/counto.directive';
 
@@ -109,9 +107,7 @@ const metaReducers: ActionReducer<any, any>[] = process.env.NODE_ENV === 'develo
     LogDataRowDeleteDialogComponent,
     LogDataRowEditDialogComponent,
     LogCategoriesComponent,
-    NewlinePipe,
     LocaleDatePipe,
-    HighlightPipe,
     CountoDirective
   ],
   imports: [

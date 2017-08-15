@@ -10,6 +10,7 @@ import {
 
 import { bootloader } from '../helpers/bootloader';
 import { Ui } from '../helpers/ui';
+import { Data } from '../helpers/data';
 import { Export } from '../helpers/export';
 
 Error['stackTraceLimit'] = Infinity;
@@ -20,12 +21,16 @@ const bootstrap = () => {
     const brokerFactory: ServiceMessageBrokerFactory = platformRef.injector.get(ServiceMessageBrokerFactory);
     const BootstrapBroker = brokerFactory.createMessageBroker('BOOTSTRAP_CHANNEL', false);
     const UiBroker = brokerFactory.createMessageBroker('UI_CHANNEL', false);
+    const dataBroker = brokerFactory.createMessageBroker('DATA_CHANNEL', false);
     const exportBroker = brokerFactory.createMessageBroker('EXPORT_CHANNEL', false);
 
     BootstrapBroker.registerMethod('init', [ PRIMITIVE ], Ui.removeStyleTags, PRIMITIVE);
+
     UiBroker.registerMethod('scroll', [ PRIMITIVE ], Ui.scroll, PRIMITIVE);
     UiBroker.registerMethod('onScroll', [ PRIMITIVE ], Ui.onScroll, PRIMITIVE);
     UiBroker.registerMethod('disableScroll', [ PRIMITIVE ], Ui.disableScroll, PRIMITIVE);
+
+    dataBroker.registerMethod('setText', [ PRIMITIVE ], Data.setHtmlText, PRIMITIVE);
 
     exportBroker.registerMethod('export', [ PRIMITIVE ], Export.export, PRIMITIVE);
   });
