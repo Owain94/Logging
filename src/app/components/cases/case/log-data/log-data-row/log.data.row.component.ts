@@ -82,7 +82,7 @@ export class LogDataRowComponent implements OnInit {
       'why': why,
       'how': how,
       'with': withWhat,
-      'result': result,
+      'result': result
     });
   }
 

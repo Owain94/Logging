@@ -19,7 +19,7 @@ export class AddCaseComponent implements OnInit {
   @Output() addCaseEvent: EventEmitter<Case> = new EventEmitter<Case>();
 
   public addCaseForm: FormGroup;
-  private formSumitAttempt: boolean;
+  private formSubmitAttempt: boolean;
 
   constructor(private formBuilder: FormBuilder) {}
 
@@ -31,15 +31,15 @@ export class AddCaseComponent implements OnInit {
   }
 
   public isFieldValid(field: string) {
-    return !this.addCaseForm.get(field).valid && this.formSumitAttempt;
+    return !this.addCaseForm.get(field).valid && this.formSubmitAttempt;
   }
 
   public submitForm(singleCase: Case): void {
-    this.formSumitAttempt = true;
+    this.formSubmitAttempt = true;
     if (this.addCaseForm.valid) {
       this.addCaseEvent.emit(singleCase);
       this.addCaseForm.reset();
-      this.formSumitAttempt = false;
+      this.formSubmitAttempt = false;
     }
   }
 }

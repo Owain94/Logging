@@ -40,7 +40,7 @@ export class LogAddComponent implements OnInit, OnDestroy {
 
   // tslint:disable-next-line:no-inferrable-types
   public prefix: string = '';
-  private formSumitAttempt: boolean;
+  private formSubmitAttempt: boolean;
   // tslint:disable-next-line:no-inferrable-types
   public datetimeValue: Subject<number> = new Subject<number>();
 
@@ -75,11 +75,11 @@ export class LogAddComponent implements OnInit, OnDestroy {
   }
 
   public isFieldValid(field: string) {
-    return !this.addLogForm.get(field).valid && this.formSumitAttempt;
+    return !this.addLogForm.get(field).valid && this.formSubmitAttempt;
   }
 
   public submitForm(log: LogItem): void {
-    this.formSumitAttempt = true;
+    this.formSubmitAttempt = true;
     if (this.addLogForm.valid) {
       this.settings.take(1).subscribe((settings: Settings) => {
         log.who = settings.name;

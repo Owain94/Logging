@@ -22,7 +22,7 @@ export class LogDataRowEditDialogComponent implements OnInit {
   public editLogForm: FormGroup;
   // tslint:disable-next-line:no-inferrable-types
   public prefix: string = '';
-  private formSumitAttempt: boolean;
+  private formSubmitAttempt: boolean;
 
   // tslint:disable-next-line:no-inferrable-types
   public hide: boolean = false;
@@ -46,11 +46,11 @@ export class LogDataRowEditDialogComponent implements OnInit {
   }
 
   public isFieldValid(field: string) {
-    return !this.editLogForm.get(field).valid && this.formSumitAttempt;
+    return !this.editLogForm.get(field).valid && this.formSubmitAttempt;
   }
 
   public submitForm(log: LogItem): void {
-    this.formSumitAttempt = true;
+    this.formSubmitAttempt = true;
     if (this.editLogForm.valid) {
       log._id = this.logItem._id;
       log.who = this.logItem.who;

@@ -13,7 +13,7 @@ export class BrokerService {
     'why': string,
     'how': string,
     'with': string,
-    'result': string,
+    'result': string
   }>();
   public exportData = new Subject<[any, string]>();
   public notification = new Subject<{title: string, content: string}>();
@@ -33,7 +33,7 @@ export class BrokerService {
     'why': string,
     'how': string,
     'with': string,
-    'result': string,
+    'result': string
   }) {
     this.setHtmlText.next(data);
   }
@@ -43,6 +43,6 @@ export class BrokerService {
   }
 
   public notificationText(title: string, content: string) {
-    return this.notification.next({title: title, content: content || ''});
+    return this.notification.next({title: title, content: content});
   }
 }

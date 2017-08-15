@@ -45,7 +45,7 @@ export class SettingsComponent implements OnInit, AfterContentInit {
   // tslint:disable-next-line:no-inferrable-types
   private initialSettings: boolean = false;
   private settingsId: string;
-  private formSumitAttempt: boolean;
+  private formSubmitAttempt: boolean;
 
   private settingsSubscription: Subscription;
 
@@ -136,11 +136,11 @@ export class SettingsComponent implements OnInit, AfterContentInit {
   }
 
   public isFieldValid(field: string) {
-    return !this.settingsForm.get(field).valid && this.formSumitAttempt;
+    return !this.settingsForm.get(field).valid && this.formSubmitAttempt;
   }
 
   public submitForm(settings: Settings): void {
-    this.formSumitAttempt = true;
+    this.formSubmitAttempt = true;
     if (this.settingsForm.valid) {
       if (this.initialSettings) {
         settings._id = this.settingsId;
@@ -148,7 +148,7 @@ export class SettingsComponent implements OnInit, AfterContentInit {
       } else {
         this.store.dispatch(new AddSettings(settings));
       }
-      this.formSumitAttempt = false;
+      this.formSubmitAttempt = false;
     }
   }
 

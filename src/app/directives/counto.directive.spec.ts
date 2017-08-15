@@ -30,7 +30,7 @@ describe('CountoDirective', () => {
     countoDirective = testComponentFixture.injector.get(CountoDirective);
   });
 
-  it('should create the test component', () => {
+  it('should create the counto directive', () => {
     expect(testFixture.debugElement.componentInstance).toBeTruthy();
   });
 
@@ -62,6 +62,29 @@ describe('CountoDirective', () => {
       (res: any) => {
         if (i === 0 || res === 1) {
           expect(res).toEqual(1000);
+        } else if (i === 2) {
+          expect(res).toEqual(0);
+          done()
+        }
+        i++;
+      }
+    );
+
+    countoDirective.countFrom = '1000';
+    countoDirective.countTo = '0';
+    countoDirective.step = '1000';
+    countoDirective.duration = '1';
+  }));
+
+  it('should just emit on platform server', ((done: any) => {
+    countoDirective['platformId'] = 'server';
+
+    let i = 0;
+
+    countoDirective.countoChange.subscribe(
+      (res: any) => {
+        if (i === 0 || res === 1) {
+          expect(res).toEqual(0);
         } else if (i === 2) {
           expect(res).toEqual(0);
           done()
