@@ -6,8 +6,6 @@ import { Log } from '../../../../../decorators/log.decorator';
 
 import { Log as LogItem } from '../../../../../store/models/log.model';
 
-import { BrokerService } from '../../../../../services/broker.service';
-
 import { Subject } from 'rxjs/Subject';
 
 @Component({
@@ -25,10 +23,14 @@ export class LogDataRowComponent implements OnInit {
   @Output() editLogEvent: EventEmitter<LogItem> = new EventEmitter<LogItem>();
   @Output() deleteLogEvent: EventEmitter<string> = new EventEmitter<string>();
 
-  public filter = '';
+  // tslint:disable-next-line:no-inferrable-types
+  public filter: string = '';
+  // tslint:disable-next-line:no-inferrable-types
+  public deleteModal: boolean = false;
+  // tslint:disable-next-line:no-inferrable-types
+  public editModal: boolean = false;
 
-  constructor(private brokerService: BrokerService,
-              private changeDetectorRef: ChangeDetectorRef) {
+  constructor(private changeDetectorRef: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
@@ -39,30 +41,26 @@ export class LogDataRowComponent implements OnInit {
   }
 
   public editLog(): void {
-    /*const dialogRef = this.dialog.open(LogEditDialogComponent, {
-      data: this.logItem
-    });
-    dialogRef.afterClosed().subscribe((result: LogItem | null) => {
-      if (result !== null) {
-        this.editLogEvent.emit(result);
-      }
-    });*/
+    this.editModal = true;
+  }
+
+  public editLogResult(result: LogItem | boolean): void {
+    this.editModal = false;
+
+    if (result !== false) {
+      this.editLogEvent.emit(<LogItem> result);
+    }
   }
 
   public deleteLog(): void {
-    const deletePromtSubscription = this.brokerService.confirmReturn.subscribe(
-      (res: boolean) => {
-        if (res) {
-          setTimeout(() => this.deleteLogEvent.emit(this.logItem._id), 100);
-        }
+    this.deleteModal = true;
+  }
 
-        deletePromtSubscription.unsubscribe();
-      }
-    );
+  public deleteLogResult(result: boolean): void {
+    this.deleteModal = false;
 
-    this.brokerService.confirmPrompt(
-      'Delete?',
-      'Are you sure you want to delete the log item?',
-    );
+    if (result) {
+      this.deleteLogEvent.emit(this.logItem._id)
+    }
   }
 }

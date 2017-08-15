@@ -135,16 +135,9 @@ export class CaseComponent implements OnInit, OnDestroy {
   }
 
   private notification(error: boolean, description: string): void {
-    if (error) {
-      this.brokerService.error(
-        'Error',
-        description
-      );
-    } else {
-      this.brokerService.success(
-        'Success',
-        description
-      );
-    }
+    this.brokerService.notificationText(
+      error ? 'Error' : 'Success',
+      description
+    );
   }
 }

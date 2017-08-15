@@ -127,18 +127,11 @@ export class SettingsComponent implements OnInit, AfterContentInit {
     });
   }
 
-  private notification(error: boolean, description: string) {
-    if (error) {
-      this.brokerService.error(
-        'Error',
-        description
-      );
-    } else {
-      this.brokerService.success(
-        'Success',
-        description
-      );
-    }
+  private notification(error: boolean, description: string): void {
+    this.brokerService.notificationText(
+      error ? 'Error' : 'Success',
+      description
+    );
   }
 
   public submitForm(settings: Settings): void {

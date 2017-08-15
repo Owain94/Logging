@@ -1,0 +1,12 @@
+.modal([ngClass]="{'hide-modal': hide == true }")
+  .modal-content([ngClass]="{'hide-content': hide == true }")
+    .modal-header
+      span.close((click)="hideDialog()") ×
+      h2 {{ notification.title }}
+    .modal-body
+      .row
+        .small-12.text-center {{ notification.content }}
+    .modal-footer
+      .row
+        .small-12.text-center
+          button.button.button-margin((click)="hideDialog()", autofocus="true") Ok

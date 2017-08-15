@@ -1,7 +1,5 @@
 @charset "UTF-8";
 
-@import "~sweetalert/dist/sweetalert.css";
-
 html {
   font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
   line-height: 1.15;

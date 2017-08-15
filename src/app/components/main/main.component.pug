@@ -6,3 +6,5 @@ app-footer
 
 #back-top(*ngIf="showScrollTop", (click)="scrollTo([0, 0, 'smooth'])")
   span.icon.icon-play
+
+app-notificatione-dialog(*ngIf="notificationModal", [notification]="notificationText" , (result)="notificationModal = false")

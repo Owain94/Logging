@@ -29,6 +29,10 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
   // tslint:disable-next-line:no-inferrable-types
   public showScrollTop: boolean = false;
 
+  // tslint:disable-next-line:no-inferrable-types
+  public notificationModal: boolean = false;
+  public notificationText: { title: string, content: string };
+
   constructor(private router: Router,
               private brokerService: BrokerService,
               private clientMessageBrokerFactory: ClientMessageBrokerFactory,
@@ -51,16 +55,16 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
         (data) => this.scrollTo(data)
       );
 
+      this.brokerService.disableScroll.subscribe(
+        (data) => this.disableScroll(data)
+      );
+
       this.brokerService.exportData.subscribe(
         (data) => this.saveAsExcelFile(data)
       );
 
       this.brokerService.notification.subscribe(
         (data) => this.notification(data)
-      );
-
-      this.brokerService.confirm.subscribe(
-        (data) => this.confirm(data)
       );
     }
   }
@@ -107,19 +111,16 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
     this.runOnUi(this.uiBroker, 'scroll', data);
   }
 
+  public disableScroll(data: boolean): void {
+    this.runOnUi(this.uiBroker, 'disableScroll', data);
+  }
+
   private saveAsExcelFile(data: [any, string]): void {
     this.runOnUi(this.exportBroker, 'export', data);
   }
 
-  private notification(data: {type: string, title: string, content: string}): void {
-    this.runOnUi(this.notificationBroker, 'notification', data);
-  }
-
-  private confirm(data: {title: string, content: string}): void {
-    this.runOnUi(this.notificationBroker, 'confirm', data).then(
-      (res: boolean) => {
-        this.brokerService.confirmReturnValue(res);
-      }
-    );
+  private notification(data: {title: string, content: string}): void {
+    this.notificationModal = true;
+    this.notificationText = data;
   }
 }

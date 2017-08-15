@@ -27,16 +27,24 @@ import { MainComponent } from '../components/main/main.component';
 import { HeaderComponent } from '../components/main/header/header.component';
 import { MenuComponent } from '../components/main/menu/menu.component';
 import { FooterComponent } from '../components/main/footer/footer.component';
+import { NotificationDialogComponent } from '../components/main/notification-dialog/notification.dialog.component';
 import { HomeComponent } from '../components/home/home.component';
 import { CasesComponent } from '../components/cases/cases.component';
 import { AddCaseComponent } from '../components/cases/add-case/add.case.component';
 import { CaseRowComponent } from '../components/cases/case-row/case.row.component';
+import { CaseDeleteDialogComponent } from '../components/cases/case-delete-dialog/case.delete.dialog.component';
 import { SettingsComponent } from '../components/settings/settings.component';
 import { NotFoundComponent } from '../components/notfound/notfound.component';
 import { LogExportComponent } from '../components/cases/case/log-export/log.export.component';
 import { LogAddComponent } from '../components/cases/case/log-add/log.add.component';
 import { LogDataComponent } from '../components/cases/case/log-data/log.data.component';
 import { LogDataRowComponent } from '../components/cases/case/log-data/log-data-row/log.data.row.component';
+import {
+  LogDataRowDeleteDialogComponent
+} from '../components/cases/case/log-data/log-data-row/log-data-row-delete-dialog/log.data.row.delete.dialog.component';
+import {
+  LogDataRowEditDialogComponent
+} from '../components/cases/case/log-data/log-data-row/log-data-row-edit-dialog/log.data.row.edit.dialog.component';
 import { LogCategoriesComponent } from '../components/cases/case/log-categories/log.categories.component';
 
 import { NewlinePipe } from '../pipes/newline.pipe';
@@ -85,10 +93,12 @@ const metaReducers: ActionReducer<any, any>[] = process.env.NODE_ENV === 'develo
     HeaderComponent,
     MenuComponent,
     FooterComponent,
+    NotificationDialogComponent,
     HomeComponent,
     CasesComponent,
     AddCaseComponent,
     CaseRowComponent,
+    CaseDeleteDialogComponent,
     CaseComponent,
     SettingsComponent,
     NotFoundComponent,
@@ -96,6 +106,8 @@ const metaReducers: ActionReducer<any, any>[] = process.env.NODE_ENV === 'develo
     LogAddComponent,
     LogDataComponent,
     LogDataRowComponent,
+    LogDataRowDeleteDialogComponent,
+    LogDataRowEditDialogComponent,
     LogCategoriesComponent,
     NewlinePipe,
     LocaleDatePipe,

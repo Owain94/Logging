@@ -176,9 +176,6 @@ module.exports = {
         ]
       },
       {
-        "include": [
-          path.join(process.cwd(), "src/assets/css/foundation.css")
-        ],
         "test": /\.css$/,
         "loaders": ExtractTextPlugin.extract({
           "use": [

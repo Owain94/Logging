@@ -12,6 +12,14 @@ export class Ui {
     return Promise.resolve(top > 0)
   }
 
+  public static disableScroll(data: boolean) {
+    if (data) {
+      document.body.classList.add('stop-scrolling');
+    } else {
+      document.body.classList.remove('stop-scrolling');
+    }
+  }
+
   public static removeStyleTags(transitionId: string) {
     setTimeout(() => {
       const styles: HTMLElement[] =

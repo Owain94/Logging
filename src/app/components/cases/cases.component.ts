@@ -50,6 +50,9 @@ export class CasesComponent implements OnInit, OnDestroy {
   private deleteCaseFailureSubscription: Subscription;
 
   public addCaseForm: FormGroup;
+  // tslint:disable-next-line:no-inferrable-types
+  public deleteModal: boolean = false;
+  public selectedCase: Case;
 
   constructor(private store: Store<CaseState>,
               private actions: AppActions,
@@ -93,17 +96,10 @@ export class CasesComponent implements OnInit, OnDestroy {
   }
 
   private notification(error: boolean, description: string): void {
-    if (error) {
-      this.brokerService.error(
-        'Error',
-        description
-      );
-    } else {
-      this.brokerService.success(
-        'Success',
-        description
-      );
-    }
+    this.brokerService.notificationText(
+      error ? 'Error' : 'Success',
+      description
+    );
   }
 
   public addCase(singleCase: Case): void {
@@ -115,20 +111,16 @@ export class CasesComponent implements OnInit, OnDestroy {
   }
 
   public deleteCase(singleCase: Case): void {
-    const deletePromtSubscription = this.brokerService.confirmReturn.subscribe(
-      (res: boolean) => {
-        if (res) {
-          setTimeout(() => this.store.dispatch(new DeleteCase(singleCase)), 100);
-        }
+    this.selectedCase = singleCase;
+    this.deleteModal = true;
+  }
 
-        deletePromtSubscription.unsubscribe();
-      }
-    );
+  public deleteCaseResult(result: boolean): void {
+    this.deleteModal = false;
 
-    this.brokerService.confirmPrompt(
-      'Delete?',
-      `Are you sure you want to delete the case ${singleCase.name} - ${singleCase.description}?`,
-    );
+    if (result) {
+      this.store.dispatch(new DeleteCase(this.selectedCase));
+    }
   }
 
   public trackByFn(index: number, item: Case): string {

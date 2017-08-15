@@ -1,0 +1,54 @@
+.modal([ngClass]="{'hide-modal': hide == true }")
+  .modal-content([ngClass]="{'hide-content': hide == true }")
+    form([formGroup]="editLogForm", (ngSubmit)="submitForm(editLogForm.value)")
+      .modal-header
+        span.close((click)="returnValue(false)") ×
+        h2 Edit log entry
+      .modal-body
+        .row
+          .small-6.columns
+            label Name
+              input(type="text", [value]="logItem.who", disabled)
+
+          .small-6.columns
+            label([ngClass]="{ 'error': !editLogForm.controls['what'].valid && editLogForm.controls['what'].touched }") What (example found x file)
+              input(type="text", [formControl]="editLogForm.controls['what']", [ngClass]="{ 'error': !editLogForm.controls['what'].valid && editLogForm.controls['what'].touched }")
+            small.error(*ngIf="!editLogForm.controls['what'].valid && editLogForm.controls['what'].touched") What is mandatory
+
+          .small-6.columns
+            label([ngClass]="{ 'error': !editLogForm.controls['where'].valid && editLogForm.controls['where'].touched }") Location
+              input(type="text", [formControl]="editLogForm.controls['where']", [ngClass]="{ 'error': !editLogForm.controls['where'].valid && editLogForm.controls['where'].touched }")
+            small.error(*ngIf="!editLogForm.controls['where'].valid && editLogForm.controls['where'].touched") Location is mandatory
+
+          .small-6.columns
+            label() Date time
+              input(type="text", [value]="logItem.when | localeDate", disabled)
+
+          .row
+            .small-12.columns
+              label([ngClass]="{ 'error': !editLogForm.controls['why'].valid && editLogForm.controls['why'].touched }", for="why") Why
+              .row.collapse
+                .small-3.columns
+                  span.prefix([innerText]="prefix")
+                .small-9.columns
+                  input(type="text", [formControl]="editLogForm.controls['why']", [ngClass]="{ 'error': !editLogForm.controls['why'].valid && editLogForm.controls['why'].touched }", id="why")
+                small.error.why-error(*ngIf="!editLogForm.controls['why'].valid && editLogForm.controls['why'].touched") Why is mandatory
+
+          .small-6.columns
+            label([ngClass]="{ 'error': !editLogForm.controls['how'].valid && editLogForm.controls['how'].touched }") How (example: cat file)
+              input(type="text", [formControl]="editLogForm.controls['how']", [ngClass]="{ 'error': !editLogForm.controls['how'].valid && editLogForm.controls['how'].touched }")
+            small.error(*ngIf="!editLogForm.controls['how'].valid && editLogForm.controls['how'].touched") How is mandatory
+
+          .small-6.columns
+            label([ngClass]="{ 'error': !editLogForm.controls['with'].valid && editLogForm.controls['with'].touched }") With (example: Terminal)
+              input(type="text", [formControl]="editLogForm.controls['with']", [ngClass]="{ 'error': !editLogForm.controls['with'].valid && editLogForm.controls['with'].touched }")
+            small.error(*ngIf="!editLogForm.controls['with'].valid && editLogForm.controls['with'].touched") With is mandatory
+
+          .small-12.columns
+            label Results
+              textarea(type="text", [formControl]="editLogForm.controls['result']")
+      .modal-footer
+        .row
+          .small-12.text-center
+            button.button.button-margin(type="submit", [disabled]="!editLogForm.valid") Save
+            button.button.cancel((click)="returnValue(false)") Cancel
