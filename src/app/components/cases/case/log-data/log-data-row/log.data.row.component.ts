@@ -46,20 +46,25 @@ export class LogDataRowComponent implements OnInit {
   }
 
   private newlineTransform(value: string) {
-    if (value) {
+    if (typeof(value) !== 'undefined' && value !== null) {
       return value.replace(new RegExp('\n', 'g'), '<br />');
     }
     return value;
   }
 
   private filterTransform(text: string, search: string): string {
-    const pattern = search.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
-    /* pattern = pattern.split(' ').filter((t) => {
-      return t.length > 0;
-    }).join('|'); */
-    const regex = new RegExp(pattern, 'gi');
+    try {
+      if (typeof(search) !== 'undefined' && search !== null) {
+        const pattern = search.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
+        /* pattern = pattern.split(' ').filter((t) => {
+          return t.length > 0;
+        }).join('|'); */
+        const regex = new RegExp(pattern, 'gi');
 
-    return search ? text.replace(regex, (match) => `<mark>${match}</mark>`) : text;
+        return search ? text.replace(regex, (match) => `<mark>${match}</mark>`) : text;
+      }
+    } catch (err) {}
+    return search;
   }
 
   private setHtmlText() {
