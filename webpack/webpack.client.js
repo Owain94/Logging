@@ -48,12 +48,18 @@ module.exports = {
       "inject": true,
       "compile": true,
       "favicon": false,
-      "cache": true,
+      "cache": false,
       "showErrors": true,
       "chunks": "all",
       "excludeChunks": [
         "webworker"
       ],
+      "xhtml": true,
+      "minify": {
+        "caseSensitive": true,
+        "collapseWhitespace": true,
+        "keepClosingSlash": true
+      },
       "excludeAssets": [/style.*.js/],
       "chunksSortMode": function sort(left, right) {
         let leftIndex = entryPoints.indexOf(left.names[0])
@@ -69,7 +75,9 @@ module.exports = {
     }),
     new HtmlWebpackExcludeAssetsPlugin(),
     new ScriptExtHtmlWebpackPlugin({
-      "async": "main"
+      "async": "main",
+      "inline": "inline",
+      "preload": ["main", "polyfills"]
     }),
     new webpack.DefinePlugin({
       "process.env.NODE_PLATFORM": JSON.stringify("client")
