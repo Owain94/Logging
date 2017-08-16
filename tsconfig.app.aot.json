@@ -1,0 +1,20 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./tmp",
+    "module": "es2015"
+  },
+  "angularCompilerOptions": {
+    "debug": false,
+    "genDir": "ngfactory",
+    "entryModule": "./src/app/modules/app.browser.module#AppBrowserModule"
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "./src/bootstrap/main.worker.ts",
+    "./src/bootstrap/main.server.ts",
+    "./src/server/**/*"
+  ]
+}

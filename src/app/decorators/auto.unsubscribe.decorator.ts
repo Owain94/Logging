@@ -4,7 +4,7 @@ export function AutoUnsubscribe(blackList: any = []) {
     const original = constructor.prototype.ngOnDestroy;
 
     constructor.prototype.ngOnDestroy = function () {
-      if (process.env.NODE_ENV === 'development' && typeof(window) !== 'undefined') {
+      if (process.env.NODE_ENV === 'development' && process.env.NODE_PLATFORM === 'client') {
         console.groupCollapsed(`${constructor.name} - Unsubscribe`);
       }
       for (const prop in this) {

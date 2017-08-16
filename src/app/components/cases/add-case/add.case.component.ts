@@ -19,22 +19,27 @@ export class AddCaseComponent implements OnInit {
   @Output() addCaseEvent: EventEmitter<Case> = new EventEmitter<Case>();
 
   public addCaseForm: FormGroup;
+  private formSubmitAttempt: boolean;
 
   constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
-    this.initForm();
-  }
-
-  private initForm() {
     this.addCaseForm = this.formBuilder.group({
       'name': [null, Validators.required],
       'description': [null, Validators.required]
     });
   }
 
+  public isFieldValid(field: string): boolean {
+    return !this.addCaseForm.get(field).valid && this.formSubmitAttempt;
+  }
+
   public submitForm(singleCase: Case): void {
-    this.addCaseEvent.emit(singleCase);
-    this.initForm();
+    this.formSubmitAttempt = true;
+    if (this.addCaseForm.valid) {
+      this.addCaseEvent.emit(singleCase);
+      this.addCaseForm.reset();
+      this.formSubmitAttempt = false;
+    }
   }
 }

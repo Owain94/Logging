@@ -20,4 +20,4 @@ hr(*ngIf="allCategories.length > 0 && selectedCategory != ''")
 
 .row.full-width(*ngIf="allCategories.length > 0 && selectedCategory != ''")
   .large-12.columns(*ngFor="let item of allCategorizedLogs[selectedCategory]; let i = index; trackBy: trackByFn")
-    app-log-data-row([logItem]="item", [filterText]="filterText", (editLogEvent)="editLog($event)", (deleteLogEvent)="deleteLog($event)")
+    app-log-data-row([logItem]="item", [i]="i", [filterText]="filterText", (editLogEvent)="editLog($event)", (deleteLogEvent)="deleteLog($event)")

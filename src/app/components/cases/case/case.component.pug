@@ -10,7 +10,5 @@ app-header([headerHeading]="[(case | async)?.name, (case | async)?.description]"
 
   hr
 
-  app-log-categories([allCategories]="allCategories", (changeCategoryEvent)="selectedCategory = $event")
-  app-log-data([log]="log", [selectedCategory]="selectedCategory", (editLogEvent)="editLog($event)", (deleteLogEvent)="deleteLog($event)", (allCategoriesEvent)="allCategories = $event", (allCategorizedLogsEvent)="allCategorizedLogsEvent($event)")
-
-app-notifications
+app-log-categories([allCategories]="allCategories", (changeCategoryEvent)="categorySelected($event)")
+app-log-data([log]="log", [selectedCategory]="selectedCategory", (editLogEvent)="editLog($event)", (deleteLogEvent)="deleteLog($event)", (allCategoriesEvent)="allCategoriesEvent($event)", (allCategorizedLogsEvent)="allCategorizedLogsEvent($event)")

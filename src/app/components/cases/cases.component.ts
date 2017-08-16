@@ -1,6 +1,5 @@
 import { Component, ChangeDetectionStrategy, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { MdDialog } from '@angular/material';
 
 import { Store } from '@ngrx/store';
 
@@ -21,13 +20,11 @@ import { getCaseState, CaseState } from '../../store/reducers/case.reducer';
 
 import { Case } from '../../store/models/case.model';
 
-import { CaseDeleteDialogComponent } from '../cases/case-delete-dialog/case.delete.dialog.component';
-
 import { Log } from '../../decorators/log.decorator';
 import { logObservable } from '../../decorators/log.observable.decorator';
 import { AutoUnsubscribe } from '../../decorators/auto.unsubscribe.decorator';
 
-import { NotificationsService } from '../../services/notifications.service';
+import { BrokerService } from '../../services/broker.service';
 
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -54,10 +51,9 @@ export class CasesComponent implements OnInit, OnDestroy {
 
   public addCaseForm: FormGroup;
 
-  constructor(public dialog: MdDialog,
-              private store: Store<CaseState>,
+  constructor(private store: Store<CaseState>,
               private actions: AppActions,
-              private notificationsService: NotificationsService
+              private brokerService: BrokerService
   ) {
     this.cases = store.select<CaseState>(getCaseState);
   }
@@ -97,17 +93,10 @@ export class CasesComponent implements OnInit, OnDestroy {
   }
 
   private notification(error: boolean, description: string): void {
-    if (error) {
-      this.notificationsService.error(
-        'Error',
-        description
-      );
-    } else {
-      this.notificationsService.success(
-        'Success',
-        description
-      );
-    }
+    this.brokerService.notificationText(
+      error ? 'Error' : 'Success',
+      description
+    );
   }
 
   public addCase(singleCase: Case): void {
@@ -119,14 +108,7 @@ export class CasesComponent implements OnInit, OnDestroy {
   }
 
   public deleteCase(singleCase: Case): void {
-    const dialogRef = this.dialog.open(CaseDeleteDialogComponent, {
-      data: `${singleCase.name} - ${singleCase.description}`
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.store.dispatch(new DeleteCase(singleCase));
-      }
-    });
+    this.store.dispatch(new DeleteCase(singleCase));
   }
 
   public trackByFn(index: number, item: Case): string {

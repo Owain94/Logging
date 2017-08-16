@@ -5,14 +5,14 @@
 .row
   form([formGroup]="addCaseForm", (ngSubmit)="submitForm(addCaseForm.value)")
     .large-3.medium-12.small-12.columns
-      label([ngClass]="{ 'error': !addCaseForm.controls['name'].valid && addCaseForm.controls['name'].touched }") Name
-        input(type="text", [formControl]="addCaseForm.controls['name']", [ngClass]="{ 'error': !addCaseForm.controls['name'].valid && addCaseForm.controls['name'].touched }")
-      small.error(*ngIf="!addCaseForm.controls['name'].valid && addCaseForm.controls['name'].touched") Name is mandatory
+      label([ngClass]="{ 'error': isFieldValid('name') }") Name
+        input(type="text", [formControl]="addCaseForm.controls['name']", [ngClass]="{ 'error': isFieldValid('name') }")
+      small.error(*ngIf="isFieldValid('name')") Name is mandatory
 
     .large-7.medium-12.small-12.columns
-      label([ngClass]="{ 'error': !addCaseForm.controls['description'].valid && addCaseForm.controls['description'].touched }") Description
-        input(type="text", [formControl]="addCaseForm.controls['description']", [ngClass]="{ 'error': !addCaseForm.controls['description'].valid && addCaseForm.controls['description'].touched }")
-      small.error(*ngIf="!addCaseForm.controls['description'].valid && addCaseForm.controls['description'].touched") Description is mandatory
+      label([ngClass]="{ 'error': isFieldValid('description') }") Description
+        input(type="text", [formControl]="addCaseForm.controls['description']", [ngClass]="{ 'error': isFieldValid('description') }")
+      small.error(*ngIf="isFieldValid('description')") Description is mandatory
 
     .large-1.medium-12.small-12.columns.end
-      button.button.button-margin(type="submit", [disabled]="!addCaseForm.valid") Add
+      button.button.button-margin(type="submit") Add

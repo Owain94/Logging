@@ -176,9 +176,6 @@ module.exports = {
         ]
       },
       {
-        "include": [
-          path.join(process.cwd(), "src/assets/css/foundation.css")
-        ],
         "test": /\.css$/,
         "loaders": ExtractTextPlugin.extract({
           "use": [
@@ -240,7 +237,7 @@ module.exports = {
     new webpack.IgnorePlugin(/vertx/),
     new ProgressBarPlugin(),
     new ExtractTextPlugin({
-      "filename": "[name].[contenthash:5].bundle.css",
+      "filename": "[name].bundle.css",
       "allChunks": true
     })
   ],

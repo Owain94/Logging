@@ -1,0 +1,13 @@
+.modal([ngClass]="{'hide-modal': hide == true }")
+  .modal-content([ngClass]="{'hide-content': hide == true }")
+    .modal-header
+      span.close((click)="returnValue(false)") ×
+      h2 Delete?
+    .modal-body
+      .row
+        .small-12.text-center Are you sure you want to delete the log item?
+    .modal-footer
+      .row
+        .small-12.text-center
+          button.button.button-margin((click)="returnValue(true)") Yes
+          button.button.cancel((click)="returnValue(false)") No

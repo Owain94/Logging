@@ -1,6 +1,5 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_ID } from '@angular/core';
+import { WorkerAppModule, WORKER_APP_LOCATION_PROVIDERS } from '@angular/platform-webworker';
 
 import { AppModule } from './app.module';
 
@@ -8,11 +7,12 @@ import { MainComponent } from '../components/main/main.component';
 
 @NgModule({
   imports: [
-    BrowserAnimationsModule,
-    BrowserModule.withServerTransition({
-        appId: 'logging'
-    }),
+    WorkerAppModule,
     AppModule
+  ],
+  providers: [
+    WORKER_APP_LOCATION_PROVIDERS,
+    { provide: APP_ID, useValue: 'logging' }
   ],
   bootstrap: [
     MainComponent

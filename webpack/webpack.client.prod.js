@@ -1,14 +1,11 @@
 const path = require("path")
 const glob = require("glob")
-const nodeModules = path.join(process.cwd(), "node_modules")
 const FaviconsWebpackPlugin = require("favicons-webpack-plugin")
 const CompressionPlugin = require("compression-webpack-plugin")
 const BrotliPlugin = require("brotli-webpack-plugin")
 const PurifyCSSPlugin = require("purifycss-webpack")
 const PurifyPlugin = require("@angular-devkit/build-optimizer").PurifyPlugin
 const SubresourceIntegrityPlugin = require("webpack-subresource-integrity")
-
-const { CommonsChunkPlugin } = require("webpack").optimize
 
 /**
  * This is a client prod config which should be merged on top of common config
@@ -54,32 +51,10 @@ module.exports = {
       "minimize": true,
       "purifyOptions": {
         "whitelist": [
-          "cdk-focused",
-          "cdk-mouse-focused",
-          "cdk-global-scrollblock",
-          "cdk-global-overlay-wrapper",
-          "cdk-overlay-pane",
-          "cdk-overlay-backdrop",
-          "cdk-overlay-container",
-          "cdk-overlay-dark-backdrop",
-          "cdk-overlay-backdrop-showing",
-          "cdk-visually-hidden",
-          "cdk-focus-trap-anchor",
-          "mat-dialog-container",
-          "mat-ripple-element"
+          "stop-scrolling",
+          "mark",
         ]
       }
-    }),
-    new CommonsChunkPlugin({
-      "name": "inline",
-      "minChunks": null
-    }),
-    new CommonsChunkPlugin({
-      "name": "vendor",
-      "minChunks": (module) => module.resource && module.resource.startsWith(nodeModules),
-      "chunks": [
-        "main"
-      ]
     }),
     new FaviconsWebpackPlugin({
       "appName": "Logging",

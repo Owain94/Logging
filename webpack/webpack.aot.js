@@ -9,14 +9,8 @@ const tsConfig = {
 
 const tsConfigAot = {
   test: "./tsconfig.spec.json",
-  client: "./tsconfig.app.json",
+  client: "./tsconfig.app.aot.json",
   server: "./tsconfig.server.aot.json"
-}
-
-const mainPath = {
-  test: "./src/bootstrap/main.ts",
-  client: "./src/bootstrap/main.ts",
-  server: "./src/bootstrap/main.server.ts"
 }
 
 /**
@@ -28,7 +22,6 @@ const mainPath = {
  */
 function getAotPlugin(platform, aot) {
   return new AotPlugin({
-    "mainPath": mainPath[platform],
     "tsConfigPath": aot ? tsConfigAot[platform] : tsConfig[platform],
     "skipCodeGeneration": !aot
   })

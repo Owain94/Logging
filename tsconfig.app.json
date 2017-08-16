@@ -2,17 +2,16 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./tmp",
-    "module": "es2015",
-    "lib": [
-      "dom",
-      "es2015"
-    ]
+    "module": "es2015"
+  },
+  "angularCompilerOptions": {
+    "entryModule": "./src/app/modules/app.browser.module#AppBrowserModule"
   },
   "include": [
     "src/**/*"
   ],
   "exclude": [
-    "./src/bootstrap/main.server.aot.ts",
+    "./src/bootstrap/main.worker.aot.ts",
     "./src/bootstrap/main.server.ts",
     "./src/server/**/*"
   ]

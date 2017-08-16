@@ -1,0 +1,23 @@
+.modal([ngClass]="{'hide-modal': hide == true }")
+  .modal-content([ngClass]="{'hide-content': hide == true }")
+    form([formGroup]="editCaseForm", (ngSubmit)="submitForm(editCaseForm.value)")
+      .modal-header
+        span.close((click)="returnValue(false)") ×
+        h2 Edit case entry
+      .modal-body
+        .row
+          .small-6.columns
+            label([ngClass]="{ 'error': isFieldValid('name') }") Name
+              input(type="text", [formControl]="editCaseForm.controls['name']", [ngClass]="{ 'error': isFieldValid('name') }")
+            small.error(*ngIf="isFieldValid('name')") Name is mandatory
+
+          .small-6.columns
+            label([ngClass]="{ 'error': isFieldValid('description') }") Description
+              input(type="text", [formControl]="editCaseForm.controls['description']", [ngClass]="{ 'error': isFieldValid('description') }")
+            small.error(*ngIf="isFieldValid('description')") Description is mandatory
+
+      .modal-footer
+        .row
+          .small-12.text-center
+            button.button.button-margin(type="submit") Save
+            button.button.cancel((click)="returnValue(false)") Cancel

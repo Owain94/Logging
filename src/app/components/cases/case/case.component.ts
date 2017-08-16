@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, OnInit, OnDestroy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Store } from '@ngrx/store';
@@ -26,7 +26,7 @@ import { Log } from '../../../decorators/log.decorator';
 import { logObservable } from '../../../decorators/log.observable.decorator';
 import { AutoUnsubscribe } from '../../../decorators/auto.unsubscribe.decorator';
 
-import { NotificationsService } from '../../../services/notifications.service';
+import { BrokerService } from '../../../services/broker.service';
 
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
@@ -65,7 +65,8 @@ export class CaseComponent implements OnInit, OnDestroy {
   constructor(private activatedRoute: ActivatedRoute,
               private store: Store<Array<LogItem> | Case>,
               private actions: AppActions,
-              private notificationsService: NotificationsService) {
+              private brokerService: BrokerService,
+              private changeDetectorRef: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
@@ -83,7 +84,12 @@ export class CaseComponent implements OnInit, OnDestroy {
     // pass
   }
 
-  public allCategorizedLogsEvent(categorizedLogs: Object) {
+  public allCategoriesEvent(allCategories: Array<string>): void {
+    this.allCategories = allCategories;
+    this.changeDetectorRef.detectChanges();
+  }
+
+  public allCategorizedLogsEvent(categorizedLogs: Object): void {
     this.allCategorizedLogs = categorizedLogs;
   }
 
@@ -97,6 +103,11 @@ export class CaseComponent implements OnInit, OnDestroy {
 
   public deleteLog(id: string): void {
     this.store.dispatch(new DeleteLog({'_id': id}));
+  }
+
+  public categorySelected(category: string): void {
+    this.selectedCategory = category;
+    this.changeDetectorRef.detectChanges();
   }
 
   private handleStates(): void {
@@ -131,16 +142,9 @@ export class CaseComponent implements OnInit, OnDestroy {
   }
 
   private notification(error: boolean, description: string): void {
-    if (error) {
-      this.notificationsService.error(
-        'Error',
-        description
-      );
-    } else {
-      this.notificationsService.success(
-        'Success',
-        description
-      );
-    }
+    this.brokerService.notificationText(
+      error ? 'Error' : 'Success',
+      description
+    );
   }
 }

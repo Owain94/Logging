@@ -9,6 +9,4 @@ import { Log } from '../../../decorators/log.decorator';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 @Log()
-export class FooterComponent {
-  constructor() {}
-}
+export class FooterComponent {}

@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { IdlePreloadModule, IdlePreload } from './idle.preload.module';
-
 import { HomeComponent } from '../../components/home/home.component';
 import { CasesComponent } from '../../components/cases/cases.component';
 import { CaseComponent } from '../../components/cases/case/case.component';
@@ -39,12 +37,10 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    IdlePreloadModule.forRoot(),
     RouterModule.forRoot(
       routes,
       {
         useHash: false,
-        preloadingStrategy: IdlePreload,
         initialNavigation: 'enabled'
       }
     )

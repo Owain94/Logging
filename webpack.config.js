@@ -22,6 +22,13 @@ module.exports = function (options, webpackOptions) {
   })
 
   let clientConfig = webpackMerge({}, commonPartial, clientPartial, {
+    entry: options.aot ? {
+      "main": "./src/bootstrap/main.ts",
+      "polyfills": "./src/polyfills/polyfills.browser.ts",
+      "styles": "./src/assets/css/styles.styl",
+      "webworker": "./src/bootstrap/main.worker.aot.ts"
+    } : clientPartial.entry, // Temporary
+
     plugins: [
       getAotPlugin("client", !!options.aot)
     ]

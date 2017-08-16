@@ -43,7 +43,7 @@ describe('The settings service', () => {
           'name': 'test',
           'case': 'test',
           'invpre': 'test',
-          'location': 'test',
+          'location': 'test'
         }
       ];
 
@@ -80,12 +80,12 @@ describe('The settings service', () => {
         'name': 'test',
         'case': 'test',
         'invpre': 'test',
-        'location': 'test',
+        'location': 'test'
       };
 
       const mockResponse = {
         '_id': '1',
-        'error': 'false',
+        'error': 'false'
       };
 
       settingsService.addSettings(payload).subscribe((settings) => {
@@ -126,12 +126,12 @@ describe('The settings service', () => {
         'name': 'test',
         'case': 'test',
         'invpre': 'test',
-        'location': 'test',
+        'location': 'test'
       };
 
       const mockResponse = {
         '_id': '1',
-        'error': 'false',
+        'error': 'false'
       };
 
       settingsService.editSettings(payload).subscribe((settings) => {
@@ -150,7 +150,7 @@ describe('The settings service', () => {
         'name': 'test',
         'case': 'test',
         'invpre': 'test',
-        'location': 'test',
+        'location': 'test'
       };
 
       settingsService.editSettings(payload).subscribe((settings) => {

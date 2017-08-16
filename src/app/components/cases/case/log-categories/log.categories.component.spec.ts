@@ -42,6 +42,11 @@ describe('LogCategoriesComponent', () => {
     expect(logCategoriesComponent.selectedCategory).toEqual(0);
   });
 
+  it('initial category shouldn\'t be set when there are no categories', () => {
+    logCategoriesComponent.allCategories = [];
+    expect(logCategoriesComponent.selectedCategory).toEqual(0);
+  });
+
   it('changing the category should emit', (done: any) => {
     logCategoriesComponent.changeCategoryEvent.subscribe(
       (res: string) => {
