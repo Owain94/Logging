@@ -54,6 +54,12 @@ module.exports = {
       "excludeChunks": [
         "webworker"
       ],
+      "xhtml": true,
+      "minify": {
+        "caseSensitive": true,
+        "collapseWhitespace": true,
+        "keepClosingSlash": true
+      },
       "excludeAssets": [/style.*.js/],
       "chunksSortMode": function sort(left, right) {
         let leftIndex = entryPoints.indexOf(left.names[0])
