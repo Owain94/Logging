@@ -13,7 +13,8 @@ export class BrokerService {
     'why': string,
     'how': string,
     'with': string,
-    'result': string
+    'result': string,
+    'timeout': number
   }>();
   public exportData = new Subject<[any, string]>();
   public notification = new Subject<{title: string, content: string}>();
@@ -33,7 +34,8 @@ export class BrokerService {
     'why': string,
     'how': string,
     'with': string,
-    'result': string
+    'result': string,
+    'timeout': number
   }) {
     this.setHtmlText.next(data);
   }

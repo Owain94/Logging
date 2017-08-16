@@ -8,15 +8,18 @@ export class Data {
       'how': string,
       'with': string,
       'result': string,
+      'timeout': number
     }
   ): void {
-    if (document.getElementById('where-' + data.i)) {
-      document.getElementById('where-' + data.i).innerHTML = data.where;
-      document.getElementById('what-' + data.i).innerHTML = data.what;
-      document.getElementById('why-' + data.i).innerHTML = data.why;
-      document.getElementById('how-' + data.i).innerHTML = data.how;
-      document.getElementById('with-' + data.i).innerHTML = data.with;
-      document.getElementById('result-' + data.i).innerHTML = data.result;
-    }
+    setTimeout(() =>  {
+      if (document.getElementById('where-' + data.i)) {
+        document.getElementById('where-' + data.i).innerHTML = data.where;
+        document.getElementById('what-' + data.i).innerHTML = data.what;
+        document.getElementById('why-' + data.i).innerHTML = data.why;
+        document.getElementById('how-' + data.i).innerHTML = data.how;
+        document.getElementById('with-' + data.i).innerHTML = data.with;
+        document.getElementById('result-' + data.i).innerHTML = data.result ? data.result : 'empty';
+      }
+    }, data.timeout);
   }
 }

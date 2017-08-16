@@ -1,5 +1,5 @@
 import { isPlatformServer } from '@angular/common';
-import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter, OnInit, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
 
 import { Log } from '../../../../../decorators/log.decorator';
 
@@ -16,7 +16,7 @@ import { Subject } from 'rxjs/Subject';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 @Log()
-export class LogDataRowComponent implements OnInit {
+export class LogDataRowComponent implements OnInit, AfterViewInit {
 
   @Input() logItem: LogItem;
   @Input() i: number;
@@ -45,6 +45,10 @@ export class LogDataRowComponent implements OnInit {
     });
   }
 
+  ngAfterViewInit(): void {
+    this.setHtmlText(50);
+  }
+
   private newlineTransform(value: string): string {
     if (typeof(value) !== 'undefined' && value !== null) {
       return value.replace(new RegExp('\n', 'g'), '<br />');
@@ -67,7 +71,7 @@ export class LogDataRowComponent implements OnInit {
     return search;
   }
 
-  private setHtmlText(): void {
+  private setHtmlText(timeout: number = 0): void {
     const where = this.filterTransform(this.logItem.where, this.filter);
     const what = this.filterTransform(this.logItem.what, this.filter);
     const why = this.filterTransform(this.logItem.why, this.filter);
@@ -82,7 +86,8 @@ export class LogDataRowComponent implements OnInit {
       'why': why,
       'how': how,
       'with': withWhat,
-      'result': result
+      'result': result,
+      'timeout': timeout
     });
   }
 

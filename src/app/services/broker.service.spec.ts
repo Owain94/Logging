@@ -78,7 +78,8 @@ describe('The broker service', () => {
       'why': 'test',
       'how': 'test',
       'with': 'test',
-      'result': 'test'
+      'result': 'test',
+      'timeout': 0
     });
   });
 

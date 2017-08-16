@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, OnInit, OnDestroy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Store } from '@ngrx/store';
@@ -65,7 +65,8 @@ export class CaseComponent implements OnInit, OnDestroy {
   constructor(private activatedRoute: ActivatedRoute,
               private store: Store<Array<LogItem> | Case>,
               private actions: AppActions,
-              private brokerService: BrokerService) {
+              private brokerService: BrokerService,
+              private changeDetectorRef: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
@@ -81,6 +82,11 @@ export class CaseComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     // pass
+  }
+
+  public allCategoriesEvent(allCategories: Array<string>): void {
+    this.allCategories = allCategories;
+    this.changeDetectorRef.detectChanges();
   }
 
   public allCategorizedLogsEvent(categorizedLogs: Object): void {
@@ -101,6 +107,7 @@ export class CaseComponent implements OnInit, OnDestroy {
 
   public categorySelected(category: string): void {
     this.selectedCategory = category;
+    this.changeDetectorRef.detectChanges();
   }
 
   private handleStates(): void {
