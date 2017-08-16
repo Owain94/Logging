@@ -48,7 +48,7 @@ module.exports = {
       "inject": true,
       "compile": true,
       "favicon": false,
-      "cache": true,
+      "cache": false,
       "showErrors": true,
       "chunks": "all",
       "excludeChunks": [
@@ -75,7 +75,9 @@ module.exports = {
     }),
     new HtmlWebpackExcludeAssetsPlugin(),
     new ScriptExtHtmlWebpackPlugin({
-      "async": "main"
+      "async": "main",
+      "inline": "inline",
+      "preload": ["main", "polyfills"]
     }),
     new webpack.DefinePlugin({
       "process.env.NODE_PLATFORM": JSON.stringify("client")

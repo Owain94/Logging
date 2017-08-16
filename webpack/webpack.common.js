@@ -92,7 +92,7 @@ module.exports = {
       },
       {
         "test": /\.(jpg|png|webp|gif|otf|ttf|woff|woff2|cur|ani)$/,
-        "loader": "url-loader?name=[name].[hash:5].[ext]&limit=10000"
+        "loader": "url-loader?name=[name].[ext]&limit=10000"
       },
       {
         "exclude": [
