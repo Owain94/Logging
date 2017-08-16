@@ -1,20 +1,10 @@
 .row.full-width
-  .large-1.columns(*ngIf="!server", [id]="'where-' + i")
-  .large-1.columns(*ngIf="server", [innerText]="logItem.where")
-
+  .large-1.columns([id]="'where-' + i", [innerText]="logItem.where")
   .large-1.columns([innerText]="logItem.when | localeDate")
-
-  .large-2.columns(*ngIf="!server", [id]="'what-' + i")
-  .large-2.columns(*ngIf="server", [innerText]="logItem.what")
-
-  .large-2.columns(*ngIf="!server", [id]="'why-' + i")
-  .large-2.columns(*ngIf="server", [innerText]="logItem.why")
-
-  .large-2.columns(*ngIf="!server", [id]="'how-' + i")
-  .large-2.columns(*ngIf="server", [innerText]="logItem.how")
-
-  .large-1.columns(*ngIf="!server", [id]="'with-' + i")
-  .large-1.columns(*ngIf="server", [innerText]="logItem.with")
+  .large-2.columns([id]="'what-' + i", [innerText]="logItem.what")
+  .large-2.columns([id]="'why-' + i", [innerText]="logItem.why")
+  .large-2.columns([id]="'how-' + i", [innerText]="logItem.how")
+  .large-1.columns([id]="'with-' + i", [innerText]="logItem.with")
 
   .large-2.columns
     span(*ngIf="!server", [id]="'result-' + i", [style.opacity]="logItem.result ? 1 : 0")
