@@ -3,7 +3,7 @@ import { CommonModule, APP_BASE_HREF } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { StoreModule, ActionReducerMap, ActionReducer, ActionsSubject } from '@ngrx/store';
+import { StoreModule, ActionReducerMap, ActionsSubject, MetaReducer } from '@ngrx/store';
 // import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -16,7 +16,7 @@ import { AppActions } from '../store/app.actions';
 import { logger } from '../store/reducers/logging.reducer';
 import { caseReducer } from '../store/reducers/case.reducer';
 import { settingsReducer } from '../store/reducers/settings.reducer';
-import { logReducer } from '../store/reducers/log.reducer';
+import { logReducer, LogState } from '../store/reducers/log.reducer';
 
 import { CaseEffects } from '../store/effects/case.effects';
 import { SettingsEffects } from '../store/effects/settings.effects';
@@ -84,7 +84,7 @@ const reducers: ActionReducerMap<any> = {
   log: logReducer
 };
 
-const metaReducers: ActionReducer<any, any>[] = process.env.NODE_ENV === 'development' ?
+const metaReducers: MetaReducer<LogState>[] = process.env.NODE_ENV === 'development' ?
   [logger] : [];
 
 @NgModule({
