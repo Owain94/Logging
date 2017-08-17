@@ -52,7 +52,7 @@
     "@angular/platform-webworker-dynamic": "5.0.0-beta.3",
     "@angular/router": "5.0.0-beta.3",
     "@ngrx/core": "1.2.0",
-    "@ngrx/effects": "4.0.2",
+    "@ngrx/effects": "4.0.3",
     "@ngrx/router-store": "4.0.3",
     "@ngrx/store": "4.0.3",
     "@ngrx/store-devtools": "4.0.0",
