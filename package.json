@@ -81,7 +81,7 @@
     "@angular-devkit/build-optimizer": "0.0.14",
     "@angular/compiler-cli": "5.0.0-beta.4",
     "@angular/language-service": "5.0.0-beta.4",
-    "@ngtools/webpack": "1.6.1",
+    "@ngtools/webpack": "1.6.2",
     "@types/express": "4.0.37",
     "@types/jasmine": "2.5.54",
     "@types/jasminewd2": "2.0.2",
