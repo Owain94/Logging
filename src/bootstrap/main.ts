@@ -5,7 +5,7 @@ import {
   bootstrapWorkerUi,
   WORKER_UI_LOCATION_PROVIDERS,
   ServiceMessageBrokerFactory,
-  PRIMITIVE
+  SerializerTypes,
 } from '@angular/platform-webworker';
 
 import { bootloader } from '../helpers/bootloader';
@@ -24,15 +24,15 @@ const bootstrap = () => {
     const dataBroker = brokerFactory.createMessageBroker('DATA_CHANNEL', false);
     const exportBroker = brokerFactory.createMessageBroker('EXPORT_CHANNEL', false);
 
-    BootstrapBroker.registerMethod('init', [ PRIMITIVE ], Ui.removeStyleTags, PRIMITIVE);
+    BootstrapBroker.registerMethod('init', [ SerializerTypes.PRIMITIVE ], Ui.removeStyleTags, SerializerTypes.PRIMITIVE);
 
-    UiBroker.registerMethod('scroll', [ PRIMITIVE ], Ui.scroll, PRIMITIVE);
-    UiBroker.registerMethod('onScroll', [ PRIMITIVE ], Ui.onScroll, PRIMITIVE);
-    UiBroker.registerMethod('disableScroll', [ PRIMITIVE ], Ui.disableScroll, PRIMITIVE);
+    UiBroker.registerMethod('scroll', [ SerializerTypes.PRIMITIVE ], Ui.scroll, SerializerTypes.PRIMITIVE);
+    UiBroker.registerMethod('onScroll', [ SerializerTypes.PRIMITIVE ], Ui.onScroll, SerializerTypes.PRIMITIVE);
+    UiBroker.registerMethod('disableScroll', [ SerializerTypes.PRIMITIVE ], Ui.disableScroll, SerializerTypes.PRIMITIVE);
 
-    dataBroker.registerMethod('setText', [ PRIMITIVE ], Data.setHtmlText, PRIMITIVE);
+    dataBroker.registerMethod('setText', [ SerializerTypes.PRIMITIVE ], Data.setHtmlText, SerializerTypes.PRIMITIVE);
 
-    exportBroker.registerMethod('export', [ PRIMITIVE ], Export.export, PRIMITIVE);
+    exportBroker.registerMethod('export', [ SerializerTypes.PRIMITIVE ], Export.export, SerializerTypes.PRIMITIVE);
   });
 }
 
