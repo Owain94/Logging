@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, Inject, PLATFORM_ID, OnDestroy, APP_ID, HostListener } from '@angular/core';
-import { ClientMessageBrokerFactory, UiArguments, FnArg, PRIMITIVE, ClientMessageBroker } from '@angular/platform-webworker';
+import { ClientMessageBrokerFactory, UiArguments, FnArg, ClientMessageBroker, SerializerTypes } from '@angular/platform-webworker';
 import { isPlatformServer } from '@angular/common';
 import { Router, NavigationEnd } from '@angular/router';
 
@@ -89,13 +89,13 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
     const args = new UiArguments(func);
     args.method = func;
     if (data) {
-      const fnArg = new FnArg(data, PRIMITIVE);
+      const fnArg = new FnArg(data, SerializerTypes.PRIMITIVE);
       fnArg.value = data;
-      fnArg.type = PRIMITIVE;
+      fnArg.type = SerializerTypes.PRIMITIVE;
       args.args = [fnArg];
     }
 
-    return broker.runOnService(args, PRIMITIVE);
+    return broker.runOnService(args, SerializerTypes.PRIMITIVE);
   }
 
   @HostListener('window:scroll', ['$event'])

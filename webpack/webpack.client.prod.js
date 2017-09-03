@@ -1,5 +1,6 @@
 const path = require("path")
 const glob = require("glob")
+const webpack = require("webpack")
 const FaviconsWebpackPlugin = require("favicons-webpack-plugin")
 const CompressionPlugin = require("compression-webpack-plugin")
 const BrotliPlugin = require("brotli-webpack-plugin")
@@ -54,6 +55,30 @@ module.exports = {
           "stop-scrolling",
           "mark",
         ]
+      }
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      "mangle": {
+        "keep_fnames": true,
+        "screw_ie8": true
+      },
+      "compress": {
+        "warnings" : false,
+        "conditionals": true,
+        "unused": true,
+        "comparisons": true,
+        "sequences": true,
+        "dead_code": true,
+        "evaluate": true,
+        "if_return": true,
+        "join_vars": true,
+        "negate_iife": false,
+        "screw_ie8": true,
+        "pure_getters": true
+      },
+      "output": {
+        "ascii_only": true,
+        "comments": false
       }
     }),
     new FaviconsWebpackPlugin({

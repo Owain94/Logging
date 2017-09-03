@@ -5,7 +5,6 @@ import {
 } from 'express';
 
 import {
-  Provider,
   NgModuleFactory,
   InjectionToken,
   Type,
@@ -149,8 +148,8 @@ function getFactory(
 /**
  * Get providers of the request and response
  */
-function getReqResProviders(req: Request, res: Response): Provider[] {
-  const providers: Provider[] = [
+function getReqResProviders(req: Request, res: Response): StaticProvider[] {
+  const providers: StaticProvider[] = [
     {
       provide: REQUEST,
       useValue: req
