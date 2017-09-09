@@ -58,7 +58,7 @@
     "@ngrx/store-devtools": "4.0.0",
     "@types/file-saver": "0.0.1",
     "@types/xlsx": "0.0.35",
-    "body-parser": "1.17.2",
+    "body-parser": "1.18.0",
     "compression": "1.7.0",
     "core-js": "2.5.1",
     "express": "4.15.3",
