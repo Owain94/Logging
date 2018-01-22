@@ -54,7 +54,7 @@
     "@ngrx/core": "1.2.0",
     "@ngrx/effects": "4.0.5",
     "@ngrx/router-store": "4.0.4",
-    "@ngrx/store": "4.0.3",
+    "@ngrx/store": "5.0.0",
     "@ngrx/store-devtools": "4.0.0",
     "@types/file-saver": "0.0.1",
     "@types/xlsx": "0.0.36",
