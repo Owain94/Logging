@@ -68,7 +68,7 @@
     "intl": "1.2.5",
     "mongodb": "2.2.31",
     "mongoose": "4.12.1",
-    "raven-js": "3.18.0",
+    "raven-js": "3.22.2",
     "rxjs": "5.4.3",
     "scroll-behaviour": "0.3.4",
     "serialize-javascript": "1.4.0",
