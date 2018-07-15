@@ -59,7 +59,7 @@
     "@types/file-saver": "0.0.1",
     "@types/xlsx": "0.0.36",
     "body-parser": "1.18.2",
-    "compression": "1.7.1",
+    "compression": "1.7.3",
     "core-js": "2.5.1",
     "express": "5.0.0-alpha.6",
     "express-static-gzip": "0.3.0",
