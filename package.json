@@ -60,7 +60,7 @@
     "@types/xlsx": "0.0.36",
     "body-parser": "1.18.2",
     "compression": "1.7.1",
-    "core-js": "2.5.1",
+    "core-js": "3.3.4",
     "express": "5.0.0-alpha.6",
     "express-static-gzip": "0.3.0",
     "fastclick": "1.0.6",
